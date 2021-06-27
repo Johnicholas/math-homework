@@ -1,0 +1,71 @@
+EXAMPLE 1:
+
+\begin{definition}
+\label{homIntoXDef}
+Given a category $C$, $X$ an object, define $Hom(-, X)$ to:
+\begin{itemize}
+  \item take an object $Y$ to $hom(Y, X)$ of arrows in $C$ from $Y$ to $X$, and
+  \marginpar{\emph{TODO}: $hom$ notation here is used without being introduced previously}
+  \item take an arrow $f: Z \rightarrow Y$ to the ``pullback'' function $f^* = \lambda x . f ; x$
+\end{itemize}
+\end{definition}
+
+BECOMES
+
+Consider the rule
+\[
+  \mathrm{Pow} \colon \mathrm{Set} \to \mathrm{Set}
+\]
+which associates a set \(S\) to its power set
+\[
+  \mathrm{Pow}(S) := \{ X \mid X \subset S \}
+\]
+and which associates a function \(f \colon S \to T\)
+the inverse image
+\begin{align*}
+  \mathrm{Pow}(f) \colon \mathrm{Pow}(T) &\to \mathrm{Pow}(S) \\
+  Y & \mapsto f^{-1}(Y).
+\end{align*}
+We check this is a contravariant functor...
+
+EXAMPLE 2
+
+\begin{definition}
+\label{powdefn}
+Define $Pow$ to take a set to its power set,
+and also take functions $f : Z \rightarrow Y$
+to a function that takes subsets of $Y$ to their preimage according to $f$,
+which is a subset of $Z$.
+\end{definition}
+
+Given a category \(C\), an object \(X\) inside \(C\),
+we have the functor
+\[
+  \operatorname{Hom}_C(-,X) \colon
+  C^{\mathrm{opp}} \to \mathrm{Set}
+\]
+such that
+\begin{itemize}
+\item given another object \(Y\) inside \(C\), \(\operatorname{Hom}(Y,X)\) is the
+set of arrows in \(C\) from \(Y\) to \(X\), and
+\item given an arrow \(f \colon Z \to Y\) in \(C\),
+we have
+\begin{align*}
+f^* \colon \operatorname{Hom}_C(Y,X) & \to 
+\operatorname{Hom}_C(Z,X) \\
+(g \colon Y \to X) & \mapsto (g \circ f \colon Z \to Y \to X).
+\end{align*}
+\end{itemize}
+
+INFERRED RULES:
+
+1. avoid $ to get into math mode, use \(. These are balanced, unlike $, which leads to better error messages and better error correction.
+
+2. use \[ routinely in order to get space around something
+
+3. Hom is typed \operatorname{Hom} QUESTION: What does \operatorname do?
+
+4. opp is typed \mathrm{opp} and Set is typed \
+
+5. Use \colon for the punctuation between a map's name and its type.
+6. Use \to for the right arrow, not \rightarrow
