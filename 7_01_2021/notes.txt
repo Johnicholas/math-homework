@@ -1,21 +1,106 @@
 1. I find it important and very helpful to think about the types of things. That is, giving even/oddness of elements in a single group G amounts to giving a homomorphism—read, function—f: G —> Z/2Z. All this really allows you to do is distinguish between different elements of G in perhaps a somewhat efficient way. For instance, 0 is not 1 in Z/2Z!
 
-	2. On the other hand, one can imagine giving a functor F: Groups —> Set that assigns a group G to the set Hom(G,Z/2Z) of all group homomorphisms from G to the cyclic group Z/2Z on two elements. This in some sense asks you to consider the set of all ways you can assign even/odd to all groups in some compatible way. In particular, this allows you to perhaps distinguish between groups in an efficient way: Z/3Z is not the same as Z/2Z, for instance!
+2. On the other hand, one can imagine giving a functor F: Groups —> Set that assigns a group G to the set Hom(G,Z/2Z) of all group homomorphisms from G to the cyclic group Z/2Z on two elements. This in some sense asks you to consider the set of all ways you can assign even/odd to all groups in some compatible way. In particular, this allows you to perhaps distinguish between groups in an efficient way: Z/3Z is not the same as Z/2Z, for instance!
 
-	3. In particular, it is the latter process that allows you to distinguish between complicated things using simpler invariants. But even that may come in flavours of varying complexity. That is, consider the process of assigning and extracting invariants to, say, topological spaces. This is often a rule that allows you to assign to any topological space T some other object inv(T), where inv(T) is hopefully something easier or more concrete. The only requirement for something to be an invariant is that if S and T are two topological spaces which are homeomorphic—or perhaps some other notion of equivalence…!—then you better have inv(S) = inv(T).
-	For instance, you inv(T) might be the topological Euler characteristic of T, or else it might be something more sophisticated, like the fundamental group of T. In the first case, you have a rule which might be thought of as a function 
+Suppose we had a variety of algebras V (such as Group or Quandle) that we were investigating,
+and we wanted a math tool (an invariant) that would let you calculate, at least in some circumstances,
+that specific pairs of algebras (such as the Klein 4 group and the cyclic group of order 4) are definitely
+nonisomorphic.
+
+The specific pairs of algebras presumably have definitions. Let's imagine they even have presentations,
+names for at least some of their elements (generators, and elements are arrows from the terminal object),
+and some laws (relations would be laws that apply ``locally'' to a particular algebra,
+and equality is a guarantee that it's not possible to separate two things)
+and and there are some variety-wide laws that apply to all algebras.
+
+In order for the invariant to be an invariant, we need it to give the same answer for isomorphic objects.
+A functor is a ``nice map'' and so would work great.
+What is a way that we could end up with a map from V to Z/2Z?
+
+Bxyz = x (y z) is a combinator in combinatory logic,
+with type (B->C)->(A->B)->A->C.
+We might be able to produce a map from V to Z/2Z via this B combinator.
+If we did, then the A in the type would be V and the C in the type would be Z/2Z.
+Then we would need:
+1. to know what type B is
+2. some map from B to Z/2Z
+3. some map from V to B
+The ideas that there should be some map from B to Z/2Z and some map from V to B might
+help us triangulate what B might be:
+1. What kind of thing plausibly has maps from variety V and to Z/2Z?
+
+One of the ways this might happen is if B were Nat,
+then counting something about V might be
+a reasonable map from V to Nat.
+Then from Nat to Z/2Z might be evens and odds.
+Then we're saying we might get an Z/2Z invariant if we had a (probably better?) invariant,
+and then we computed it mod 2 - true but not complicated.
+
+Similarly, if B were some kind of set of polynomials,
+then we might be able to evaluate it over Z/2Z.
+Again, we're saying we might get a Z/2Z invariant if we had a better invariant,
+and then we computed it mod 2.
+
+Cxyz = x z y is another combinator in combinatory logic,
+with type (A->B->C)->B->A->C.
+Again, we might be able to produce a map from V to Z/2Z via this C combinator.
+If we did, we would need:
+1. to know what type B is
+2. some map from V to maps B->Z/2Z
+3. an element of B
+Again, the ideas that there should be some map from B to Z/2Z and some map from V to maps B->Z/2Z
+might help us triangulate what B might be:
+1. Can we imagine what type B might be, that there would be a reasonably natural map from V to maps B->Z/2Z?
+2. Do we have any particular, salient or natural elements of that B?
+
+A map to Z/2Z might be viewed as a subset.
+If B were the plane R^2, then a map from V to R^2 might be some canonical way of depicting V.
+A particular element of the plane might be the origin, or the point (1, 0).
+Then we're saying that we might get a Z/2Z invariant by asking whether
+"the depiction" of one of these V things contains the special point.
+
+
+Sxyz = (x z) (y z) is another combinator in combinatory logic,
+with type (A->B->C)->(A->B)->A->C.
+If we produced this invariant via S, then the A in the type would be V and the C in the type would be Z/2Z.
+Then we would need:
+1. to know what type B is
+2. some map from V to maps from B to Z/2Z
+3. some map from V to B
+
+Here we are getting maybe a little bit clever. 
+The Mandelbrot set is maybe a colorful visual example of this kind of thing.
+There's a thing, the Julia set of a dynamical system, which is a subset of the plane.
+The dynamical system also has parameters - which can be viewed as a point in the plane.
+The Mandelbrot set comes from taking all the dynamical systems,
+and ``cooking'' them two ways, to their Julia sets, and to their points,
+and asking whether the point is within the corresponding Julia set.
+
+Similarly, the Gray-Scott reaction diffusion system is parameterized by a pair of points,
+and running it (from a given starting point for a given amount of time) yields a picture,
+which can be sharpened to be a subset of the plane.
+Since everything in reaction-diffusion land is continuous,
+if you plot the "diagonal" like this, you get a figure which
+(like Mandelbrot and Julia) exhibits all the possible behaviors of particular parameters.
+https://www.karlsims.com/rd-exhibit.html
+https://www.karlsims.com/rd.html
+
+
+3. In particular, it is the latter process that allows you to distinguish between complicated things using simpler invariants. But even that may come in flavours of varying complexity. That is, consider the process of assigning and extracting invariants to, say, topological spaces. This is often a rule that allows you to assign to any topological space T some other object inv(T), where inv(T) is hopefully something easier or more concrete. The only requirement for something to be an invariant is that if S and T are two topological spaces which are homeomorphic—or perhaps some other notion of equivalence…!—then you better have inv(S) = inv(T).
+
+For instance, your inv(T) might be the topological Euler characteristic of T, or else it might be something more sophisticated, like the fundamental group of T. In the first case, you have a rule which might be thought of as a function 
 	χ: Ob(Top) —> 𝐙 
 from the set of (objects in the category of) topological spaces; in the second case, you have a rule which might be thought of as a functor
 	π₁: Top —> Group
 from the category of topological spaces to the category of groups.
 
-	4. A presheaf on a category C is another name for a contravariant functor F: C —> Set. As you pointed out, the prefix pre is meant to signify that upon adding more requirements on F, we have some object we might call a sheaf. A sheaf is a presheaf in which we can “glue” values of F together. But to make sense of that, you have to specify what this glueing is supposed to mean. Let’s talk about that below.
+4. A presheaf on a category C is another name for a contravariant functor F: C —> Set. As you pointed out, the prefix pre is meant to signify that upon adding more requirements on F, we have some object we might call a sheaf. A sheaf is a presheaf in which we can ``glue'' values of F together. But to make sense of that, you have to specify what this glueing is supposed to mean. Let’s talk about that below.
 
-	5. A fun exercise toward diagrammatics would be to try to prove some basic things in category theory using just properties of diagrams. Namely, one can formulate many results in category theory by saying that such and such is a universal thing. See the page on universal properties. Two examples to come below.
+5. A fun exercise toward diagrammatics would be to try to prove some basic things in category theory using just properties of diagrams. Namely, one can formulate many results in category theory by saying that such and such is a universal thing. See the page on universal properties. Two examples to come below.
 
 Some things to think about:
 
-	A. Think about some examples of invariants you can assign to things, say on spaces, groups, etc. Make sense of them as functions, functors, etc. To begin, here are some suggestions:
+A. Think about some examples of invariants you can assign to things, say on spaces, groups, etc. Make sense of them as functions, functors, etc. To begin, here are some suggestions:
 	- the determinant of a matrix, 
 	- the characteristic polynomial of a matrix, 
 	- the set of spanning trees of a graph, 
@@ -24,147 +109,13 @@ Some things to think about:
 	- the set of connected components of a topological space,
 	- ...
 
-	B. Towards making sense of a sheaf. Let X be your favourite topological space. Let C be the category whose objects are the open subsets of X, and whose arrows are inclusion relations. That is, given two open subsets U and V of X, viewed as objects of C, 
+B. Towards making sense of a sheaf. Let X be your favourite topological space. Let C be the category whose objects are the open subsets of X, and whose arrows are inclusion relations. That is, given two open subsets U and V of X, viewed as objects of C, 
 	
-	Hom_C(U,V) is empty if U is not contained in V, and
-			      is a single arrow if U is contained in V.
+Hom_C(U,V) is empty if U is not contained in V, and is a single arrow if U is contained in V.
 
 Think about what the data of a presheaf amounts to here. See if you can carefully formulate what it ought to mean to be able to glue values of a presheaf. (Think of covering an open set with smaller opens, specifying something on each of the smaller opens so that things are equal on overlaps. Think also of the triangle Escher-esque example we talked about!)
 
-C. 
-Consider the category of sets. Let X and Y be two sets. The Cartesian product
 
-X ⨉ Y = {(x,y) | x in X, y in Y}
-
-is another set. Moreover this has the following property: given any other set Z and two functions f: Z —> X and g: Z —> Y, there is a unique function h: Z —> X ⨉ Y such that pr_X . h = f and pr_Y . h = g; here, pr_X: X ⨉ Y —> X and pr_Y: X ⨉ Y —> Y are the projection maps. (One might say that some diagram commutes…) Compare this with the notion of a categorical product. 
-
-Conversely, the disjoint union X ⊔ Y satisfies the following property: given any other set Z, and two functions i: X —> Z and j: Y —> Z, there is a unique function k: X ⊔ Y —> Z such that k . incl_X = i and k . incl_Y = j; here, incl_X: X —> X ⊔ Y and incl_Y: Y —> X ⊔ Y are the inclusion maps. Compare this with the notion of a categorical coproduct.
-
-There are two things to check: that there is a map, and that it is unique. It is somehow so tautological that the proof might be hard.
-
-
-
-When I was a kid, there was a ``puzzle'' or ``paradox'', possibly inspired by superhero stories,
-asking what would happen, if an unstoppable force met an immovable obstacle.
-(https://en.wikipedia.org/wiki/Irresistible_force_paradox)
-I don't remember whether it was my older cousin who told it to me, but it might have been.
-It was a bit cruel (kids are often a bit cruel to each other), or at least, it felt a bit cruel to me.
-My cousin, or whoever was acting as the puzzle setter would ask the question as if the answer was one or the other, as if it were a matter of taste. 
-Then whichever side the puzzle answerer picked, the puzzle setter would talk about the opposite side's guarantee, building them up until the puzzle answerer was bullied into switching their answer. 
-
-For me, the key to a clear grip on understanding it to stop narrowly trying to work out consequences of the superpowers, 
-working forward from the definition of the superpowers to a (presumed) goal of either 
-and instead relax and think about a large grid explaining "when X bumps Y, what happens?", possibly with little xkcd-style illustrations in each cell.
-(something like https://xkcd.com/2043/ or https://xkcd.com/1890/)
-
-(I think of this as ``naturalistic'' thinking, your mind having a gentle and wide grip rather than a narrow tight focus. We are collecting flower-theorems from this entire field, all of which are valuable.) 
-
-The quality of "unstoppableness" is like circling a row and saying that everywhere in this row, the bumper overcomes the bumpee.
-The quality of "irresistablenesss" is like circling one column and saying that everywhere in this column, the bumpee stops the bumper.
-The grid and the circling can resolve the paradox. In this case, the resolution is that the puzzle setter has contradicted themselves.
-
-There's a similar puzzle, the https://en.wikipedia.org/wiki/Teumessian_fox,
-which I mention because the resolution is different (the hunt must be a procedure that does not terminate).
-
-In group theory, the identity satisfies the law that for all x x * e = e * x = e.
-Suppose that there was another element e2 which also satisfied the law that for all x, x * e2 = e2 * x = e2.
-Satisfying this property means there is a whole row (the e2 row) and a whole column (the e2 column) filled with e2 in the multiplication table of the group.
-Of course, there is also a whole row (the e1 row) and a whole column (the e1 column) filled with e1.
-What happens when they intersect?
-
-Here the resolution is different, the four products e{1,2} * e{1,2} can all be equal to e1 and also all be equal to e2,
-if and only if e1 is equal to e2.
-
-In category theory, an initial object, 0,  satisfies the law that for all objects x there exists a unique map 0 -> x.
-What if there were two initial objects, 01 and 02?
-Then we could draw a grid of all the hom(x, y), and look at the rows and columns 01 and 02.
-There exists a unique map 01 -> 02 and a unique map 02 -> 01.
-If we compose them, we get a map 01 -> 01 and a map 02 -> 02.
-We already knew of maps 01 -> 01 and 02 -> 02, the identity maps,
-and they're unique - so 01 -> 02 composed with 02 -> 01 yields the identity map 01 -> 01,
-and 02 -> 01 composed with 01 -> 02 yields the identity map 02 -> 02.
-That is, we use the two object's guarantees (their posited superpowers) to yield an isomorphism between them.
-
-The resolution of the argument regarding cartesian product and categorical product is close to the identities-must-be-equal and the initial-objects-must-be-equal
-argument - we end up with the cartesian product and categorical product being isomorphic.
-
-(the similarity of concepts is an obstacle to a clear proof, and the similarity of names is another one)
-
-Given a category X, and a pair of purportedly distinct objects in it named Decartes and Cross,
-and arrows dc: Decartes -> Cross and cd: Cross -> Decartes, 
-such that dc; cd = 1 and cd; dc = 1, let's try to make two new categories:
-1. X Minus Decartes, which has almost all the objects and arrows in it that X had,
-but doesn't have Decartes or any arrows that start or end at Decartes.
-2. X Minus Cross, which has almost all the objects and arrows in it that X had,
-but doesn't have Cross or any arrows that start or end at Cross.
-
-Can we define a functor from X to X Minus Decartes?
-Yes, everything stays where it is, except for the things that got dropped need to be fixed up.
-Decartes goes to Cross, and arrows that started or ended at Decartes get pre or post composed with
-the distinguished arrows dc and cd.
-Let's call this the fixup map from X to X Minus Decartes.
-
-Is fixup a functor? Yes.
-Proof:
-
-Suppose we had a1 ; a2 = a3.
-
-Consider fixup a1 ; fixup a2.
-According to whether a1 or a2 or both had source or target or both equal to Decartes,
-we will get one of these formulas: 
-fixup a1; fixup a2 = { cd, 1 }; a1; { cd;dc, 1 }; a2; { dc, 1 }
-= { cd, 1 }; a1; a2; { dc, 1 } (Since cd ; dc = 1)
-= { cd, 1 }; a3; { dc, 1 } (by hypothesis)
-= fixup a3 (by recognition)
-
-a1; a2 = a3 => fixup a1; fixup a2 = fixup a3
-So Fixup is a functor.
-
-QED
-
-The inclusion from X Minus Decartes back to X is also a functor, which we might call iota.
-
-Is there a natural transformation from Fixup; iota to 1?
-What does it mean to say there is a natural transformation from Fixup; iota to 1?
-There exists an N : objects of C \mapsto arrows of C
-such that if 
-a : X -> Y
-Then
-(Fixup; iota) a; N Y = N X; (Fixup; iota) a1
-
-
-Well, what would the natural transformation do on objects?
-Every object goes to itself via Fixup; iota, except Decartes, which goes to Cross.
-So let's have N take every object of X go to its own identity morphism, except Decartes, which goes to the dc arrow.
-What does the natural transformation do to arrows?
-Well, what does Fixup; iota do to arrows?
-If an arrow started at Decartes, it gets mapped to another, similar, arrow starting at Cross. 
-if an arrow ended at Decartes, it gets mapped to another, similar, arrow starting at Cross.
-So 
-
-
-Since Fixup doesn't change things that were not dropped, the inclusion from X Minus Decartes to X followed by Fixup is the identity. This means that Fixup is full - the inclusion functor followed by fixup shows that fixup hits everything in X Minus Decartes.
-
-Is Fixup faithful?
-Suppose fixup a1 = fixup a2
-Then we can pre or postcompose cd or dc in order to show that a1 = a2
-{dc, 1}{ cd, 1}; a1; { dc, 1} = { cd, 1 }; a2; { dc, 1 }
-
-Yes, Fixup is faithful.
-
-We haven't used anything specific about Decartes in these two conclusions, so we also have the analogous maps from C to C Minus Cross and from C Minus Cross back to C.
-
-
-
-
-
-
-Formally, given two categories C and D, an equivalence of categories consists of a functor F : C → D, a functor G : D → C, and two natural isomorphisms ε: FG→ID and η : IC→GF. Here FG: D→D and GF: C→C, denote the respective compositions of F and G, and IC: C→C and ID: D→D denote the identity functors on C and D, assigning each object and morphism to itself. If F and G are contravariant functors one speaks of a duality of categories instead.
-
-
-
-
-suppose we have a triple of arrows in 
 
 
 D. Something I came across some time ago that you might enjoy reading, if you have not seen this already: https://jneem.github.io/merging/.

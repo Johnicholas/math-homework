@@ -1,0 +1,294 @@
+Some Remarks on Writing Mathematical Proofs
+John M. Lee
+University of Washington Mathematics Department
+(www.math.washington.edu/˜lee)
+
+Copyright c 2010, 2012, 2019 John M. Lee. This note is distributed under the Creative Commons AttributionShareAlike License (creativecommons.org/licenses/by-sa/4.0/).
+
+Writing mathematical proofs is, in many ways, unlike any other kind of writing. Over the years, the
+mathematical community has agreed upon a number of more-or-less standard conventions for proof
+writing. This note describes my version of these conventions. Although not every mathematician
+would agree with everything I recommend here, on the whole these recommendations represent a
+consensus among the best mathematical writers. And though most of these guidelines are stated
+as hard and fast rules, every rule admits exceptions, and experienced mathematical writers might
+encounter situations that call for different choices. But novice proof writers will generally benefit
+from following these guidelines carefully.
+General Considerations About Mathematical Writing
+
+* Identify your audience. Before you begin writing about mathematics (or about anything, for that matter), know who your audience is and what they already know. For example, if you’re writing a proof as a homework assignment for a course, a good rule of thumb is
+to write as if you were trying to convince a fellow student in the same class of the truth of the theorem and the correctness of your argument—assume the reader knows the same background material as you do, but doesn’t know the proof of this particular theorem. If you are writing for publication, who is the intended audience?
+
+• Write in paragraph form. Remember always that a mathematical proof is designed to communicate to a human reader. You are communicating the truth of a mathematical statement, the correctness of your argument, and hopefully some insight about what the result means and why it’s true. There is an overwhelming consensus that an ordinary prose narrative is much better suited to this purpose than formal symbolic statements. Although you might initially construct your proof as a sequence of terse symbolic statements, when you write it up you should use complete sentences organized into paragraphs. As you read increasingly complicated proofs, you’ll find that paragraph-style proofs are much easier to read and comprehend than symbolic ones or the two-column proofs of high school geometry.
+
+• Use proper English. Mathematical writing should follow the same conventions of grammar, usage, punctuation, and spelling as any other writing. In addition to writing complete sentences organized into paragraphs, you must use correct punctuation (including a period at the end of every sentence); avoid sentence fragments, run-on sentences, and dangling modifiers; pay attention to subject-verb agreement and parallel structure; and use correct spelling and capitalization. Violating the conventions of standard English will, at the very least, trip up careful readers; and at worst it can make your meaning impossible to decipher. It’s an
+excellent idea to find a good book on grammar and usage and make friends with it.
+
+• Write clearly. Although you may feel that some of the mathematical writing you’ve read is
+deliberately opaque, the goal of good mathematical writing should be to produce prose that
+is clear enough to be easily comprehensible to the intended audience. Don’t be stingy with
+intuitive explanations of what’s going on and why. If the structure of your proof is anything
+other than a simple direct proof, state at the beginning what type of proof you’re using (“we
+will prove the contrapositive” or “we will prove this by induction,” for example).
+
+• Include motivation. If the mathematical ideas you are trying to convey are at all complicated, or follow an unexpected path, it’s wise to include some preliminary discussion that explains such things as why things are defined as they are, why one might expect the theorem to be true, how one might have been led to the proof, why the proof is structured the way it is, and how the result might be used subsequently. Mathematicians call this the motivation, and it’s an essential part of good mathematical exposition. Depending on your purpose, motivation might be inserted before the statement of a theorem, or at the beginning of a proof, or at transition points between parts of proofs, or all of the above.
+
+• Use the first person singular sparingly. Most authors avoid using the word “I” in mathematical writing. It is standard practice to use “we” whenever it can reasonably be interpreted as referring to “the writer and the reader.” Thus: “We will prove the theorem by
+induction on n,” and “because △ABC is equilateral, we see that AB = BC = CA.” But if you’re really referring only to yourself, it’s better to go ahead and use “I” so you don’t sound like the Queen of England: “I learned this technique from Richard Melrose.”
+
+• Avoid most abbreviations. There are many abbreviations that we use frequently in informal mathematical communication: “s.t.” (such that), “w.r.t.” (with respect to), and “w.l.o.g.” (without loss of generality) are some of the most common. These are indispensable for writing on the blackboard and taking notes, but should usually be avoided in written mathematical exposition, especially in formal contexts: they might save you a few seconds of writing time, but they make your text ugly and cryptic and are likely to cause readers to waste considerably more time deciphering what you wrote than the time you saved. The only exceptions are abbreviations that would be acceptable in any formal writing, such as “i.e.” (id est, which means “that is”) or “e.g.” (exempli gratia, which means “for example”); but if you use these, be sure you know the difference between them!
+
+One abbreviation that deserves special mention is “iff” (if and only if). Some mathematical writers use this routinely, even in quite formal writing. But my opinion is that, like the other abbreviations mentioned above, it actually acts as a hindrance to understanding in mathematical prose, because it’s likely to briefly trip up your readers as they formulate your sentences in their minds. Thus it should be reserved for the blackboard and your notes.
+
+• Proofread. Be sure to read what you’ve written from beginning to end after you think you’re all finished. You’ll be amazed how many silly mistakes you can catch that way.
+
+
+Special Considerations for Proof Writing
+
+• State what you’re proving. If you’re writing a proof, you should always precede it with
+a precise statment, in one or more English sentences, of the theorem you are proving. This
+applies even if you’re writing a proof as a homework assignment for a course. Depending on
+your instructor’s preference, you might do this by copying the problem statement verbatim,
+by summarizing the problem statement, or by paraphrasing the problem in the form of a
+theorem statement. My preference is the latter. For example, suppose you’re assigned the
+following homework problem:
+
+Prove that if x is a real number, then x
+2 ≥ 0.
+
+If you copy this verbatim into your homework paper, it’s likely to look as if you’re commanding
+2
+the reader to do something. Instead, your solution might be clearest if you start with a
+statement like this:
+
+Theorem: If x is a real number, then x
+2 ≥ 0.
+
+• Label your theorems. Each theorem you state should be clearly labeled with an identifying
+tag such as Theorem. With computer typesetting programs like TEX or Microsoft Word,
+the usual convention is to set the word “Theorem” in boldface, with the statement of the
+theorem itself italicized. In handwritten proofs, just underline the word “Theorem.”
+In some contexts, the word Theorem might be replaced by Proposition, Corollary, or Lemma.
+Logically, these all mean the same thing (a mathematical statement that can be proved from
+assumptions and previously proved results), but your choice of label can alert the reader
+about the role that the result plays in the current context. In modern usage, a theorem is
+an important result; a proposition is a result that is interesting in its own right, but not as
+important as a theorem; a lemma is a result that might not be interesting in itself, but is
+useful for proving another theorem; and a corollary is a result that follows easily from some
+theorem or proposition, usually the immediately preceding one.
+
+• Show where your proofs begin and end. Each proof should begin with the word Proof,
+and end with a distinctive symbol such as the square at the end of this paragraph. In older
+books, ends of proofs are frequently marked with the Latin abbreviation QED (quod erat
+demonstrandum, “that which was to be proved”), but this is rapidly going out of style.
+
+• Write with precision. In mathematical writing more than any other kind, precision is
+paramount. For each mathematical statement you write, ask yourself these two key questions:
+
+– What does it mean?
+Every mathematical statement must have a precise mathematical meaning. Every mathematical term you use must be well defined and used properly according to its definition
+(unless it’s an officially undefined term); and every symbolic name you mention must be
+either previously defined or quantified in some appropriate way. If you write f(a) > 0,
+do you mean that this is true for every a ∈ R, or that there exists some a ∈ R for which
+it’s true, or that it’s true for a particular a that you introduced earlier in the proof? Be
+sure the meaning of each term and symbol is made clear to the reader before the first
+time you use it, or at the very latest, within the same sentence in which it first appears.
+
+– Why is it true?
+Every mathematical statement in a proof must be justified in one or more of the following
+six ways: by an axiom; by a previously proved theorem; by a definition; by hypothesis
+(including as special cases an inductive hypothesis or an assumption for the sake of
+contradiction); by a previous step in the current proof; or by the rules of logic. Sometimes
+this is best accomplished by citing the reason directly: “We conclude that AB = AC
+by Theorem 3,” or “It follows from transitivity that 2xy ≤ x
+2 + y
+2
+.” At other times,
+the reason will be so obvious to the reader that it is actually more effective to leave it
+unstated. (See also Include the right amount of detail below.)
+
+• Include more than just the logic. It’s all too easy to write a sequence of statements that
+are entirely precise and mathematically correct, and yet that are nearly incomprehensible to
+a human being. If you have to write a long sequence of formulas, intersperse the formulas at
+carefully chosen places with words about why one step follows from another, or what you’re
+doing and why. As you already know from experience, written mathematics is never easy to
+absorb, so write with an eye to minimizing the amount of work your reader will have to do.
+
+• Include the right amount of detail. A clear understanding of your audience will help you
+to answer the perennial question, “How much detail do I need to include?” The first thing
+that must be said is this: If you think you probably know roughly how an argument would
+go but it seems too tedious to work through in detail, then you need to work through it! It’s
+only after you know exactly how the argument goes that you can be sure it holds water, and
+make a good judgment about whether the details need to be included in the proof or not. If
+you’re sure that it would be obvious to your readers how to fill in the omitted details, then
+the proof might be clearer if you leave them out. But if they weren’t obvious to you at first,
+then something probably needs to be said. It might not be necessary to write down every
+step, but you should include just enough to give the reader the Aha! experience that makes
+the rest obvious (and, if you’re writing a homework assignment that will be graded, makes it
+clear to the grader that you’ve figured out the details yourself!). Deciding how much detail
+to include is one of the most subtle and difficult aspects of writing, and one where experience
+and artistry are most evident. If you’re unsure about what your proofs should look like, study
+the ones in a math textbook that you find reasonably easy to read, and emulate those.
+
+• Distinguish formal vs. informal writing. Most written proofs include both formal and
+informal parts. The formal part lays out the precise mathematical definitions and describes
+the logical steps of the proof and their justifications. The informal part might include the
+motivations for the definitions, theorems, or proofs; the intuition behind the proof; or a brief
+sketch of how the proof will go. Be sure it is easy for the reader to distinguish which parts
+are formal and which are informal.
+
+• Proofread. It’s worth saying again: be sure to read your proofs from beginning to end after
+you’ve finished writing them. Your proofreading will probably be more effective if you wait
+a while before doing it. Better yet, get someone else to read over your work.
+
+Writing Mathematical Formulas
+
+The feature that most dramatically distinguishes mathematical writing from other kinds is the
+extensive use of symbols and formulas. Used appropriately, formulas are absolutely indispensable
+to clarity and ease of reading. The sentence “Let f be the function defined by f(x) = x^2 + x” is
+far clearer than “Let f be the function whose value at a particular number is equal to the square
+of the number added to the number itself.” On the other hand, formulas must be used judiciously,
+because their excessive use can lead to writing that is just as obscure as writing without formulas.
+Here are some guidelines for using mathematical symbols and formulas in your writing. In this
+note, the word “formula” refers to any expression made up of one or more mathematical symbols,
+where a “symbol” can be a variable name such as x, y, P, Q, α, β; a function name such as f,
+sin, log; or any of the special-purpose signs that we use to refer to mathematical operators and
+relations such as +, =, ∈. In computer typeset mathematics, letters used as mathematical symbols
+should be set in italics so they stand out from the surrounding text. Note that a mathematical
+symbol must appear the same every time it is used, because in some circumstances the same letter
+in different styles (such as italic, upright bold, and script) can be used to represent different things.
+
+• Single symbols and most short formulas should be included directly within your paragraphs,
+as in the sentence “If x is a real number, then x
+2 ≥ 0.” These are called in-line formulas.
+
+• Any formula that is large or especially important should be centered on a line by itself; this
+4
+is called a displayed formula. Here’s how a displayed formula looks:
+x =
+−b ±
+√
+b
+2 − 4ac
+2a
+.
+If you wish to give a number to a formula in order to refer to it later, the formula must be
+displayed. Your formula numbers can be placed either at the right margins or at the left
+margins, as long as you’re consistent.
+
+• Every mathematical symbol or formula, whether in line or displayed, should have a definite
+grammatical function as part of a sentence; a formula cannot stand on its own as an entire
+sentence. Formulas should almost always have one of the following two grammatical functions:
+(1) a formula representing a particular mathematical object can be used as a noun; and (2)
+a complete symbolic mathematical statement can be used as a clause. For example, consider
+the following sentence:
+If x > 2, we see that x
+2 + x must be greater than 6.
+Here “x > 2” is a mathematical statement functioning as a clause (whose verb is “>”), while
+“x
+2 + x” and “6” are mathematical expressions (representing real numbers) that function as
+nouns.
+One useful way to check that your sentences containing formulas are grammatically correct is
+to read each sentence aloud. When you do so, bear in mind that many symbols can be read in
+several different ways—for example, the symbol “=” can be read as “equal,” “equals,” “equal
+to,” “be equal to,” or “is equal to,” depending on context.
+
+• If a displayed formula ends a sentence, it must be followed by a period.
+
+• That last one is easy to forget, so let me say it again with emphasis: If a displayed formula
+ends a sentence, it must be followed by a period. Similarly, if it would have required any other
+punctuation such as a comma or semicolon had it been written in line, that punctuation
+must appear at the end of the displayed equation. The reason for this is exactly the same as
+the reason for using punctuation in any other writing: to guide the reader. For example, a
+sentence-ending period after a formula alerts the reader that a thought has been completed
+and it’s time to try to understand what’s been said so far, while a comma indicates that there
+is more to read before the statement can be fully absorbed.
+
+• It’s bad form to begin a sentence in a paragraph with a mathematical symbol, because
+that makes it hard for the reader to recognize that a new sentence has begun. (You can’t
+capitalize a symbol to indicate the beginning of a sentence!) It’s usually easy to avoid this by
+minor rewording—for example, if you find yourself wanting to write a sentence that begins
+“ℓ and m are parallel lines,” you could instead write “The lines ℓ and m are parallel.” Short
+mathematical statements in bulleted or numbered lists, however, can begin with symbols if
+they are clearer that way.
+
+• Avoid writing two in-line formulas separated only by a comma or other punctuation mark,
+because they will look like one long formula. For example, the phrase “if x 6= 0, x2 > 0” can
+be confusing; it would be easier to read if a word were interposed between the two formulas,
+as in “if x 6= 0, then x
+2 > 0.”
+
+• Symbols representing mathematical relations (like =, >, ∈, or ⊆) or operators (like +, −, or
+∩) should be used only to connect mathematical formulas, not to connect words with symbols
+or with each other. For example, do not write:
+
+If x is a real number that is > 2, then x
+2 + x must be > 6. (BAD)
+
+Either of the following is much better:
+
+If x is a real number such that x > 2, then we must have x
+2 + x > 6.
+If x is a real number greater than 2, then x
+2 + x must be greater than 6.
+
+• Symbols for logical terms, such as ∃ (there exists), ∀ (for all), ∧ (and), ∨ (or), ¬ (not), ⇒
+(implies), ⇔ (if and only if), ∋ (such that), ∴ (therefore), and ∵ (because) should not be
+used to replace the corresponding words in an English sentence. The only time these symbols
+have any place in formal mathematical writing is as part of complete symbolic logic formulas
+(although the last three are not typically used even in that context). In fact, unless the
+subject you are writing about is mathematical logic, it is usually clearer to write out the
+statements in English. (This applies only to logical symbols; as mentioned above, symbols
+for mathematical operators and relations are indispensable.)
+
+Exception: The symbols ⇒ and ⇔ are not uncommon in ordinary mathematical writing. But
+if you do use them, be sure to use them only to connect complete symbolic statements, or to
+connect letters or numbers representing statements, not to connect English statements. This
+sentence would not be appropriate:
+
+The fact that x is nonzero ⇒ x
+is positive. (BAD)
+
+The next two sentences would be fine, however:
+
+We will prove (a) ⇔ (b) by first showing (a) ⇒ (b) and then showing (b) ⇒ (a).
+Therefore, x 6= 0 ⇒ x
+2 > 0.
+
+• Built-up expressions such as summations, integrals, matrices, or fractions should be either
+displayed or written in such a way that they fit easily on a line without forcing extra spacing
+between lines. In particular, if a fractional expression is included in the text, it should usually
+be written with a slash, as in “x/(y^2+1)”. If a fraction is so large or complicated that it needs
+to be written using a horizontal bar, it should be displayed. The only common exception is
+small fractions with numbers or simple variables such as 1/2 or a/b, which can be included in
+text as long as they are written small enough to fit naturally on their lines.
+
+• A multiple equality like a = b = c = d actually means “a = b, and b = c, and c = d, and
+therefore a = d.” This multiple-equality syntax should only be used when the steps can be
+proved in the order shown. The same goes for other relations that obey transitivity, such as >,
+≥, <, or ≤. These relations can even be mixed, as long as they satisfy a transitivity relation;
+thus =, <, and ≤ can be mixed, as in a ≤ b = c < d (which means “a ≤ b, and b = c, and
+c < d, and therefore a < d”), but a ≤ b ≥ c is not acceptable. (Note that 6= is not transitive,
+so it should not be combined in this way.) When multiple relations appear in a displayed
+equation, the usual way of writing them is to line up the relational symbols vertically. Thus
+the sequence of relations 2xy ≤ 2xy + (x − y)
+2 = 2xy + (x
+2 − 2xy + y
+2
+) = x
+2 + y
+2
+
+could be
+written equivalently (and much more clearly) as follows:
+2xy ≤ 2xy + (x − y)
+2
+= 2xy + (x
+2 − 2xy + y
+2
+)
+= x
+2 + y
+2
+.
+That’s enough to think about for now. Mathematical writing can be enjoyable if you think about
+it as communicating your insights to other interested people, so enjoy!
