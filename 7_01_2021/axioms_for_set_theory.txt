@@ -36,13 +36,14 @@ Definition of Terminal: A set T is terminal if for every set X, there is a uniqu
 
 
 3. (Existence of the empty set)
-Definition of elem: Given a set X, we write x ∈ X to mean x: 1 −→ X, and call x an element of X.
-Definition of application: Given x ∈ X and a function f : X −→ Y , we write f x for the element x; f: 1 −→ Y of Y .
+Definition of elem: Given a set X, we write x in X to mean x: 1->X, and call x an element of X.
+Definition of application: Given x in X and a function f: X->Y , we write f x for the element x; f: 1->Y of Y .
 3. (Existence of the empty set) There exists a set with no elements.
 
 
 
-4. (Functions are extensional) Let X and Y be sets and f, g : X −→ Y functions. Suppose that f(x) = g(x) for all x ∈ X. Then f = g.
+4. (Functions are extensional) Let X and Y be sets and f, g: X −→ Y functions.
+Suppose that f x = g x for all x in X. Then f = g.
 
 
 
@@ -51,50 +52,46 @@ Definition of application: Given x ∈ X and a function f : X −→ Y , we writ
 Let X and Y be sets.
 Definition of Product: A product of X and Y is a set P together with functions X, p1:P->X, p2:P->Y with the following property:
 for all sets I and functions f1:I->X, f2:I->Y
-there is a unique function (f1, f2): I −→ P
+there is a unique function (f1, f2): I->P
 such that (f1, f2); p1 = f1 and (f1, f2); p2 = f2.
 5. Every pair of sets has a product.
 
 
 6. (Definition of function sets)
 Let X and Y be sets. A function set from X to Y is a set F together with a function
-ε: F × X -> Y, with the following property:
-for all sets I and functions q : I × X −→ Y ,
-there is a unique function q¯: I −→ F
-such that q (t, x) = ε (¯q t, x) for all t ∈ I, x ∈ X.
+eval: F * X -> Y, with the following property:
+for all sets I and functions q : I * X -> Y ,
+there is a unique function p: I -> F
+such that q (t, x) = eval (p t, x) for all t in I, x in X.
 6. (Definition of function sets) For all sets X and Y, there exists a function set from X to Y .
 
 7. (Definition of inverse image)
-Let f : X −→ Y be a function and y ∈ Y .
-An inverse image of y under f is a set A together with a function j : A −→ X,
+Let f : X -> Y be a function and y in Y .
+An inverse image of y under f is a set A together with a function j : A -> X,
 such that
-f(j(a)) = y for all a ∈ A and the following property holds:
-for all sets I and functions q : I −→ X such that
-f(q(t)) = y for all t ∈ I, there is a unique function q¯: I −→ A such that q = q¯; j.
-7. (Definition of inverse image) For every function f : X −→ Y and element y ∈ Y , there exists an inverse image of y under f.
+f (j a) = y for all a in A and the following property holds:
+for all sets I and functions q : I -> X such that
+f (q t) = y for all t in I, there is a unique function p: I -> A such that q = p; j.
+7. (Definition of inverse image) For every function f : X -> Y and element y in Y , there exists an inverse image of y under f.
 
 
+(Definition of injection): An injection is a function j : A -> X such that
+for a, a0 in A . j a = j a0 implies a = a0
 
-8. (The two-element set exists)
-
-(Definition of injection): An injection is a function j : A −→ X such that
-for a, a0 ∈ A . j a = j a0 implies a = a0
-
-(Definition of subset classifier) A subset classifier is a set 2 together with an element t ∈ 2, with the following property:
-for all sets A, X and injections j : A −→ X, there is a unique function χ: X −→ 2 such that j : A −→ X is an inverse image of t under χ.
+(Definition of subset classifier) A subset classifier is a set 2 together with an element t in 2, with the following property:
+for all sets A, X and injections j : A -> X, there is a unique function chi: X -> 2 such that j : A -> X is an inverse image of t under chi.
 
 8. (The two-element set exists) There exists a subset classifier.
 
 9. (The natural numbers exist)
-A natural number system is a set N together with an element 0 ∈ N and a function s: N −→ N, with the following property:
-whenever X is a set, a ∈ X, and r : X −→ X, there is a unique function x: N −→ X such that x(0) = a and x(s(n)) = r(x(n)) for all n ∈ N.
+A natural number system is a set N together with an element 0 in N and a function s: N -> N, with the following property:
+whenever X is a set, a in X, and r : X -> X, there is a unique function x: N -> X such that
+x 0 = a and x (s n) = r (x n) for all n in N.
 
-10. (Choice)
+(Definition of surjection) A surjection is a function s: X -> Y such that
+for all y in Y, there exists x in X with s x = y.
 
-(Definition of surjection) A surjection is a function s: X −→ Y such that
-for all y ∈ Y, there exists x ∈ X with s(x) = y.
-
-(Definition of right inverse) A right inverse of a function s: X −→ Y is a function i: Y −→ X such that
+(Definition of right inverse) A right inverse of a function s: X -> Y is a function i: Y -> X such that
 i; s = 1Y .
 
 10. (Choice) Every surjection has a right inverse.

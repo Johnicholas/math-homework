@@ -1,0 +1,111 @@
+Concrete examples:
+
+1. You can compute the Tutte polynomial of a graph.
+A graph is an example of a diagram. A Tutte polynomial is an example of an invariant.
+
+2. You can compute the HOMFLY polynomial of a knot (diagram).
+A knot diagram is an example of a diagram. A HOMFLY polynomial is an example of an invariant.
+
+3. You can compute the regular expression of a deterministic finite automata (diagram).
+A DFA diagram is an example of a diagram. The regular expression is an example of an invariant.
+
+4. You can compute the Hindley-Milner type of the parse tree of a lambda term.
+The parse tree of a lambda term is an example of a diagram. The Hindley-Milner type is an example of an invariant.
+
+5. You can compute the transfer function of a block diagram of a linear time-invariant system.
+
+
+These examples are too hard. We need easier examples. They're two-dimensional diagrams; are there one-dimensional things,
+which are easier?
+
+Imagine someone shuffles a deck of cards, cuts it, and hands you a thick stack of cards.
+You would like to be able to compute an invariant, such as the total of the numbers on the cards,
+or the total number of cards in the stack, or the polynomial which has the numbers printed on the red cards as roots.
+Moreover, you would like to outsource the computation of the invariant, and hand some of the cards to your siblings,
+and have them say back to you something small, which you could then combine.
+
+Here's an API that I've seen for this kind of thing:
+
+1. You can LIFT a particular card (observation) to a Computational Object.
+2. You can MERGE two Computational Objects to a Computational Object (and this MERGE had better be commutative and associative)
+3. You can PROJECT a Computational Object to a resulting summary (invariant).
+
+(Aside: an alternate API has a ZERO operation instead of a LIFT (singleton) operation.
+Mathematicians might like it, but it doesn't make a big difference.
+It turns out, for a lot of these kinds of things, you end up adding a special zero value,
+and your MERGE has some routine cases at the beginning like:
+MERGE(zero, zero) = zero
+MERGE(zero, x) = LIFT(x)
+MERGE(x, zero) = LIFT(x)
+MERGE(x, y) = REALLYMERGE(x, y)
+For example, to compute a min, you need to add a positive infinity ``zero'' to your type of values.
+To compute a max, you need to compute a negative infinity ``zero''.
+Average is easy at the ZERO side, but at the PROJECT side you now have to deal with total 0 divided by count 0,
+
+)
+
+For example, in order to compute the total of the numbers printed on cards,
+1. Computational Object can be an integer in Z. 
+2. LIFT takes particular cards to their one-card totals.
+3. MERGE takes pairs of integers to their sum.
+4. PROJECT is the identity. 
+
+In order to compute the total number of cards,
+1. Computational Object can be an integer in Z.
+2. LIFT takes cards to 1.
+3. MERGE takes pairs of integers to their sum.
+4. PROJECT is the identity.
+
+In order to compute the average of the numbers printed on cards,
+1. Computational Object can be a pair of integers called count and total.
+2. LIFT takes particular cards to pairs of count 1 and total their one-card total.
+3. MERGE takes pairs of integers to point-wise sums.
+4. PROJECT takes a pair of integers (count, total) to total / count in Q.
+
+Let's imagine that there's something like a progress bar sweeping over the diagram,
+a line sweep algorithm.
+At any given point in time, some of the diagram, the part behind the line sweep,
+has been ``squashed'' into its corresponding Computational Object.
+The new thing in two dimensions is that some edges (and maybe even regions)
+of the diagram are transverse to the sweeping line,
+and so they need to be picked out, referred to by name or addressed by the process of computation.
+
+Though on the one hand I'd like to imagine the line sweep progressing linearly,
+I don't want to constrain it to progress linearly - it could be a growing blob,
+or even a set of blobs that gradually grow and merge to form a giant blob.
+
+Maybe an API for this might look like this:
+1. LIFT takes particular nodes of the diagram to Computational Objects;
+the resulting object will have names for all the outgoing edges. 
+2. CLOSE_EDGE takes a Computational Object, and a couple edge names at the edge of that object, and produces a Computational Object. The idea is that the line sweep has noticed that two edges transverse to the line sweep,
+are actually the same edge.
+3. OPEN_EDGE takes a Computational Object, and introduces a couple new edge names at the edge of that object, resulting in a Computational Object. The idea is that the line sweep has noticed a (curved) edge.
+3. NODE takes a Computational Object, and a few edge names, and results in a Computational Object.
+The idea is that NODE ``moves the line sweep over a node'', generally eliminating some edge names as no longer accessible, and adding new edge names corresponding to any new outgoing edges.
+4. MERGE takes two Computational Objects, and connects them, resulting in a new Computational Object.
+The idea is that two blobs have met up (and the edge names of the resulting blob will be the edge names of the two unions).
+This MERGE probably needs to be commutative and associative.
+5. PROJECT takes a Computational Object to the invariant.
+
+The idea is that you divide up the task of computing the invariant to
+to some siblings, and they work spatially across the diagram,
+growing their respective ``I am done with this part of the diagram'' blobs,
+and keeping track of their computational objects and edge names.
+The siblings eventually merge and the blob eventually covers the whole diagram.
+Then you PROJECT.
+
+It is certainly possible to compute these invariants via this API, instead of however they're described as being computed.
+Compare with the deck-of-cards analogy: imagine the very biggest Computational Object,
+that keeps as much information available, subject only to the commutative and associative laws.
+This would keep the actual set of cards.
+Then at the PROJECT step, you have the whole set of cards, and you can run whatever procedure you want.
+
+Similarly, if you take the Computational Object to be (partial) diagrams themseves,
+keeping as much information available as possible,
+until at the PROJECT step, you have the diagram itself inside the Computational Object,
+and you can run whatever procedure you want.
+
+The hope, however, is that there is a way to compute these invariants moving some of the computation out
+from the PROJECT step into the earlier steps.
+
+

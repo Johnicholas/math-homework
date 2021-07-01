@@ -2,90 +2,6 @@
 
 2. On the other hand, one can imagine giving a functor F: Groups —> Set that assigns a group G to the set Hom(G,Z/2Z) of all group homomorphisms from G to the cyclic group Z/2Z on two elements. This in some sense asks you to consider the set of all ways you can assign even/odd to all groups in some compatible way. In particular, this allows you to perhaps distinguish between groups in an efficient way: Z/3Z is not the same as Z/2Z, for instance!
 
-Suppose we had a variety of algebras V (such as Group or Quandle) that we were investigating,
-and we wanted a math tool (an invariant) that would let you calculate, at least in some circumstances,
-that specific pairs of algebras (such as the Klein 4 group and the cyclic group of order 4) are definitely
-nonisomorphic.
-
-The specific pairs of algebras presumably have definitions. Let's imagine they even have presentations,
-names for at least some of their elements (generators, and elements are arrows from the terminal object),
-and some laws (relations would be laws that apply ``locally'' to a particular algebra,
-and equality is a guarantee that it's not possible to separate two things)
-and and there are some variety-wide laws that apply to all algebras.
-
-In order for the invariant to be an invariant, we need it to give the same answer for isomorphic objects.
-A functor is a ``nice map'' and so would work great.
-What is a way that we could end up with a map from V to Z/2Z?
-
-Bxyz = x (y z) is a combinator in combinatory logic,
-with type (B->C)->(A->B)->A->C.
-We might be able to produce a map from V to Z/2Z via this B combinator.
-If we did, then the A in the type would be V and the C in the type would be Z/2Z.
-Then we would need:
-1. to know what type B is
-2. some map from B to Z/2Z
-3. some map from V to B
-The ideas that there should be some map from B to Z/2Z and some map from V to B might
-help us triangulate what B might be:
-1. What kind of thing plausibly has maps from variety V and to Z/2Z?
-
-One of the ways this might happen is if B were Nat,
-then counting something about V might be
-a reasonable map from V to Nat.
-Then from Nat to Z/2Z might be evens and odds.
-Then we're saying we might get an Z/2Z invariant if we had a (probably better?) invariant,
-and then we computed it mod 2 - true but not complicated.
-
-Similarly, if B were some kind of set of polynomials,
-then we might be able to evaluate it over Z/2Z.
-Again, we're saying we might get a Z/2Z invariant if we had a better invariant,
-and then we computed it mod 2.
-
-Cxyz = x z y is another combinator in combinatory logic,
-with type (A->B->C)->B->A->C.
-Again, we might be able to produce a map from V to Z/2Z via this C combinator.
-If we did, we would need:
-1. to know what type B is
-2. some map from V to maps B->Z/2Z
-3. an element of B
-Again, the ideas that there should be some map from B to Z/2Z and some map from V to maps B->Z/2Z
-might help us triangulate what B might be:
-1. Can we imagine what type B might be, that there would be a reasonably natural map from V to maps B->Z/2Z?
-2. Do we have any particular, salient or natural elements of that B?
-
-A map to Z/2Z might be viewed as a subset.
-If B were the plane R^2, then a map from V to R^2 might be some canonical way of depicting V.
-A particular element of the plane might be the origin, or the point (1, 0).
-Then we're saying that we might get a Z/2Z invariant by asking whether
-"the depiction" of one of these V things contains the special point.
-
-
-Sxyz = (x z) (y z) is another combinator in combinatory logic,
-with type (A->B->C)->(A->B)->A->C.
-If we produced this invariant via S, then the A in the type would be V and the C in the type would be Z/2Z.
-Then we would need:
-1. to know what type B is
-2. some map from V to maps from B to Z/2Z
-3. some map from V to B
-
-Here we are getting maybe a little bit clever. 
-The Mandelbrot set is maybe a colorful visual example of this kind of thing.
-There's a thing, the Julia set of a dynamical system, which is a subset of the plane.
-The dynamical system also has parameters - which can be viewed as a point in the plane.
-The Mandelbrot set comes from taking all the dynamical systems,
-and ``cooking'' them two ways, to their Julia sets, and to their points,
-and asking whether the point is within the corresponding Julia set.
-
-Similarly, the Gray-Scott reaction diffusion system is parameterized by a pair of points,
-and running it (from a given starting point for a given amount of time) yields a picture,
-which can be sharpened to be a subset of the plane.
-Since everything in reaction-diffusion land is continuous,
-if you plot the "diagonal" like this, you get a figure which
-(like Mandelbrot and Julia) exhibits all the possible behaviors of particular parameters.
-https://www.karlsims.com/rd-exhibit.html
-https://www.karlsims.com/rd.html
-
-
 3. In particular, it is the latter process that allows you to distinguish between complicated things using simpler invariants. But even that may come in flavours of varying complexity. That is, consider the process of assigning and extracting invariants to, say, topological spaces. This is often a rule that allows you to assign to any topological space T some other object inv(T), where inv(T) is hopefully something easier or more concrete. The only requirement for something to be an invariant is that if S and T are two topological spaces which are homeomorphic—or perhaps some other notion of equivalence…!—then you better have inv(S) = inv(T).
 
 For instance, your inv(T) might be the topological Euler characteristic of T, or else it might be something more sophisticated, like the fundamental group of T. In the first case, you have a rule which might be thought of as a function 
@@ -109,19 +25,70 @@ A. Think about some examples of invariants you can assign to things, say on spac
 	- the set of connected components of a topological space,
 	- ...
 
+A matrix can correspond to a morphism of vector spaces.
+There's a property of determinants, that they commute with matrix product. det(AB)=det(A)det(B) 
+Is there a category where composition of arrows corresponds to multiplication, so that determinant forms a functor?
+
+A little googling leads me to Fernando Muro,
+https://personal.us.es/fmuro/files/slides/pontevedra.pdf
+who gives Deligne '87 
+(https://publications.ias.edu/sites/default/files/Number58.pdf)
+as the reference associated with this definition:
+
+Let E be an abelian or exact category and P a Picard groupoid.
+A determinant is a functor det: E^iso −→ P together with an additivity isomorphism
+
+det(∆): det(B/A) ⊗ det(A) −→ det(B)
+
+for each short exact sequence ∆ = A->B->B/A in E satisfying naturality, associativity and commutativity.
+
+Okay.
+1. What's an abelian category?
+2. What's an exact category?
+3. What's a Picard groupoid?
+
+I think I have a little idea of what "short exact sequence" means.
+One of the obstacles that seems obvious in category theory is:
+why is everything unary?
+Surely you have some standard way to do binary or n-ary operations around here?
+
+If you take a small square (the set [0, 1] x [0, 1] in the real plane, maybe),
+and first, squash it linearly flat to a line segment (the set [0, 1] x {0}),
+and, second, squash that line linearly flat to the origin (the set {(0, 0)}),
+then you've squashed to zero in the second step exactly the image of the first move,
+and this story seems to be ``about'' products, or quotients, or coordinates or something,
+while still only mentioning (unary) transformations. 
+
+If you're categorifying the idea that ``the determinant of a product of matrices is the product of the determinants of the matrices`` then I think it seems moderately plausible to say
+det(A) * det(B) = det(C) for all short exact sequences C -> B -> A
+
+The other standard example of a short exact sequence is
+Z -> Z -> Z/2Z
+The way I understand this, you're saying that you can explain numbers as a two dimensional grid,
+which is Z/2Z on one axis (the last bit in the binary representation), and Z on the other axis.
+
 B. Towards making sense of a sheaf. Let X be your favourite topological space. Let C be the category whose objects are the open subsets of X, and whose arrows are inclusion relations. That is, given two open subsets U and V of X, viewed as objects of C, 
 	
 Hom_C(U,V) is empty if U is not contained in V, and is a single arrow if U is contained in V.
 
 Think about what the data of a presheaf amounts to here. See if you can carefully formulate what it ought to mean to be able to glue values of a presheaf. (Think of covering an open set with smaller opens, specifying something on each of the smaller opens so that things are equal on overlaps. Think also of the triangle Escher-esque example we talked about!)
 
+There are ideas of limits and colimits, pullbacks and pushouts in category theory,
+and they correspond to kinds of intersections and unions that you might think about if
+you were thinking in Set.
+
 
 
 
 D. Something I came across some time ago that you might enjoy reading, if you have not seen this already: https://jneem.github.io/merging/.
 
-
-
+I think highly of Benjamin Pierce, who I think is comfortable or familiar with category theory,
+among other things. He has a research project on file synchronization 
+https://www.cis.upenn.edu/~bcpierce/papers/index.shtml#Synchronization
+and the most recent paper in this project is pretty awesome:
+https://dl.acm.org/doi/10.1145/3341699
+There's a video of a presentation of it here:
+https://www.youtube.com/watch?v=VtpFyPdcDsQ
 
 As usual, let me know if you have questions, or things you want me to look at before we meet again next week!
 
