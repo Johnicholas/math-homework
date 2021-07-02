@@ -51,12 +51,12 @@ Consider the category of sets. Let X and Y be two sets. The Cartesian product
 \[
 X \times Y = \{(x,y) | x \in X, y \in Y\}
 \]
-is another set. Moreover this has the following property: given any other set \(Z\) and two functions \(f: Z \to X\) and \(g: Z \to Y\), there is a unique function \(h: Z \to X \times Y\) such that \(h; pr_X = f\) and \(h ; pr_Y = g\). Here, \(pr_X: X \times Y \to X\) and \(pr_Y: X \times Y \to Y\) are the projection maps. (One might say that some diagram commutes…) Compare this with the notion of a categorical product. 
+is another set. Moreover this has the following property: given any other set \(Z\) and two functions \(f: Z \to X\) and \(g: Z \to Y\), there is a unique function \(h: Z \to X \times Y\) such that \(h; pr X = f\) and \(h ; pr Y = g\). Here, \(pr X: X \times Y \to X\) and \(pr Y: X \times Y \to Y\) are the projection maps. (One might say that some diagram commutes…) Compare this with the notion of a categorical product. 
 
 There are two things to check: that there is a map, and that it is unique. It is somehow so tautological that the proof might be hard.
 \end{quote}
 
-(Remember we are using the semicolon `followed by' operator \(f; g = g \circ f\) for reversed function composition.)
+(Regarding notation, remember we are using the semicolon `followed by' operator \(f; g = g \circ f\) for reversed function composition, and juxtaposition for function application; \(f x\) means \(f\) applied to \(x\).)
 
 \subsection{products are products}
 
@@ -65,7 +65,7 @@ I don't remember whether it was my older cousin who told it to me, but it might 
 It was a bit cruel (kids are often a bit cruel to each other), or at least, it felt a bit cruel to me.
 When my cousin asked the question,
 they subtly implied that the answer was either one or the other (as it turns out, a false dichotomy),
-and that the question was a matter of taste. It is not a matter of taste. In contrast, ``Who is your favorite superhero?'' is a question that \emph{is} a matter of taste).
+and that the question was a matter of taste. It is not a matter of taste. In contrast, ``Who is your favorite superhero?'' is a question that \emph{is} a matter of taste.
 Then whichever side I picked, my cousin would talk about the opposite side's guarantee,
 building up their specified superpower by using emphasis and superlatives,
 saying things like ``but this force is \emph{absolutely unstoppable}'',
@@ -96,10 +96,11 @@ What happens when they intersect?
 
 Here again the resolution is different, the four products \(e\{1,2\} * e\{1,2\}\) can all be equal to \(e_1\) and also all be equal to \(e_2\), if \(e_1\) is equal to \(e_2\).
 \[
-e_1 = e_{\{1,2\}} * e_{\{1,2\}} = e_2
+e_1 = \{e_1, e_2\} * \{e_1,e_2\} = e_2
 \]
 
-Note that we are using braces and commas here to express a set of alternatives\footnote{https://www.linuxjournal.com/content/bash-brace-expansion}, for example \(\{a,b\} hello \{2,3\}\) expands to the four strings \(a hello 2, a hello 3, b hello 2, b hello 3\).
+Note that we are using braces and commas here to talk about a bunch of alternatives\footnote{https://www.linuxjournal.com/content/bash-brace-expansion}, for example `\{a,b\} hello \{2,3\}' expands to
+the four strings `a hello 2', `a hello 3', `b hello 2', `b hello 3'. In this case, all four of the expansions of \(\{e_1, e_2\} * \{e_1,e_2\}\) are equal, but sometimes you, the reader, may need to use some interpretation as to which expansions are intended.
 
 In category theory, an initial object, 0,  satisfies the law that for all objects \(x\) there exists a unique map \(0 \to x\). What if there were two initial objects, \(0_1\) and \(0_2\)?
 Then we could draw a grid of all the \(hom(x, y)\), and look at the rows and columns involving \(0_1\) and \(0_2]\).
@@ -107,14 +108,14 @@ The whole row of \(0_1\) is filled with singleton \(hom(0_1, y)\) sets,
 and the whole row of \(0_2\) is filled with singleton \(hom(0_2, y)\) sets.
 Looking down the columns, we don't know much - except of course where they intersect the rows.
 
-For all four \(0_{\{1,2\}} \to 0_{\{1,2\}}\) there is a unique map,
+For all four \(\{0_1,0_2\} \to \{0_1,0_2\}\) there is a unique map of that type,
 and we know some \(0_1\to0_1\) and \(0_2\to0_2\) maps, the identity maps, already.
-So \(0_1\to 0_2\) composed with \(0_2 \to 0_1\) must yield the identity map \(id 0_1 : 0_1 \to 0_1\),
-and \(0_2 \to 0_1\) composed with \(0_1 \to 0_2\) must yield the identity map \(id 0_2 : 0_2 \to 0_2\).
+So \(0_1\to 0_2\) composed with \(0_2 \to 0_1\) must yield the identity map \(\operatorname{id} 0_1 : 0_1 \to 0_1\),
+and \(0_2 \to 0_1\) composed with \(0_1 \to 0_2\) must yield the identity map \(\operatorname{id} 0_2 : 0_2 \to 0_2\).
 That is, we use the two object's guarantees (their posited superpowers) to obtain an isomorphism between them.
 
 The resolution of the argument regarding cartesian product and categorical product is close to the group-identities-must-be-equal and the initial-objects-must-be-equal
-argument - we end up with the cartesian product and categorical product being isomorphic.
+argument: we end up with the cartesian product and categorical product being isomorphic.
 
 During the course of the argument, we need to hold the cartesian product and categorical product as
 if they are distinct. But the similarity of the concepts means that its easy to be confused,
@@ -128,7 +129,7 @@ Given \(X, Y\) sets,
 \)
 \end{definition}
 
-\begin{theorem}[the universal property of the cartesian product, stated without proof]
+\begin{theorem}[the universal property of the cartesian product]
 Given any other set Z and two functions \(f: Z \to X\) and \(g: Z \to Y\),
 there is a unique function \(h: Z \to \operatorname{Decartes} X Y\)
 such that \(h; \operatorname{pr} X = f\) and \(h; \operatorname{pr} Y = g\).
@@ -153,61 +154,58 @@ and
 The Categorical Product is isomorphic to the Cartesian Product in Set.
 \end{theorem}
 
-{\huge beware below is not really latexed}
 
 \begin{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% BELOW IS NOT LATEX
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We have \(X, Y\) sets. We want to show that \(\operatorname{Decartes} X Y\) is isomorphic to \(\operatorname{Cross} X Y\).
 
-
-We have X, Y sets. We want to show that Decartes X Y is isomorphic to Cross X Y.
-We take 1. Decartes X Y,
-2. the cartesian projection decartesP 1: Decartes X Y -> X and
-3. the cartesian projection decartesP 2: Decartes X Y -> Y
-and use them with Cross X Y's guarantee to get
-4. a unique arrow dc: Decartes X Y -> Cross X Y
+We take
+\(\operatorname{Decartes} X Y\),
+the cartesian projection \(\operatorname{decartesP} 1: \operatorname{Decartes} X Y \to X\) and
+the cartesian projection \(\operatorname{decartesP} 2: \operatorname{Decartes} X Y \to Y\)
+and use them with \(\operatorname{Cross} X Y\)'s guarantee to get
+a unique arrow \(dc: \operatorname{Decartes} X Y \to \operatorname{Cross} X Y\)
 such that
-5. dc; crossP 1 = decartesP 1
-and
-6. dc; crossP 2 = decartesP 2
+\[
+dc; \operatorname{crossP} \{1,2\} = \operatorname{decartesP} \{1,2\}
+\]
 
-We take 7. Cross X Y,
-8. the cross projection crossP 1: Cross X Y -> X and
-9. the cross projection crossP 2: Cross X Y -> Y
-and use them with Decartes X Y's guarantee to get
-10. a unique arrow cd: Cross X Y -> Decartes X Y
+\begin{quote}
+Note that here it is not that all four brace expansions are equal to one another, it's that corresponding expansions on one side are equal to parallel expansions on the other side. This is ambiguous notation, but sometimes ambiguous terse notation is better than precise verbose notation.
+\end{quote}
+
+We take 
+\(\operatorname{Cross} X Y\),
+the cross projection \(\operatorname{crossP} 1: \operatorname{Cross} X Y \to X\) and
+the cross projection \(\operatorname{crossP} 2: \operatorname{Cross} X Y \to Y\)
+and use them with \(\operatorname{Decartes} X Y\)'s guarantee to get
+a unique arrow \(cd: \operatorname{Cross} X Y \to \operatorname{Decartes} X Y\)
 such that
-11. cd; decartesP 1 = crossP 1
-and
-12. cd; decartesP 2 = crossP 2
+\[
+cd; \operatorname{decartesP} \{1,2\} = \operatorname{crossP} \{1,2\}
+\]
 
-We take 13. Decartes X Y, decartesP 1 and decartesP 2,
-and use them with Decartes X Y's guarantee to get
-14. a unique arrow dd: Decartes X Y -> Decartes X Y
+We take \(\operatorname{Decartes} X Y\), \(\operatorname{decartesP} 1\) and \(\operatorname{decartesP} 2\),
+and use them with \(\operatorname{Decartes} X Y\)'s guarantee to get
+a unique arrow \(dd: \operatorname{Decartes} X Y \to \operatorname{Decartes} X Y\)
 such that
-15. dd; decartesP 1 = decartesP 1
-16. dd; decartesP 2 = decartesP 2
+\[
+dd; \operatorname{decartesP} \{1,2\} = \operatorname{decartesP} \{1,2\}
+\]
 
-We know another arrow, id (Decartes X Y), which has those properties (15 and 16)
-but dd was guaranteed to be unique (14) and so dd equals id.
+We know another arrow, \(\operatorname{id} (\operatorname{Decartes} X Y)\), which has those properties but \(dd\) was guaranteed to be unique and so \(dd = \operatorname{id}\).
 
-Consider dc; cd.
+Consider \(dc; cd\).
+\begin{align*}
+dc; cd; \operatorname{decartesP} \{1,2\} & = dc; \operatorname{crossP} \{1,2\} \\
+& = \operatorname{decartesP} \{1,2\} \\
+\end{align*}
 
-17.
+We know another arrow, \(dd = \operatorname{id}\) which has those properties, 
+but it was guaranteed to be unique
+and so \(dc; cd = \operatorname{id}\).
 
-dc; cd; decartesP x
-= (by cd's guarantee. 11 or 12)
-dc; crossP x
-= (by dc's guarantee, 5 or 6)
-decartesP x
-
-We know another arrow, dd = id which has those properties (17), 
-but it was guaranteed to be unique (4)
-and so dc; cd = dd = id.
-
-By symmetrical argument, cd; dc = id. Therefore Decartes X Y is isomorphic to Cross X Y.
+By a symmetrical argument, \(cd; dc = \operatorname{id}\). Therefore \(\operatorname{Decartes} X Y\) is isomorphic to \(\operatorname{Cross} X Y\).
 \end{proof}
 
 \subsection{substituting isomorphic objects leads to equivalent categories}
@@ -218,66 +216,74 @@ an argument that we are licensed by an isomorphism to do `surgery' on the set of
 collapsing pairs of isomorphic objects into one another.
 \marginpar{maybe related to skeletal categories}
 
-Given a category X, and a pair of purportedly distinct objects in it named Decartes and Cross,
-and arrows dc: Decartes -> Cross and cd: Cross -> Decartes, 
-such that dc; cd = id and cd; dc = id, let's try to make two new categories:
-1. X Minus Decartes, which has almost all the objects and arrows in it that X had,
-but doesn't have Decartes or any arrows that start or end at Decartes.
-2. X Minus Cross, which has almost all the objects and arrows in it that X had,
-but doesn't have Cross or any arrows that start or end at Cross.
+Given a category \(X\), and a pair of purportedly distinct objects in it named \(Decartes\) and \(Cross\),
+and arrows \(dc: Decartes \to Cross\) and \(cd: Cross \to Decartes\), 
+such that \(dc; cd = \operatorname{id}\) and \(cd; dc = \operatorname{id}\), let's try to make two new categories:
+%1.
+\(X \setminus Decartes\), which has almost all the objects and arrows in it that \(X\) had,
+but doesn't have \(Decartes\) or any arrows that start or end at \(Decartes\).
+2. \(X \setminus Cross\), which has almost all the objects and arrows in it that \(X\) had,
+but doesn't have \(Cross\) or any arrows that start or end at \(Cross\).
 
-Can we define a functor from X to X Minus Decartes?
+Can we define a functor from \(X\) to \(X \setminus Decartes\)?
 Yes, everything stays where it is, except for the things that got dropped need to be fixed up.
-Decartes goes to Cross, and arrows that started or ended at Decartes get pre or post composed with
-the distinguished arrows dc and cd.
-Let's call this the fixup map from X to X Minus Decartes.
+\(Decartes\) goes to \(Cross\), and arrows that started or ended at \(Decartes\) get pre- or post-composed with
+the distinguished arrows \(dc\) and \(cd\).
+Let's call this the \(\operatorname{fixup}\) map from \(X\) to \(X \setminus Decartes\).
 
-Is fixup a functor? Yes.
+Is \(\operatorname{fixup}\) a functor? Yes.
 
 \begin{proof}
-Suppose we had \(a1; a2 = a3\) in X.
+Suppose we had \(a_1; a_2 = a_3\) in \(X\).
 
-Consider fixup a1; fixup a2.
-There are a few cases according to whether a1 or a2 or both had source or target or both equal to Decartes,
+Consider \(\operatorname{fixup} a_1; \operatorname{fixup} a_2\).
+There are a few cases according to whether \(a_1\) or \(a_2\) or both had source or target or both equal to \(Decartes\),
 but they're all very similar.
 
-We are using brace expansion\footnote{https://www.linuxjournal.com/content/bash-brace-expansion} again.
+Note we are using brace expansion\footnote{https://www.linuxjournal.com/content/bash-brace-expansion} again.
 
 \begin{align*}
-\operatorname{fixup} a1; \operatorname{fixup} a2 & = \{ cd, id \}; a1; \{ cd;dc, id \}; a2; \{ dc, id \} \\     %= (by definition of \operatorname{fixup})
-%= (since cd; dc = id)
-& = \{ cd, id \}; a1; a2; \{ dc, id \} \\                              
-%= (since a1; a2 = a3)
-& = \{ cd, id \}; a3; \{ dc, id \} \\                         
-%= (by definition of \operatorname{fixup}, reversed)
-& = \operatorname{fixup} a3                                                              
+\operatorname{fixup} a_1; \operatorname{fixup} a_2 & = \{ cd, id \}; a_1; \{ cd;dc, id \}; a_2; \{ dc, id \} && \text{(by definition of \(\operatorname{fixup}\))} \\
+& = \{ cd, id \}; a_1; a_2; \{ dc, id \} && \text{(since \(cd; dc = id\))} \\
+& = \{ cd, id \}; a_3; \{ dc, id \} && \text{(since \(a_1; a_2 = a_3\))} \\                         
+& = \operatorname{fixup} a3 && \text{(by definition of \(\operatorname{fixup}\), reversed)}
 \end{align*}
+%\begin{align*}
+%  4xyzw 
+%  &= 2\cdot2tu 
+%  \\ &\le 2\cdot(t^2+u^2)                    \tag{a remark in parentheses}
+%  \\ &= 2\cdot((xy)^2+(zw)^2)
+%  \\ &= 2\cdot(x^2y^2+z^2w^2)                \tag*{a remark without parentheses}
+%  \\ &= 2x^2y^2+2z^2w^2
+%  \\ &\le ((x^2)^2+(y^2)^2)+((z^2)^2)+(w^2)^2)
+%  \\ &= x^4+y^4+z^4+w^4                      \qedhere
+%\end{align*}
 
-We have shown that a1; a2 = a3 implies fixup a1; fixup a2 = fixup a3. So fixup is a functor.
+We have shown that \(a_1; a_2 = a_3\) implies \(\operatorname{fixup} a_1; \operatorname{fixup} a_2 = \operatorname{fixup} a_3\). So \(\operatorname{fixup}\) is a functor.
 \end{proof}
 
-The inclusion from X Minus Decartes back to X is also a functor, which we might call iota.
+The inclusion from \(X \setminus Decartes\) back to \(X\) is also a functor, which we might call \(\iota\).
 
 \begin{proof}
-If a1; a2 = a3 in X Minus Decartes, then iota a1; iota a2 = iota a3 in X,
+If \(a_1; a_2 = a_3\) in \(X \setminus Decartes\), then \(\iota a_1; \iota a_2 = \iota a_3\) in \(X\),
 because we didn't add or change any arrow compositions,
-we only dropped some to create X Minus Decartes.
+we only dropped some to create \(X \setminus Decartes\).
 \end{proof}
 
-Is there a natural transformation from fixup; iota to id?
+Is there a natural transformation from \(\operatorname{fixup}; \iota\) to \(\operatorname{id}\)?
 
-What does it mean to say there is a natural transformation from fixup; iota to id?
-There exists an n: objects of X to arrows of X
-such that if you take a generic arrow a of X
+What does it mean to say there is a natural transformation from \(\operatorname{fixup}; \iota\) to \(\operatorname{id}\)?
+There exists an \(n\) from objects of \(X\) to arrows of \(X\)
+such that if you take a generic arrow \(a\) of \(X\)
 then this square commutes:
 \[
 (\operatorname{fixup}; \iota) a; n (\operatorname{target} a) = n (\operatorname{source} a); (\operatorname{fixup}; \iota) a
 \]
 
-Fixup followed by iota slides arrows that might start or finish at Decartes to arrows that instead start or finish at Cross.
-So in order for the types to match up, \(n\) should take objects to endo-arrows, except Decartes, which should go to an endo-arrow on Cross.
+Fixup followed by \(\iota\) slides arrows that might start or finish at \(Decartes\) to arrows that instead start or finish at \(Cross\).
+So in order for the types to match up, \(n\) should take objects to endo-arrows, except \(Decartes\), which should go to an endo-arrow on \(Cross\).
 Let's try defining \(n\) to take everything to its own identity arrow,
-except Decartes, which will go to Cross's identity arrow. 
+except \(Decartes\), which will go to \(Cross\)'s identity arrow. 
 
 This \(n\) turns out to be a natural transformation from \(\operatorname{fixup}; \iota\) to \(id\).
 
@@ -286,28 +292,28 @@ This \(n\) turns out to be a natural transformation from \(\operatorname{fixup};
 (\operatorname{fixup}; \iota) a; n (\operatorname{target} a) & = \iota (\operatorname{fixup} a); n (\operatorname{target} a) \\
 & = \iota (\{ 1, cd \}; a; \{ dc, 1 \}); n (\operatorname{target} a) \\      
 & = \{ 1, cd \}; a; \{ dc, 1 \}; n (\operatorname{target} a) \\
-& = \{ 1, cd \}; a; \{ dc, 1 \}; \{ id \operatorname{Cross}, 1 \} \\
+& = \{ 1, cd \}; a; \{ dc, 1 \}; \{ \operatorname{id} Cross, 1 \} \\
 & = \{ 1, cd \}; a; \{ dc, 1 \} \\
-& = \{ 1, id \operatorname{Cross} \}; \{ 1, cd \}; a; \{ dc, 1 \} \\
-& = \{ 1, id \operatorname{Cross} \}; \iota (\{ 1, cd \}; a; \{ dc, 1 \}) \\
-& = \{ 1, id \operatorname{Cross} \}; \iota (\operatorname{fixup} a) \\
-& = \{ 1, id \operatorname{Cross} \}; (\operatorname{fixup}; \iota) a \\   
-& = n (\operatorname{source} a); (\operatorname{fixup}; \iota) a
+& = \{ 1, \operatorname{id} Cross \}; \{ 1, cd \}; a; \{ dc, 1 \} \\
+& = \{ 1, \operatorname{id} Cross \}; \iota (\{ 1, cd \}; a; \{ dc, 1 \}) \\
+& = \{ 1, \operatorname{id} Cross \}; \iota (\operatorname{fixup} a) \\
+& = \{ 1, \operatorname{id} Cross \}; (\operatorname{fixup}; \iota) a \\   
+& = n (\operatorname{source} a); (\operatorname{fixup}; \iota) a   \qedhere
 \end{align*}
 \end{proof}
 
-Is there a natural transformation from iota; fixup to 1? Yes.
+Is there a natural transformation from \(\iota; \operatorname{fixup}\) to \(\operatorname{id}\)? Yes.
 
 \begin{proof}
-iota; fixup is an inclusion followed by a function which is the identity on the image of the inclusion,
+\(\iota; \operatorname{fixup}\) is an inclusion followed by a function which is the identity on the image of the inclusion,
 so it's equal to the identity already.
 \end{proof}
 
-Moreover, these natural transformations are actually natural isomorphisms; they always take objects to identity arrows, and identity arrows are always isomorphisms. So X is actually equivalent to X Minus Decartes.
+Moreover, these natural transformations are actually natural isomorphisms; they always take objects to identity arrows, and identity arrows are always isomorphisms. So \(X\) is actually equivalent to \(X \setminus Decartes\).
 
-We haven't actually used anything specific about Decartes in these two conclusions, so we also have the analogous maps from C to C Minus Cross and from C Minus Cross back to C.
+We haven't actually used anything specific about \(Decartes\) in these two conclusions, so we also have the analogous maps from \(X\) to \(X \setminus Cross\) and from \(X \setminus Cross\) back to \(X\).
 
-So X Minus Decartes is equivalent as a category to X Minus Cross; it's not possible to `see' the substitution from a distance via any arrows composing differently.
+So \(X \setminus Decartes\) is equivalent as a category to \(X \setminus Cross\); it's not possible to `see' the substitution from a distance via any arrows composing differently.
 
 
 \end{document}
