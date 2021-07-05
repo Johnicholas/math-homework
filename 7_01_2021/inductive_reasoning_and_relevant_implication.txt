@@ -13,7 +13,7 @@ From observed A and given B -> A to conclude perhaps B (because that would expla
 A paradigmatic example of inductive reasoning in math is probabilistic primality testing using Fermat's Little Theorem.
 
 If we choose random number a, and we compute a^(n-1) and we observe that it is 1 mod n,
-we know that if a were prime, Fermat's Little Theorem would ``force'' this to be the case,
+we know that if a were prime, Fermat's Little Theorem would `force' this to be the case,
 so we might plausibly speculate that a is prime.
 Of course, there are numbers (Carmichael numbers, Fermat pseudoprimes) that make the inductive
 inference deductively false; it's an uncertain inference. But the densities of these families of numbers lead to the inductive reasoning actually being practically valuable.
@@ -37,7 +37,7 @@ In particular, they might object to what are called `fallacies of relevance', wh
 the antecedent and the consequent seem to be disconnected from one another, 
 talking about completely different things.
 
-Examples of fallacies of relevance include`a falsehood implies anything' (also known as `ex falso quodlibet') and `everything implies a truth'.
+Examples of fallacies of relevance include `a falsehood implies anything' (also known as `ex falso quodlibet') and `everything implies a truth'.
 
 Some logicians (Anderson and Belnap) have developed a system, relevant implication (R->),
 which is generally not truth-functional, and which doesn't suffer from these `fallacies of relevance'.
@@ -46,7 +46,8 @@ Why bring up relevant logic?
 
 The point is, irrelevant truth-functional rules are definitely not inductively valid.
 If you test a tautology and find it to be true, you cannot conclude anything,
-not even some probabilistic or plausibilistic antecedent.
+even if there was a rule A -> T, you should not (probabilistically or plausibilistically)
+change your opinion in the slightest regarding A.
 
 How does this apply to invariant hunting?
 
@@ -91,8 +92,7 @@ with type (B->C)->(A->B)->A->C.
 We might be able to produce a map from V to Z/2Z via this B combinator.
 
 (That is, suppose our future selves built a map via some procedure; it's entirely possible that the last step  might well be plugging some other maps together somehow.
-B is one possible way to plug some maps together; the procedure that we built might end with B. 
-'m not trying to say anything particularly insightful or nontrivial here.)
+B is one possible way to plug some maps together; the procedure that we built might end with B.  I'm not trying to say anything particularly insightful or nontrivial here.)
 
 If we did (produce a map via B), then the A in the type of B would be V and the C in the type would be Z/2Z.
 (B->Z/2Z)->(V->B)->V->C

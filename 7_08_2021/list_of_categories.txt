@@ -1,0 +1,175 @@
+(Taken from an appendix of Riehl's Category Theory in Context)
+Vect sub k of k-vector spaces and linear maps
+
+Vect sub k sup fd of finite-dimensional k-vector spaces and linear maps
+
+Vect sub k sup basis of finite-dimensional k-vector spaces with a chosen basis and linear maps
+
+Vect sub k sup BG of G-representations and equivariant linear maps
+
+Top sub * sup pc of path-connected based spaces and based continuous maps
+
+Top sub * of pointed spaces and basepoint-preserving continuous maps
+
+Top of spaces and continous maps
+
+T sub G X the translation groupoind for a G-set X
+
+sk C the skeleton of the category C
+
+Shv sub X the category of shaves (of sets) on a space X and natural transformations
+
+Set sup delta of sets and partially-defined functions
+
+Set sub * of pointed sets and basepoint-preserving functions
+
+Set of sets and functions
+
+SET of "large" sets and functions
+
+Rng of non-unital rings and homomorphisms
+
+Ring of unital rings and homomorphisms
+
+rDirGraph of reflexive directed graphs and homomorphisms
+
+Proj sup | of projective planes with a distinguished line and bijections that preserve and reflect incidence
+
+Poset of partially ordered sets and order-preserving functions
+
+PCluster of persistent clusters and refinements
+
+(P, <=) a poset or preorder regarded as a category, with elements of P as objects and with a morphism x -> y if and only if x <= y
+
+O(X) the poset of open subsets of a space X under inclusion
+
+omega, the ordinal regarded as a category
+
+O sub G of subgroups of a group G represented as left G-sets of left cosets and G-equivariant maps
+
+n, the ordinal n regarded as a category
+
+Monoid, of monoids and homomorphisms
+
+subR Mod of right R-modules and homomorphisms
+Mod sub R of left R-modules and homomorphisms
+
+Model sub T of models of set T of sentences ina first-order language and homomorphisms
+
+Measure of measure spaces and equivalence classes of measurable functions
+
+Meas of measurable spaces and measurable functions
+
+Mat sub R of positive integers and matrices with coefficients in the unital ring R
+
+Man sub * of pointed smooth manifolds and pointed smooth functions
+
+Man of smooth manifolds and smooth functions
+
+Lattice of lattices and lattice morphisms
+
+J sup triangle pointing right, the category obtained from J by
+freely adjoining a terminal object.
+
+J sup triangle pointing left, the category obtained from J by
+freely adjoining an initial object.
+
+Htpy sub CW of CW complexes and homotopy classes of continuous maps
+
+Htpy sub * of based spaces and basepoint-preserving homotopy class of based continuous maps
+
+Htpy of spaces and homotpy class of continuous maps
+
+Haus of Hausdorff spaces and continuous maps
+
+Groupoid of groupoids and functors
+
+Group sub iso of Groups and isomorphisms
+
+Group sub epi of Groups and epimorphisms
+
+Group of groups and homomorphisms
+
+GrMod sub R of Z-graded R-modules and graded homomorphisms
+
+Graph of graphs and homomorphisms
+
+Gamma, Segal's category, equivalent to the opposite of Fin sub *
+
+Fin sub mono of finite sets and injections
+
+FinMetric of finite metric spaces and distance non-increasing functions
+
+Fin sub iso if finite sets and bijections
+
+Fin sub * of pointed finite sets and basepoint-preserving functions (equivalent to the opposite of Segal's Gamma).
+
+Fin of finite sets and functions
+
+Field sub F sup E of intermediate fields K between F and E and homophisms fixing Field
+
+Field of fields and homomorphisms
+
+F downarrow G, the comma category for a pair of functors F D -> C and G: E -> C
+
+Euclid sub * of pointed Euclidean spaces and pointed differentiable functions
+
+End of sets equipped with an endomorphism and commuting functions
+
+integral F the category of elements for a set-valued functor F
+
+DirGraph of directed graphs and homomorphisms
+
+Doublestruck Delta sub + of finite ordinals and order-preserving maps
+
+Doublestrucl Delta of finite non-empty ordinals and order-preserving maps
+
+C times D the product of categories C and D
+
+C sub T the Kleisli category for a monad T on a category C
+
+C sup T the category of algebras for a monad T on a category C
+
+CRing of commutative unital rings and homomorphisms
+
+C sup op the opposite of a category
+
+CMonoid of commutative monoids and homomorphisms
+
+Cluster of clusters and refinements
+
+C sup J of functors J -> C and natural transformations
+
+Ch sub R of chain complexes of R-modules and chain maps
+
+cHaus of compact Hausdorff spaces and continuous maps
+
+cgHaus of compactly generated Hausdorff spaces and continuous maps
+
+c / C the slice of a category C under an object c
+
+C / c the slice of a category C over an object c
+
+Cat of small categories and functors
+
+CAT of locally small categories and functors
+
+Card the discrete category of cardinals
+
+BG a group (or monoid) G regarded as a category, with one object
+and elements of the groupG as endomorphisms
+
+
+Ban of real Banach spaces and continuous linear maps
+
+Affine of affine planes and bijections that preserve and reflect incidence
+
+Adj sub T of adjunctions inducing a monad T and maps of adjunctions
+
+Ab sub tf of torsion-free abelian groups and homomorphisms
+
+Ab sub fg of finitely generated abelian groups and homomorphisms
+
+Ab of abelian groups and homomorphisms
+
+

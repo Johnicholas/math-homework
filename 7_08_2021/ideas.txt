@@ -1,0 +1,337 @@
+There's sometimes considered to be a correspondence 
+available
+between the numbers 0 through n and 
+the dimensions or basis vectors of a n-dimensional linear space.
+
+This is possibly similar to a "one-hot" representation in neural networks.
+An alternative representation that is sometimes used is the "thermometer" representation,
+where the numbers 0 through n correspond to the vectors with
+the initial dimensions 1 and later dimensions 0, like this:
+(1, 0, 0, ..., 0)
+(1, 1, 0, 0, ..., 0)
+(1, 1, ..., 1)
+There are N thermometer vectors spanning N dimensions.
+There are N one-hot vectors spanning N dimensions.
+
+Obviously you can convert from one to the other basis and back.
+There are a pair of 3 by 3 matrices for converting back and forth between these.
+What is the categorification of this one-hot <-> thermometer correspondence?
+
+There's a simple categorification of the binomial theorem:
+
+bin 4 2 = 6
+
+an element of bin 4 2 is a subset of size 2 of the 4-set
+
+The binomial theorem 
+(a + b)^n = the sum from i = 0 to n of bin n i * a^i * b^(n - i)
+
+says something like
+
+functions from n to the disjoint union of A and B
+
+can be put into bijection with
+
+The disjoint union of a bunch of different kinds of triples
+where each triple is:
+1. an element of bin n i
+2. a function from i to a
+3. a function from (n - i) to b
+
+So an element of bin n i 
+is something like a particular way to interleave or shuffle 
+a sequence of things of size i with a sequence of things of size n - i
+
+
+I have another sense, which is that monoids and/or deterministic finite automata could be involved.
+
+Suppose that you have the free monoid on two generators a and b.
+Suppose that you have a finite string of a and b.
+Then you can navigate, using that string, to an element; that element `is' the finite string.
+
+Suppose that you have the free commutative monoid on two generators a and b.
+Suppose that you have a set-with-multiplicity of a and b (a function from {a, b} to Nat).
+Then you can navigate, using that string, to an element of the free commutative monoid.
+That element `is' the set-with-multiplicity.
+
+Suppose that you have a finite string of a and b.
+You can measure the length of that string.
+You can map it to the free monoid on one generator by identifying a and b.
+You can map that to the free commutative monoid on one generator.
+
+This square commutes:
+If you start with a finite string of a and b, like abaaab
+and map it into a free commutative monoid on two generators, like a^3 b^2
+and then "measure" it (identify a and b and map it to the free commutative monoid on one generator), like 5
+then you end up at the same spot as if you had measured it (mapped to the free monoid on one generator), like 5
+and then enforced commutativity on that (also 5).
+
+The size of the preimage of a particular element of the free commutative monoid on two generators,
+in the map from the free monoid to the free commutative monoid, 
+will have something to do with the binomial function,
+and 
+
+`particular element' is map from 1 the terminal object to an object.
+
+What does preimage correspond to, categorically?
+A preimage is a kind of pullback.
+
+
+Within Set, let's pick out a particular Nat object, call it nat.
+Let's look at maps to nat.
+This is the slice category Set/nat.
+What are arrows in the slice category?
+If there is a triangle a->b, a->nat, b->nat, that commuted, 
+then there is an arrow in the slice category.
+So {(a, b), (c, d)} is a function from {a, c} to {b, d}.
+
+
+
+
+If you take the left hand side (a map from N to a disjoint union of A and B),
+If you have a way of measuring an element of the left hand side,
+using only the tags, not actually the values,
+then can you figure out a disjoint union of triples,
+where the tags of the different parts in the union are the different possible measures,
+and the second and third elements of the triples are
+maps from I to A and maps from N - I to B?
+
+
+What does disjoint union correspond to, categorically?
+A disjoint union is a coproduct.
+
+What is the universal property of a coproduct?
+Coproduct X1 X2 has i {1,2} : X {1,2} \to Coproduct (X 1) (X 2)
+Given any other triple of 
+1. a coproduct-alike object Y
+2. an injection-alike arrow f 1 : X1 \to Y
+3. an injection-alike arrow f 2 : X2 \to Y
+then 
+there is a unique morphism from Coproduct (X 1) (X 2) -> Y
+such that 
+i {1,2} ; f = f {1,2}
+
+Given the universal property of a coproduct, 
+what can we say about maps INTO a coproduct?
+
+In order to say something about maps INTO a coproduct,
+we need to construct a triple that we can apply the
+coproduct rule to.
+* What if there was a terminal object in the category?
+* Alternately, what if there was a subobject classifier, 2?
+* Alternately, what if there was a Natural Numbers object in the category?
+
+
+What is that thing about I and N - I?
+Each of the summands on the right hand side of the binomial theorem seems to correspond to a (ordered) subset of N.
+
+If we have binary products,
+then we 
+
+Let's do a proof of the binomial theorem, and walk through it,
+and see how we could do a corresponding categorified version.
+
+We take as ``definitional'' the relationship
+bin 0 r := 1
+bin n n := 1
+bin (n+1) (r+1) := (bin n r) + (bin n r+1)
+
+We aim for a theorem, proved inductively, something like:
+(a + b)^n = sum_{i=0}^n (bin n i) * a^i * b^(n-i)
+
+Then we investigate base cases of the binomial theorem:
+n = 1 case:
+(a + b)^1 = a + b
+= 1 * 1 * b + 1 * a * 1
+= (bin 1 0) * a^0 * b^(1-0) + (bin 1 1) * a^1 * b^0
+= sum_{i=0}^n (bin 1 i) * a^i * b^(1-i)
+
+n = 2 case:
+(a + b)^2
+= a^2 + 2 * a * b + b^2
+= (bin 2 0) * a^0 * b^(2-0) + (bin 2 1) * a^1 * b^(2-1) + (bin 2 2) * a^2 * b^(2-2)
+
+In the inductive case, we assume that the binomial theorem is true up to a point, n.
+n+1 case:
+(a + b)^n
+= (a + b) * (sum_{i=0}^n (bin n i) * a^i * b^(n-i))
+
+Here we use distribution of multiplication over addition.
+
+= (sum_{i=0}^n a * (bin n i) * a^i * b^(n-i)) + (sum_{i=0}^n b * (bin n i) * a^i * b^(n-i))
+
+We have a pair of two things, the left hand side is tagged with either `A' or `B',
+while the right hand side is tagged with a whole index datatype.
+We can do an isomorphism, where we first view the tags (and construe all the tags together as a single thing),
+and then, given that, we know what we have (and we view that all together as a single thing).
+
+The fancy tags are something like strings of `A' or `B'.
+The thing that we do with them is transform
+1. A pair of a function from I to A and a function from (N - I) to B to a function from N to (A - B)
+
+Let's talk about fancy coproducts.
+A binary coproduct, we talk about 1 and 2 without discussing what kind of thing they are,
+or where they live, or what operations are possible on them.
+A fancy coproduct, we use big-sum notation, and we need to discuss what kind of thing the
+indexes are, or what operations are possible on them.
+
+There's a metaphor that I think about, between fancy coproducts and C programming.
+(I am assuming some familiarity with programming, programming languages, and C here;
+if you are unfamiliar with them, this metaphor will not help.)
+In C programming, there are a few basic types including integers and characters,
+and a few type constructors, such as arrays, structs, and unions.
+Types in programming are a bit like sets in set theory,
+and a bit like objects in category theory.
+
+Structs in C are a bit like products in set theory, but they're even more
+similar to definitions of the form "A thing consists of this, that, and the other".
+They're pretty safe and comfortable. One thing to mention is that you can view them
+both as products and as functions from (finite) index sets with an attached guarantee.
+You can view something like:
+```
+struct {
+    int x;
+    char c;
+}
+```
+in at least two ways:
+1. as a product int \times char
+2. as a function {'x', 'c'} -> int + char with an attached guarantee, that if you apply it to 'x' it will yield an int, while if you apply it to 'c' will yield a char.
+
+Arrays in C are somewhat like  partial functions from Nat to some other type,
+which are guaranteed to be defined on some initial section of Nat such as [0..128).
+Unlike array types in other languages such as Python or Go the length of the initial section where it is defined
+is not considered to be accessible from the array itself,
+nor is it considered feasible to figure out the length of the initial section by
+iteratively evaluating larger and larger numbers, since the observable consequence of
+attempting to evaluate the array at a point beyond where it is defined is a segmentation fault;
+crashing the entire program. So the right thing to do with an array is to communicate the size of the array
+via some additional channel. You might define a binary function taking an array and a nat,
+that presumes the nat is the length of the array, and sums the contents of the array up to that length.
+
+```
+int sum(int toSum[], int len) {
+    int accum = 0;
+    for (int i = 0; i < len; i += 1) {
+        accum += toSum[i];
+    }
+    return accum;
+}
+```
+
+Since the right thing to do is to communicate the size of the array as Nat `beside' the array,
+you might describe the type of the array using an "inverse product" notation.
+`Array of X' is a type somewhat like "(Nat \to X) / Nat",
+that is, it's a type that, if you took a cross product between this type and Nat,
+might act a bit like a function from Nat to X.
+
+Similarly, Unions in C are not as safe and convenient as tagged unions in other programming languages,
+or coproducts in category theory. They're a bit like untagged unions in set theory.
+If you have some types and some names for them, you can construct the union type
+(just like if you have some types and some names for them, you can construct the struct type).
+If you have an element of any of those types, there is a standard map into the union type
+(like a coproduct). However, you cannot in general inspect a union in order to determine which
+thing it came from. So right thing to do is to communicate a union together with a tag or `kind' field,
+often in a struct.
+
+```
+struct {
+    char kind
+    union {
+        int x
+        char c
+    }
+}
+```
+
+Similar to Array, you might describe Union as resulting in some sort of 'inverse product',
+where you can't do much with a bare union. If you combine it with a kind field,
+it acts like a category-theoretic coproduct. `Union of Int and Char' is a type somewhat 
+like `(Int + Char) / (1 + 1)'.
+
+
+
+
+A generic fancy coproduct, viewed from the outside,
+looks like a map from the index set to the coproduct of the terms,
+with some guarantees.
+
+If you have an element of the fancy coproduct (a map 1 \to FancyCoproduct)
+then you compose to get an element of the index (a map 1 \to Index).
+
+If you ``recognize'' that element of the index, you can use a guarantee that you might have lying around
+to obtain a bijection between the preimage of that element and some nicely structured set.
+
+What happens if you take a binary product with a binary coproduct on the one side, and a fancy coproduct on the other side?
+
+Well, what happens if you take a binary product with a binary coproduct on the one side, and a binary coproduct on the other side?
+(A + B) * (C + D)
+Elements of this set are pairs.
+The left side of the pairs are `tagged' with `A' or `B', while the right hand side are tagged with `C' or `D'.
+What can we do with this?
+
+Often it's valuable, in working with data structures,
+to imagine that they are handed to us as an array of face-down cards,
+similar to a game of Memory,
+and to define an operation on the data structure,
+we need to say which cards we will turn over 
+and, depending on what we see,
+decide what we will do with the remaining cards via `bulk' operations without turning them over,
+essentially manipulating them as opaque blobs of cargo.
+
+In writing a proof, `turning over a card' corresponds to analysis by cases;
+In writing a program, `turning over a card' corresponds to pattern matching or definition by cases.
+
+
+In this case, what we can do that's maybe a categorification of distribution of multiplication is
+to inspect the tag of the first element of the pair, and inspect the tag of the second element of the pair,
+and pair up the values.
+Pair (Union {A, B} A B) (Union {C, D} C D)
+= Union {AC, AD, BC, BD} (Pair A C) (Pair A D) (Pair B C) (Pair B D) 
+
+What is the universal property of this resulting object?
+Well, it's a coproduct, so:
+IT = Union {AC, AD, BC, BD} (Pair A C) (Pair A D) (Pair B C) (Pair B D) 
+has an injection function i from the index set {AC, AD, BC, BD} \to maps from Pair (A + B) (C + D) to IT,
+such that any other pair of 
+1. a coproduct-like object Y, with
+2. with an injection-like function f from {AC, AD, BC, BD} \to maps from from Pair (A + B) (C + D) to IT
+then
+there is a unique morphism from IT to Y
+such that
+i {AC, AD, BC, BD} ; f = f {AC, AD, BC, BD}
+
+
+Coproduct X1 X2 has i {1,2} : X {1,2} \to Coproduct (X 1) (X 2)
+Given any other triple of 
+1. a coproduct-alike object Y
+2. an injection-alike arrow f 1 : X1 \to Y
+3. an injection-alike arrow f 2 : X2 \to Y
+then 
+there is a unique morphism from Coproduct (X 1) (X 2) -> Y
+such that 
+i {1,2} ; f = f {1,2}
+
+
+
+Okay, popping the stack and going back to 
+
+
+Regarding Ax-Grothendieck:
+This is a theorem that, in certain circumstances,
+something that is known to be an injection,
+is actually a bijection.
+
+There are two simpler situations:
+1. An injection from a finite set to itself is a bijection.
+
+2. A polynomial function from the reals to themselves that is an injection is a bijection.
+
+The way the Ax-Grothendieck proof proceeds, as far as I understand it (which is not very far), is something like:
+1. A polynomial over finite fields that is an injection is a bijection (because an injection from a finite set to itself is a bijection).
+2. If, in the infinitary situations, that Ax Grothendieck applies to,
+there was a counter example, then there would be a finitary
+counterexample.
+
+
+
