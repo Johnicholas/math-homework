@@ -1,6 +1,6 @@
-There's sometimes considered to be a correspondence 
-available
-between the numbers 0 through n and 
+1. one-hot and thermometer correspondences
+You might fix a correspondence 
+available between the numbers 0 through n and 
 the dimensions or basis vectors of a n-dimensional linear space.
 
 This is possibly similar to a "one-hot" representation in neural networks.
@@ -16,6 +16,9 @@ There are N one-hot vectors spanning N dimensions.
 Obviously you can convert from one to the other basis and back.
 There are a pair of 3 by 3 matrices for converting back and forth between these.
 What is the categorification of this one-hot <-> thermometer correspondence?
+
+
+2. Initial thinking about categorification of the binomial theorem.
 
 There's a simple categorification of the binomial theorem:
 
@@ -43,6 +46,8 @@ is something like a particular way to interleave or shuffle
 a sequence of things of size i with a sequence of things of size n - i
 
 
+3. Monoids and Commutative Monoids
+
 I have another sense, which is that monoids and/or deterministic finite automata could be involved.
 
 Suppose that you have the free monoid on two generators a and b.
@@ -50,7 +55,7 @@ Suppose that you have a finite string of a and b.
 Then you can navigate, using that string, to an element; that element `is' the finite string.
 
 Suppose that you have the free commutative monoid on two generators a and b.
-Suppose that you have a set-with-multiplicity of a and b (a function from {a, b} to Nat).
+Suppose that you have a set-with-multiplicity of a and b (a function from {a, b} to Nat?).
 Then you can navigate, using that string, to an element of the free commutative monoid.
 That element `is' the set-with-multiplicity.
 
@@ -68,8 +73,8 @@ and then enforced commutativity on that (also 5).
 
 The size of the preimage of a particular element of the free commutative monoid on two generators,
 in the map from the free monoid to the free commutative monoid, 
-will have something to do with the binomial function,
-and 
+will have something to do with the binomial function.
+
 
 `particular element' is map from 1 the terminal object to an object.
 
@@ -128,37 +133,7 @@ Each of the summands on the right hand side of the binomial theorem seems to cor
 If we have binary products,
 then we 
 
-Let's do a proof of the binomial theorem, and walk through it,
-and see how we could do a corresponding categorified version.
 
-We take as ``definitional'' the relationship
-bin 0 r := 1
-bin n n := 1
-bin (n+1) (r+1) := (bin n r) + (bin n r+1)
-
-We aim for a theorem, proved inductively, something like:
-(a + b)^n = sum_{i=0}^n (bin n i) * a^i * b^(n-i)
-
-Then we investigate base cases of the binomial theorem:
-n = 1 case:
-(a + b)^1 = a + b
-= 1 * 1 * b + 1 * a * 1
-= (bin 1 0) * a^0 * b^(1-0) + (bin 1 1) * a^1 * b^0
-= sum_{i=0}^n (bin 1 i) * a^i * b^(1-i)
-
-n = 2 case:
-(a + b)^2
-= a^2 + 2 * a * b + b^2
-= (bin 2 0) * a^0 * b^(2-0) + (bin 2 1) * a^1 * b^(2-1) + (bin 2 2) * a^2 * b^(2-2)
-
-In the inductive case, we assume that the binomial theorem is true up to a point, n.
-n+1 case:
-(a + b)^n
-= (a + b) * (sum_{i=0}^n (bin n i) * a^i * b^(n-i))
-
-Here we use distribution of multiplication over addition.
-
-= (sum_{i=0}^n a * (bin n i) * a^i * b^(n-i)) + (sum_{i=0}^n b * (bin n i) * a^i * b^(n-i))
 
 We have a pair of two things, the left hand side is tagged with either `A' or `B',
 while the right hand side is tagged with a whole index datatype.
@@ -175,79 +150,6 @@ or where they live, or what operations are possible on them.
 A fancy coproduct, we use big-sum notation, and we need to discuss what kind of thing the
 indexes are, or what operations are possible on them.
 
-There's a metaphor that I think about, between fancy coproducts and C programming.
-(I am assuming some familiarity with programming, programming languages, and C here;
-if you are unfamiliar with them, this metaphor will not help.)
-In C programming, there are a few basic types including integers and characters,
-and a few type constructors, such as arrays, structs, and unions.
-Types in programming are a bit like sets in set theory,
-and a bit like objects in category theory.
-
-Structs in C are a bit like products in set theory, but they're even more
-similar to definitions of the form "A thing consists of this, that, and the other".
-They're pretty safe and comfortable. One thing to mention is that you can view them
-both as products and as functions from (finite) index sets with an attached guarantee.
-You can view something like:
-```
-struct {
-    int x;
-    char c;
-}
-```
-in at least two ways:
-1. as a product int \times char
-2. as a function {'x', 'c'} -> int + char with an attached guarantee, that if you apply it to 'x' it will yield an int, while if you apply it to 'c' will yield a char.
-
-Arrays in C are somewhat like  partial functions from Nat to some other type,
-which are guaranteed to be defined on some initial section of Nat such as [0..128).
-Unlike array types in other languages such as Python or Go the length of the initial section where it is defined
-is not considered to be accessible from the array itself,
-nor is it considered feasible to figure out the length of the initial section by
-iteratively evaluating larger and larger numbers, since the observable consequence of
-attempting to evaluate the array at a point beyond where it is defined is a segmentation fault;
-crashing the entire program. So the right thing to do with an array is to communicate the size of the array
-via some additional channel. You might define a binary function taking an array and a nat,
-that presumes the nat is the length of the array, and sums the contents of the array up to that length.
-
-```
-int sum(int toSum[], int len) {
-    int accum = 0;
-    for (int i = 0; i < len; i += 1) {
-        accum += toSum[i];
-    }
-    return accum;
-}
-```
-
-Since the right thing to do is to communicate the size of the array as Nat `beside' the array,
-you might describe the type of the array using an "inverse product" notation.
-`Array of X' is a type somewhat like "(Nat \to X) / Nat",
-that is, it's a type that, if you took a cross product between this type and Nat,
-might act a bit like a function from Nat to X.
-
-Similarly, Unions in C are not as safe and convenient as tagged unions in other programming languages,
-or coproducts in category theory. They're a bit like untagged unions in set theory.
-If you have some types and some names for them, you can construct the union type
-(just like if you have some types and some names for them, you can construct the struct type).
-If you have an element of any of those types, there is a standard map into the union type
-(like a coproduct). However, you cannot in general inspect a union in order to determine which
-thing it came from. So right thing to do is to communicate a union together with a tag or `kind' field,
-often in a struct.
-
-```
-struct {
-    char kind
-    union {
-        int x
-        char c
-    }
-}
-```
-
-Similar to Array, you might describe Union as resulting in some sort of 'inverse product',
-where you can't do much with a bare union. If you combine it with a kind field,
-it acts like a category-theoretic coproduct. `Union of Int and Char' is a type somewhat 
-like `(Int + Char) / (1 + 1)'.
 
 
 

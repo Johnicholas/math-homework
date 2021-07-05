@@ -1,15 +1,32 @@
-%------------------------------------------------------------------------------
-% Beginning of proc_sample.tex
-%------------------------------------------------------------------------------
+%-----------------------------------------------------------------------
+% Beginning of proc-l-template.tex
+%-----------------------------------------------------------------------
 %
-% AMS-LaTeX version 2 sample file for journals, based on amsart.cls.
+%     This is a topmatter template file for PROC for use with AMS-LaTeX.
 %
-%        ***     DO NOT USE THIS FILE AS A STARTER.      ***
-%        ***       USE THE PROC-L-TEMPLATE FILE.         ***
+%     Templates for various common text, math and figure elements are
+%     given following the \end{document} line.
 %
-% Please see the README-PROC-OVERLEAF.TXT file for more information.
-%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%     Remove any commented or uncommented macros you do not use.
+
 \documentclass{proc-l}
+
+%     If you need symbols beyond the basic set, uncomment this command.
+%\usepackage{amssymb}
+
+%     If your article includes graphics, uncomment this command.
+%\usepackage{graphicx}
+
+%     If the article includes commutative diagrams, ...
+%\usepackage[cmtip,all]{xy}
+\usepackage{mathtools} % for \coloneqq
+\usepackage{listings} % for \lstlisting
+
+%     Update the information and uncomment if AMS is not the copyright
+%     holder.
+%\copyrightinfo{2009}{American Mathematical Society}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -24,293 +41,379 @@
 
 \numberwithin{equation}{section}
 
-%    Absolute value notation
-\newcommand{\abs}[1]{\lvert#1\rvert}
-
-%    Blank box placeholder for figures (to avoid requiring any
-%    particular graphics capabilities for printing this document).
-\newcommand{\blankbox}[2]{%
-  \parbox{\columnwidth}{\centering
-%    Set fboxsep to 0 so that the actual size of the box will match the
-%    given measurements more closely.
-    \setlength{\fboxsep}{0pt}%
-    \fbox{\raisebox{0pt}[#2]{\hspace{#1}}}%
-  }%
-}
-
 \begin{document}
 
-\title{Proceedings of the American Mathematical Society Sample}
+% \title[short text for running head]{full title}
+\title[Categorifying the Binomial Theorem]{Categorifying the Binomial Theorem}
 
-%    Information for first author
-\author{Author One}
-%    Address of record for the research reported here
-\address{Department of Mathematics, Louisiana State University, Baton
-Rouge, Louisiana 70803}
-%    Current address
-\curraddr{Department of Mathematics and Statistics,
-Case Western Reserve University, Cleveland, Ohio 43403}
-\email{xyz@math.university.edu}
-%    \thanks will become a 1st page footnote.
-\thanks{The first author was supported in part by NSF Grant \#000000.}
+%    Only \author and \address are required; other information is
+%    optional.  Remove any unused author tags.
 
-%    Information for second author
-\author{Author Two}
-\address{Mathematical Research Section, School of Mathematical Sciences,
-Australian National University, Canberra ACT 2601, Australia}
-\email{two@maths.univ.edu.au}
-\thanks{Support information for the second author.}
+%    author one information
+% \author[short version for running head]{name for top of paper}
+\author{Johnicholas Hines}
+\address{}
+\curraddr{}
+\email{}
+\thanks{}
 
-%    General info
-\subjclass[2000]{Primary 54C40, 14E20; Secondary 46E25, 20C20}
+%    author two information
+\author{Raymond Cheng}
+\address{}
+\curraddr{}
+\email{}
+\thanks{}
 
-\date{January 1, 2001 and, in revised form, June 22, 2001.}
+%    \subjclass is required.
+\subjclass[2020]{Primary }
 
-\dedicatory{This paper is dedicated to our advisors.}
+\date{}
 
-\keywords{Differential geometry, algebraic geometry}
+\dedicatory{}
 
+%    "Communicated by" -- provide editor's name; required.
+\commby{}
+
+%    Abstract is required.
 \begin{abstract}
-This paper is a sample prepared to illustrate the use of the American
-Mathematical Society's \LaTeX{} document class \texttt{amsart} and
-publication-specific variants of that class for AMS-\LaTeX{} version 2.
+\emph{TODO}: find a categorification\footnote{https://en.wikipedia.org/wiki/Categorification} of the binomial theorem
 \end{abstract}
 
 \maketitle
 
-\section*{This is an unnumbered first-level section head}
-This is an example of an unnumbered first-level heading.
+%    Text of article.
+\section{Review of the proof of binomial theorem over Nat}
 
-%% The correct journal style for \specialsection is all uppercase; a known bug
-%% in amsart.cls prevents this, so input must be uppercase until it is fixed.
-%\specialsection*{This is a Special Section Head}
-\specialsection*{THIS IS A SPECIAL SECTION HEAD}
-This is an example of a special section head%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\footnote{Here is an example of a footnote. Notice that this footnote
-text is running on so that it can stand as an example of how a footnote
-with separate paragraphs should be written.
-\par
-And here is the beginning of the second paragraph.}%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-.
+Let's do a proof of the binomial theorem, and walk through it,
+and see how we could do a corresponding categorified version.
 
-\section{This is a numbered first-level section head}
-This is an example of a numbered first-level heading.
+We take as `definitional' the Pascal's triangle recursion
+\begin{align*}
+{n \choose 0} & \coloneqq 1 \\
+{n \choose n} & \coloneqq 1 \\
+{n + 1 \choose k + 1} & \coloneqq {n \choose k} + {n \choose k+1}
+\end{align*}
 
-\subsection{This is a numbered second-level section head}
-This is an example of a numbered second-level heading.
-
-\subsection*{This is an unnumbered second-level section head}
-This is an example of an unnumbered second-level heading.
-
-\subsubsection{This is a numbered third-level section head}
-This is an example of a numbered third-level heading.
-
-\subsubsection*{This is an unnumbered third-level section head}
-This is an example of an unnumbered third-level heading.
-
-\begin{lemma}
-Let $f, g\in  A(X)$ and let $E$, $F$ be cozero
-sets in $X$.
-\begin{enumerate}
-\item If $f$ is $E$-regular and $F\subseteq E$, then $f$ is $F$-regular.
-
-\item If $f$ is $E$-regular and $F$-regular, then $f$ is $E\cup
-F$-regular.
-
-\item If $f(x)\ge c>0$ for all $x\in E$, then $f$ is $E$-regular.
-
-\end{enumerate}
-\end{lemma}
-
-The following is an example of a proof.
-
-\begin{proof} Set $j(\nu)=\max(I\backslash a(\nu))-1$. Then we have
+We're aiming for a theorem, to be proved inductively, that
 \[
-\sum_{i\notin a(\nu)}t_i\sim t_{j(\nu)+1}
-  =\prod^{j(\nu)}_{j=0}(t_{j+1}/t_j).
-\]
-Hence we have
-\begin{equation}
-\begin{split}
-\prod_\nu\biggl(\sum_{i\notin
-  a(\nu)}t_i\biggr)^{\abs{a(\nu-1)}-\abs{a(\nu)}}
-&\sim\prod_\nu\prod^{j(\nu)}_{j=0}
-  (t_{j+1}/t_j)^{\abs{a(\nu-1)}-\abs{a(\nu)}}\\
-&=\prod_{j\ge 0}(t_{j+1}/t_j)^{
-  \sum_{j(\nu)\ge j}(\abs{a(\nu-1)}-\abs{a(\nu)})}.
-\end{split}
-\end{equation}
-By definition, we have $a(\nu(j))\supset c(j)$. Hence, $\abs{c(j)}=n-j$
-implies (5.4). If $c(j)\notin a$, $a(\nu(j))c(j)$ and hence
-we have (5.5).
-\end{proof}
-
-\begin{quotation}
-This is an example of an `extract'. The magnetization $M_0$ of the Ising
-model is related to the local state probability $P(a):M_0=P(1)-P(-1)$.
-The equivalences are shown in Table~\ref{eqtable}.
-\end{quotation}
-
-\begin{table}[ht]
-\caption{}\label{eqtable}
-\renewcommand\arraystretch{1.5}
-\noindent\[
-\begin{array}{|c|c|c|}
-\hline
-&{-\infty}&{+\infty}\\
-\hline
-{f_+(x,k)}&e^{\sqrt{-1}kx}+s_{12}(k)e^{-\sqrt{-1}kx}&s_{11}(k)e^
-{\sqrt{-1}kx}\\
-\hline
-{f_-(x,k)}&s_{22}(k)e^{-\sqrt{-1}kx}&e^{-\sqrt{-1}kx}+s_{21}(k)e^{\sqrt
-{-1}kx}\\
-\hline
-\end{array}
-\]
-\end{table}
-
-\begin{definition}
-This is an example of a `definition' element.
-For $f\in A(X)$, we define
-\begin{equation}
-\mathcal{Z} (f)=\{E\in Z[X]: \text{$f$ is $E^c$-regular}\}.
-\end{equation}
-\end{definition}
-
-\begin{remark}
-This is an example of a `remark' element.
-For $f\in A(X)$, we define
-\begin{equation}
-\mathcal{Z} (f)=\{E\in Z[X]: \text{$f$ is $E^c$-regular}\}.
-\end{equation}
-\end{remark}
-
-\begin{example}
-This is an example of an `example' element.
-For $f\in A(X)$, we define
-\begin{equation}
-\mathcal{Z} (f)=\{E\in Z[X]: \text{$f$ is $E^c$-regular}\}.
-\end{equation}
-\end{example}
-
-\begin{xca}
-This is an example of the \texttt{xca} environment. This environment is
-used for exercises which occur within a section.
-\end{xca}
-
-The following is an example of a numbered list.
-
-\begin{enumerate}
-\item First item.
-In the case where in $G$ there is a sequence of subgroups
-\[
-G = G_0, G_1, G_2, \dots, G_k = e
-\]
-such that each is an invariant subgroup of $G_i$.
-
-\item Second item.
-Its action on an arbitrary element $X = \lambda^\alpha X_\alpha$ has the
-form
-\begin{equation}\label{eq:action}
-[e^\alpha X_\alpha, X] = e^\alpha \lambda^\beta
-[X_\alpha X_\beta] = e^\alpha c^\gamma_{\alpha \beta}
- \lambda^\beta X_\gamma,
-\end{equation}
-
-\begin{enumerate}
-\item First subitem.
-\[
-- 2\psi_2(e) =  c_{\alpha \gamma}^\delta c_{\beta \delta}^\gamma
-e^\alpha e^\beta.
+(a + b)^n = \sum_{i=0}^n {n \choose i} a^i b^{n-i}
 \]
 
-\item Second subitem.
-\begin{enumerate}
-\item First subsubitem.
-In the case where in $G$ there is a sequence of subgroups
-\[
-G = G_0, G_1, G_2, \ldots, G_k = e
-\]
-such that each subgroup $G_{i+1}$ is an invariant subgroup of $G_i$ and
-each quotient group $G_{i+1}/G_{i}$ is abelian, the group $G$ is called
-\textit{solvable}.
+First we investigate the first few cases of the binomial theorem. In the \(n = 1\) case,
+\begin{align*}
+(a + b)^1 & = a + b \\ % base case of exponentiation
+& = 1 \times 1 \times b + 1 \times a \times 1 \\ % 1 as identity of product
+& = {1 \choose 0} a^0 \times b^{1-0} + {1 \choose 1} \times a^1 \times b^{1-1} \\ % base cases of binomial and exponentiation several times
+& = \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i} % rule of introduction of summation notation?
+\end{align*}
 
-\item Second subsubitem.
-\end{enumerate}
-\item Third subitem.
-\end{enumerate}
-\item Third item.
-\end{enumerate}
+In the \(n = 2\) case,
+\begin{align*}
+(a + b)^2 & = b^2 + 2 \times a \times b + a^2 \\ % distribution of multiplication over addition
+& = 1 \times 1 \times b^2 + 2 \times a \times b + 1 \times a^2 \times 1 \\
+& = {2 \choose 0} \times a^0 \times b^{2-0} + {2 \choose 1} \times a^1 \times b^{2-1} + {2 \choose 2} \times a^2 \times b^{2-2} \\
+& = \sum_{i=0}^n {2 \choose i} * a^i * b^{1-i} % rule of introduction of summation notation?
+\end{align*}
 
-Here is an example of a cite. See \cite{A}.
+In the inductive case, we assume that the binomial theorem is true up to a point \(n\), and we expand the left hand and right hand sides until they meet up.
+\begin{align*}
+& (a + b)^{n+1} \\ 
+& = (a + b) \times (\sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i}) \\ 
+& = (b \times \sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i}) + (a \times \sum_{j=0}^n {n \choose j} \times a^j \times b^{n-j}) \\
+& = \left(\sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i+1}\right) + \left(\sum_{j=0}^n {n \choose j} \times a^{j+1} \times b^{n-j}\right) \\
+& = b^{n+1} + \sum_{i=1}^n {n \choose i} \times a^i \times b^{n-i+1} + \sum_{i=1}^n {n \choose i+1} \times a^i \times b^{n-i+1} + a^{n+1} \\
+& = b^{n+1} + \sum_{i=1}^n \left({n \choose i} \times a^i \times b^{n-i+1} + {n \choose i+1} \times a^i \times b^{n-i+1}\right) + a^{n+1} \\
+& = b^{n+1} + \sum_{i=1}^n \left({n \choose i} + {n \choose i+1}) \times a^i \times b^{n+1-i}\right) + a^{n+1} \\
+& = {n+1 \choose 0} * a^0 * b^{n-0} + \sum_{i=1}^n ({n+1 \choose i+1} \times a^i \times b^{n+1-i}) + {n+1 \choose n+1} \times a^{n+1} \times b^{n+1-n+1} \\
+& = \sum_{i=0}^{n+1} {n+1 \choose i} \times a^i \times b^{n+1-i}
+\end{align*}
 
-\begin{theorem}
-This is an example of a theorem.
-\end{theorem}
+To handwave a bit, what we're doing is using the associative, commutative, and distributive properties of addition and multiplication
+with an eye to `register' or `align' the two sequences of terms that we have,
+leaving only a couple very simple terms hanging off the two ends.
+Then once they're aligned we can get the coefficients to combine using the definition of choose.
+Finally we recognize the three-term expression as an example of the kind of expression we were looking for.
 
-\begin{theorem}[Marcus Theorem]
-This is an example of a theorem with a parenthetical note in the
-heading.
-\end{theorem}
+In doing these algebraic manipulations, I am realizing that I am using the big-sigma indexed sum notation only intuitively or informally,
+by imagining expanding the big-sigma indexed sum to a vaguely large finite binary sum and,
+if it seems plausible according to my imagination (grounded in manipulating associative-commutative binary sums)
+that a manipulation should be legal, then I take it.
 
-\begin{figure}[tb]
-\blankbox{.6\columnwidth}{5pc}
-\caption{This is an example of a figure caption with text.}
-\label{firstfig}
-\end{figure}
+I'm not entirely clear on what axioms license these manipulations, and big-sigma indexed sum starts to feel like an alien entity.
 
-\begin{figure}[tb]
-\blankbox{.75\columnwidth}{3pc}
-\caption{}\label{otherfig}
-\end{figure}
+\section{What analogies do we have to work with?}
 
-\section{Some more list types}
-This is an example of a bulleted list.
-
+Well, the big three are:
 \begin{itemize}
-\item $\mathcal{J}_g$ of dimension $3g-3$;
-\item $\mathcal{E}^2_g=\{$Pryms of double covers of $C=\openbox$ with
-normalization of $C$ hyperelliptic of genus $g-1\}$ of dimension $2g$;
-\item $\mathcal{E}^2_{1,g-1}=\{$Pryms of double covers of
-$C=\openbox^H_{P^1}$ with $H$ hyperelliptic of genus $g-2\}$ of
-dimension $2g-1$;
-\item $\mathcal{P}^2_{t,g-t}$ for $2\le t\le g/2=\{$Pryms of double
-covers of $C=\openbox^{C'}_{C''}$ with $g(C')=t-1$ and $g(C'')=g-t-1\}$
-of dimension $3g-4$.
+    \item arithmetic product corresponds to cartesian or categorical product,
+    \item arithmetic sum corresponds to disjoint union or categorical coproduct, and
+    \item arithmetic exponentiation corresponds to constructing the set of functions from one set to another.
 \end{itemize}
 
-This is an example of a `description' list.
+To categorify the binomial theorem, we want to extend these correspondences with another, ending up with a bijection that `explains'\footnote{in the narrow technical sense that if we take cardinalities of each side of the bijection, we get the
+binomial theorem; it's not necessarily a clarifying or helpful explanation.}
+the binomial theorem.
 
-\begin{description}
-\item[Zero case] $\rho(\Phi) = \{0\}$.
+The algebra in the proof of the the binomial theorem used a lot of a big-sigma indexed sum, which seems like it is going to correspond to some sort of `fancy coproduct'.
 
-\item[Rational case] $\rho(\Phi) \ne \{0\}$ and $\rho(\Phi)$ is
-contained in a line through $0$ with rational slope.
+\subsection{Meandering about C programming}
 
-\item[Irrational case] $\rho(\Phi) \ne \{0\}$ and $\rho(\Phi)$ is
-contained in a line through $0$ with irrational slope.
-\end{description}
+There's a metaphor that I think about, between category theory and particularly `fancy coproducts' and C programming.
+(I am assuming some familiarity with programming, programming languages, and C here;
+if you are unfamiliar with them, this metaphor will not help.)
+In C programming, there are a few basic types including integers and characters,
+and a few type constructors, such as arrays, structs, and unions.
+Types in programming are a bit like sets in set theory,
+and a bit like objects in category theory.
 
+Structs in C are a bit like products in set theory, but they're even more
+similar to definitions of the form "A thing consists of this, that, and the other".
+They're pretty safe and comfortable. One thing to mention is that you can view them
+both as products and as functions from (finite) index sets with an attached guarantee.
+You can view something like:
+
+\begin{lstlisting}[language=C]
+struct PointAndLetter {
+    int x;
+    char c;
+};
+\end{lstlisting}
+
+in at least two ways:
+\begin{enumerate}
+\item as a product \(int \times char\)
+\item as a function \(\{`x', `c'\} \to (int + char)\) with an attached guarantee, that if you apply it to x it will yield an int, while if you apply it to c will yield a char.
+\end{enumerate}
+
+Arrays in C are somewhat like  partial functions from Nat to some other type,
+which are guaranteed to be defined on some initial section of Nat such as [0..128).
+Unlike array types in other languages such as Python or Go the length of the initial section where it is defined
+is not normally considered to be accessible from the array itself,
+nor is it normally considered feasible to figure out the length of the initial section by
+iteratively evaluating larger and larger numbers, since the observable consequence of
+attempting to evaluate the array at a point beyond where it is defined is a segmentation fault;
+crashing the entire program. So the right thing to do with an array is to communicate the size of the array
+via some additional channel. You might define a binary function taking an array and a nat,
+that presumes the nat is the length of the array, and sums the contents of the array up to that length.
+
+\begin{lstlisting}[language=C]
+int sum(int toSum[], int len) {
+    int accum = 0;
+    for (int i = 0; i < len; i += 1) {
+        accum += toSum[i];
+    }
+    return accum;
+}
+\end{lstlisting}
+
+Since the right thing to do is to communicate the size of the array as Nat `beside' the array,
+you might describe the type of the array using an "inverse product" notation.
+\(Array~of~X\) is a type somewhat like \((Nat \to X) / Nat\),
+that is, it's a type that, if you took a cross product between this type and Nat,
+might act a bit like a function from Nat to X.
+
+Similarly, unions in C are not as safe and convenient as tagged unions in other programming languages,
+or coproducts in category theory. They're a bit like untagged unions in set theory.
+If you have some types and some names for them, you can construct the union type
+(just like if you have some types and some names for them, you can construct the struct type).
+If you have an element of any of those types, there is a standard map into the union type
+(like a coproduct). However, you cannot in general inspect a union in order to determine which
+thing it came from. So right thing to do is to communicate a union together with a tag or `kind' field,
+often in a struct.
+
+\begin{lstlisting}[language=C]
+
+struct TaggedIntOrChar {
+    enum {INT, CHAR} kind;
+    union {
+        int x;
+        char c;
+    }
+};
+\end{lstlisting}
+
+Similar to array, you might describe union as resulting in some sort of 'inverse product',
+where you can't do much with a bare union. If you combine it with a kind field,
+it acts like a real coproduct. `Union of Int and Char' is a type somewhat 
+like `(Int + Char) / (1 + 1)'.
+
+The point of this meandering about datatypes is to motivate some bijections,
+where we manipulate tags, build data structures out of tags.
+
+\section{Categorifying the Binomial Theorem in Set}
+
+TODO: a canonical bijection is an explicitly given map (we're not asking the reader to make a choice) which has an inverse.
+I am not sure I know how to `work up to unique isomorphism'.
+
+Lifting \(x \times 1 = x\) to Set:
+
+\begin{theorem}
+Given a set X, there is a canonical bijection between the categorical product with the singleton set \(X \times 1\) and \(X\).
+\end{theorem}
+
+\begin{proof}
+The projection to \(X\) has an inverse: \(x \in X \mapsto (x, *)\). 
+\end{proof}
+
+Lifting \(x^1 = x\) to Set:
+
+\begin{theorem}
+Given a set X, there is a canonical bijection between \(1 \to X\), the set of functions from the singleton set, and X.
+\end{theorem}
+
+Lifting \(1^x = 1\) to Set:
+
+\begin{theorem}
+Given a set \(X\), there is a canonical bijection between \(X \to 1\), the set of functions from \(X\) the singleton set
+and the single
+
+\end{theorem}
+
+\begin{proof}
+A function from \(1\) to \(X\) consists of a single pair \(\{(*, x)\}\) for some \(x \in X\), and \(\{(*, x)\} \mapsto x \mapsto \{(*, x)\}\) is a bijection.
+\end{proof}
+
+Lifting \(x^0 = 1\) to Set:
+
+\begin{theorem}
+Given a set X, there is a canonical bijection between the set of functions from the empty set to X, and the singleton set.
+\end{theorem}
+
+\begin{proof}
+Functions are sets of pairs, one for each element of the domain. There are zero elements in the domain, if the domain is the empty set. So regardless of what \(X\) is, there is exactly one function from the empty set to \(X\): the empty set, regarded as a set of pairs.
+\end{proof}
+
+Lifting \(x \times (y + z) = x \times y + x \times z\) to Set:
+
+\begin{theorem}
+Given sets X, Y, Z, there is a canonical bijection between \(X \times (Y + Z)\) and \(X \times Y + X \times Z\).
+\end{theorem}
+
+\begin{proof}
+A generic element of \(X \times (Y + Z)\) is a pair, the second part of which has a tag, either `Y' or `Z'. If it had tag `Y', we map it to `XY'. If it came from `Z', we map it to `XZ'. In the opposite direction, if was tagged with `XY', we dissect it into its X and Y components, tag the Y component with `Y', and compose to form an element of \(X \times (Y + Z\). 
+\end{proof}
+
+\section{Fancy Coproducts}
+
+Let's talk about what we need to do with Fancy Coproducts.
+
+The last move that we did in the arithmetic proof was
+to go from a coproduct of some things and a Fancy Coproduct over one set of indexes, to a fancy coproduct over a bigger set of indexes.
+
+\[
+Coproduct~a + FancyCoproduct~I X = FancyCoproduct~(I+1)~Y
+\]
+
+We also did this in reverse, where we took some term out from under the Fancy Coproduct, and reduced the set of indexes to compensate.
+
+Another move that we did in the arithmetic proof was
+to go from a coproduct of fancy coproducts with compatible indexes to a fancy coproduct of coproducts.
+
+\[
+FancyCoproduct~I X + FancyCoproduct~I Y = FancyCoproduct~I (X + Y)
+\]
+
+% Another move that we did (or did we?) was apply a morphism
+% of indexes.
+
+Finally, at the base case, we introduced a Fancy Coproduct directly from a Coproduct. I can imagine splitting this into multiple steps,
+where first we build a Fancy Coproduct that corresponds to nothing (an initial object is the identity with respect to coproduct?), and then use one of the other moves.
+
+
+
+
+
+\begin{align*}
+(a + b)^1 & = a + b \\ % base case of exponentiation
+& = 1 \times 1 \times b + 1 \times a \times 1 \\ % 1 as identity of product
+& = {1 \choose 0} a^0 \times b^{1-0} + {1 \choose 1} \times a^1 \times b^{1-1} \\ % base cases of binomial and exponentiation several times
+& = \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i} % rule of introduction of summation notation?
+\end{align*}
+
+
+x · y = y · x
+x · (y + z) = x · y + x ·z
+1x = 1
+x1 = x
+(x · y)z = xz · yz
+(xy)z = xy · z.
+
+
+(x · y) · z = x · (y · z)
+
+Lifting \((x + y) + z = x + (y + z)\) to Set:
+
+\begin{theorem}
+Given sets X, Y, Z, there is a canonical bijection between the categorical coproduct \(X + Y) + Z\) and the categorical coproduct \(X + (Y + Z)\).
+\end{theorem}
+
+\begin{proof}
+TODO
+\end{proof} 
+
+
+Lifting \(x + y = y + x\) to Set:
+
+\begin{theorem}
+Given sets \(X, Y\), there is a canonical bijection between the categorical coproduct \(X + Y\) and the categorical coproduct \(Y + X\).
+\end{theorem}
+
+\begin{proof}
+TODO
+\end{proof}
+
+%    Bibliographies can be prepared with BibTeX using amsplain,
+%    amsalpha, or (for "historical" overviews) natbib style.
 \bibliographystyle{amsplain}
-\begin{thebibliography}{10}
-
-\bibitem {A} T. Aoki, \textit{Calcul exponentiel des op\'erateurs
-microdifferentiels d'ordre infini.} I, Ann. Inst. Fourier (Grenoble)
-\textbf{33} (1983), 227--250.
-
-\bibitem {B} R. Brown, \textit{On a conjecture of Dirichlet},
-Amer. Math. Soc., Providence, RI, 1993.
-
-\bibitem {D} R. A. DeVore, \textit{Approximation of functions},
-Proc. Sympos. Appl. Math., vol. 36,
-Amer. Math. Soc., Providence, RI, 1986, pp. 34--56.
-
-\end{thebibliography}
+%    Insert the bibliography data here.
 
 \end{document}
 
-%------------------------------------------------------------------------------
-% End of proc_sample.tex
-%------------------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    Templates for common elements of a journal article; for additional
+%    information, see the file Author_Handbook_Journals.pdf, included
+%    in the PROC author package, and the amsthm user's guide, linked
+%    from http://www.ams.org/tex/amslatex.html .
+
+%    Section headings
+\section{}
+\subsection{}
+
+%    Ordinary theorem and proof
+\begin{theorem}[Optional addition to theorem head]
+% text of theorem
+\end{theorem}
+
+\begin{proof}[Optional replacement proof heading]
+% text of proof
+\end{proof}
+
+%    Figure insertion; default placement is top; if the figure occupies
+%    more than 75% of a page, the [p] option should be specified.
+\begin{figure}
+\includegraphics{filename}
+\caption{text of caption}
+\label{}
+\end{figure}
+
+%    Mathematical displays; for additional information, see the amsmath
+%    user's guide, linked from http://www.ams.org/tex/amslatex.html .
+
+% Numbered equation
+\begin{equation}
+\end{equation}
+
+% Unnumbered equation
+\begin{equation*}
+\end{equation*}
+
+% Aligned equations
+\begin{align}
+  &  \\
+  &
+\end{align}
+
+%-----------------------------------------------------------------------
+% End of proc-l-template.tex
+%-----------------------------------------------------------------------
