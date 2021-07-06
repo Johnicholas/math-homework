@@ -1,0 +1,37 @@
+% benchmark parameters -n4 -m100
+
+% Hatcher axioms for category theory
+op(400, xfx, *). % compose
+
+list(usable).
+
+% One ternary predicate K, read K(x, y, z) as "z is the composition of x with y"
+% One monadic function D, read D(x) as "the domain of x"
+% One monadic function C, read C(x) as "the codomain of x"
+% One binary function *, read as "x compose y"
+
+% The domain of the codomain of any morphism a is the codomain of a.
+D(C(x)) = C(x).
+% And the codomain of the domain of a is the domain of a:
+C(D(x)) = D(x).
+
+% Composition is unique
+-K(x, y, z) | -K(x, y, w) | z = w.
+
+% The composition of a with b is defined if and only if the codomain of a is the domain of b:
+C(x) != D(y) | K(x, y, x * y).
+-K(x, y, x * y) | C(x) = D(y).
+
+% If c is the composition of a with b, then the domain of c is the domain of a and the the codomain of c is the codomain of b:
+
+-K(x, y, z) | D(z) = D(x).
+-K(x, y, z) | C(z) = C(y).
+
+% For any a, the domain of a is a left identity for a under composition, and the codomain of a is a right identity:
+K(D(x), x, x).
+K(x, C(x), x).
+
+% Composition is associative when it is defined.
+-K(x1, x2, x3) | -K(x2, x4, x5) | -K(x1, x5, x6) | -K(x3, x4, x7) | x6 = x7.
+
+end_of_list.

@@ -5,5 +5,40 @@ https://en.wikipedia.org/wiki/Twelvefold_way
 Related:
 https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)
 
+Competitive Programmer's Handbook
+https://cses.fi/book/book.pdf
+
+
+Maybe something like 
+"Introduction to Axiomatic Geometry" https://ohioopen.library.ohio.edu/opentextbooks/1/
+or
+"Axiomatic Geometry" https://bookstore.ams.org/amstext-21
+or maybe just the list of theorems that it claims to prove:
+https://sites.math.washington.edu/~lee/Books/AG/theorems.pdf
+
+Maybe https://store.doverpublications.com/0486847268.html
+which claims to describe a "coordinate method"
+suitable for proving (in Maple?) theorems like:
+14.31 Suppose that three circles with equal radii intersect at a point. For each pair of these circles, consider the other point of their intersection. Prove that these three points lie on a circle of the same radius.
+
+14.32 (Ptolemy's Theorem) Consider four points A, B, C, and D in the plane. Prove they lie on a circle if and only if A B * C D + B C * A D= A C * B D.
+
+14.33 Given three circles of radii r_1, r_2 and r_3, such that each is externally tangent to the other two, find the radius of a circle that passes through the points of tangency of these three circles.
+
+(Taken from https://www.google.com/books/edition/_/PfH3DwAAQBAJ?hl=en&gbpv=1)
+
+
+
+
+Maybe looking for somehow adjacent things to existing, somewhat elementary things would be good.
+Something like the Corset Theorem
+https://storage.googleapis.com/www.johnicholas.com/assets/finding_polygonal_areas_with_the_corset_theorem.pdf
+or the Shoelace Formula
+https://storage.googleapis.com/www.johnicholas.com/assets/Cool-Math-Essay_June-2014_SHOELACE-FORMULA.pdf
+
+
+
+
+
 
 
