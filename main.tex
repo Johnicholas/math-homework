@@ -361,44 +361,41 @@ TODO
 
 \subsection{Meandering about lattice paths}
 
-There's a correspondence regarding binomial coefficients and lattice paths. Can we build something relating the lattice path metaphor to something? Maybe a lattice path corresponds to a partition of a product of chains into an upper and lower set? a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
+There's a standard metaphor or story regarding binomial coefficients, that they count how many ways it is to get to a point on a grid, via `north' and `east' steps. Can we build something relating the lattice path metaphor to something? Visualizing the path as extending from the left corner of a rectangle to the right corner, maybe we can `shade in' one side of the path, and say that a lattice path corresponds to a partition of a product of chains into an upper and a lower set? And a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
 
-(Alternately, maybe we have a correspondence between a maximal chain within a poset that is a product of chains, and a binomial coefficient?)
+(Alternately, maybe we draw the lattice path going `up and down' the rectangle have a correspondence between maximal chains in a poset that is a product of chains, and binomial coefficients?)
 
 Examples:
 \begin{itemize}
-    \item \({2 \choose 1}\) = 2 = number of monotone maps \(1 \times 1 \to 2\)
-    \item \({3 \choose 1}\) = 3 = number of monotone maps \(1 \times 2 \to 2\)
-    \item \({3 \choose 2}\) = 3 = number of monotone maps \(2 \times 1 \to 2\)
-    \item \({4 \choose 1}\) = 4 = number of monotone maps \(3 \times 1 \to 2\)
-    \item \({4 \choose 2}\) = 6 = number of monotone maps \(2 \times 2 \to 2\)
+    \item \({2 \choose 1}\) = 2 = number of monotone maps \(\operatorname{Ch} 1 \times \operatorname{Ch} 1 \to \operatorname{Ch} 2\)
+    \item \({3 \choose 1}\) = 3 = number of monotone maps \(\operatorname{Ch} 1 \times \operatorname{Ch} 2 \to \operatorname{Ch} 2\)
+    \item \({3 \choose 2}\) = 3 = number of monotone maps \(\operatorname{Ch} 2 \times \operatorname{Ch} 1 \to \operatorname{Ch} 2\)
+    \item \({4 \choose 1}\) = 4 = number of monotone maps \(\operatorname{Ch} 3 \times \operatorname{Ch} 1 \to \operatorname{Ch} 2\)
+    \item \({4 \choose 2}\) = 6 = number of monotone maps \(\operatorname{Ch} 2 \times \operatorname{Ch} 2 \to \operatorname{Ch} 2\)
     \item \({4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6\)
 
-    \item Conjecture: \({n \choose k}\) = number of monotone maps from \((n - k) \times k \to 2\)
+    \item Conjecture: \({n \choose k}\) = number of monotone maps from \(\operatorname{Ch} (n - k) \times \operatorname{Ch} k \to \operatorname{Ch} 2\)
 \end{itemize}
 
 
-How do you "read it out", in order to form a function from, say, 
-\(A^3 \times B^4 \to (A + B)^7\)? This "read out" function is a sort of interpreter.
-
+So it's plausible, since the cardinalities look right, that there might be a natural correspondence. Given a function, say \(3 \times 4 \to 2\), how would you `read it out' in order to define a function from, say, \(A^3 \times B^4 \to (A + B)^7\)? This `read out' function is a sort of interpreter.
 
 \begin{theorem}
-There is a canonical bijection between monotone maps from product of a chain of length i and a chain of length j to a chain of length 2, and functions \((I \to A) \times (J \to B) \to (I + J) \to (A + B)\).
+There is a canonical bijection between \(\operatorname{Ch} i \times \operatorname{Ch} j \to \operatorname{Ch} 2\), that is, monotone maps from a product of a chain of length i and a chain of length j to a chain of length 2, and functions \((\operatorname{Ch} i \to A) \times (\operatorname{Ch} j \to B) \to \operatorname{Ch} (i + j) \to (A + B)\),
+that is, functions from pairs of functions from chains of length i to \(A\) and functions from chains of length j to \(B\) to functions from chains of length i + j to the coproduct of \(A + B\).
 \end{theorem}
 
 \begin{proof}
-We will show this by induction on I + J.
+We will show this by induction on i and j.
 
 Given a map \(f\),
 
 \begin{itemize}
-\item (The first base case) If \(I\) is zero, then project the pair to the second component, then compose it with the injection function from B to (A + B).
+\item (The first base case) If \(i = 0\), then project the pair to the second component, then compose it with the injection \(B \hookrightarrow (A + B)\).
 
-\item (The second base case) is zero, then project the pair to the first component, then compose it with the the correct injection function to inject it from A to (A + B)
+\item (The second base case) If \(j = 0\), then project the pair to the first component, then compose it with the injection \(A \hookrightarrow (A + B)\).
 
-\item Recursive case I, J are both > 0 and we have the canonical bijection for all (i + j) < (I + J).
-If f takes (I, J) to 0, then 
-we use:
+\item (Recursive case) Remember in this case we have that \(i, j\) are both greater than zero, and we have the inductive bijection for smaller pairs (TODO: what do we need regarding the concept of `smaller pairs'?)
 
 TODO: what even is this?
 
