@@ -362,6 +362,67 @@ Given sets \(X, Y\), there is a canonical bijection between the categorical copr
 TODO
 \end{proof}
 
+5. There's a correspondence regarding binomial coefficients and lattice paths.
+
+Can we build something relating the lattice path metaphor to something?
+"a lattice path corresponds to a functor from a product of chains to the chain of length 2"?
+a partition of a poset that is a product of chains into an upper set and a lower set?
+A maximal chain in a poset that is a product of chains?
+
+How do you "read it out", in order to form a function from, say, 
+A^3 \times B^4 to (A + B)^7?
+Well, suppose that there is a standard interpreter function.
+Base case: (0 \to A) \times (N \to B) \to N \to (A + B) ; project the pair to the second component, then compose it with with the inR function to inject it from B to (A + B)
+Base case 2: (N \to A) \times (0 \to B) \to N \to (A + B) ; symmetry, project the pair to the first component, then compose it with the inL function to inject it from A to (A + B).
+Recursive case: It is guaranteed that (N, M), the top of the product of the N and M chains, is in the chain.
+What about (N-1, M) and (M, N-1)? I think one of them will be in the chain, and so we can decide something,
+such as whether to recurse to
+A \times (N-1 \to A) \times (M \to B) \to N-1 \to A()
+
+Examples
+{2 \choose 1} = 2 = number of maps from chain 1 \times chain 1 to chain 2
+{3 \choose 1} = 3 = number of maps from chain 1 \times chain 2 to chain 2
+{3 \choose 2} = 3 = number of maps from chain 2 \times chain 1 to chain 2
+{4 \choose 1} = 4 = number of maps from chain 3 \times chain 1 to chain 2
+{4 \choose 2} = 6 = number of maps from chain 2 \times chain 2 to chain 2
+{4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6
+
+{n \choose k} = number of monotone maps from chain (n - k) \times chain k to chain 1
+
+Theorem:
+
+There is a canonical bijection between monotone maps from product of a chain of length i and a chain of length j to a chain of length 2, and functions (I \to A) \times (J \to B) \to (I + J) \to (A + B).
+
+Proof:
+We will show this by induction on I + J.
+
+Given a map f,
+
+Base case 1: If I is zero, then project the pair to the second component, then compose it with with the correct injection function to inject it from B to (A + B).
+
+Base case 2: J is zero, then project the pair to the first component, then compose it with the the correct injection function to inject it from A to (A + B)
+
+Recursive case: I, J are both > 0 and we have the canonical bijection for all (i + j) < (I + J).
+If f takes (I, J) to 0, then 
+we use:
+
+TODO: what even is this?
+(I \to A) \times (J \to B) \to N \to (A + B)
+= (by factoring an A out of I \to A? Need a lemma for that?)
+A \times (I-1 \to A) \times (J \to B) \to N \to (A + B)
+= 
+= (by invoking the canonical bijection recursively)
+= (by injecting A \to (A + B))
+
+If f takes (I, J) to 1, then
+we use:
+
+(I \to A) \times (J \to B) \to N \to (A + B)
+= (by factoring an A out of I \to A? Need a lemma for that?)
+A \times (I-1 \to A) \times B \times ((J-1) \to B) \to N \to (A + B)
+= (by invoking the canonical bijection recursively)
+= (by injecting A \to (A + B))
+
 %    Bibliographies can be prepared with BibTeX using amsplain,
 %    amsalpha, or (for "historical" overviews) natbib style.
 \bibliographystyle{amsplain}

@@ -1,0 +1,11 @@
+In order to say something about (a+b)^n, that is n \to a+b, a map into a coproduct,
+we need to construct a triple that we can apply the
+coproduct unversal property to; I don't think there's guaranteed to be much of anything in a generic category with a coproduct of a and b, even a category with all binary coproducts.
+
+* What if there was a terminal object in the category?
+* Alternately, what if there was a subobject classifier, 2?
+* Alternately, what if there was a Natural Numbers object in the category?
+
+Would I get all of these if I had a category with all finite coproducts, including 0?
+
+

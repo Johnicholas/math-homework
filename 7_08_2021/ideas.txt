@@ -1,4 +1,21 @@
-1. one-hot and thermometer correspondences
+1. Regarding Ax-Grothendieck:
+This is a theorem that, in certain circumstances, something that is known to be an injection, is actually a bijection.
+
+Discussed here:
+https://terrytao.wordpress.com/2009/03/07/infinite-fields-finite-fields-and-the-ax-grothendieck-theorem/
+which is elaborated on here:
+https://math.osu.edu/sites/math.osu.edu/files/AxGrothendieck.pdf
+and references this:
+https://arxiv.org/abs/0903.0517
+
+There are two simpler situations:
+1. If a function from a finite set to itself is injective, then it is bijective.
+2. If a polynomial function from the reals to themselves is injective, then it is bijective.
+
+The way the Ax-Grothendieck proof proceeds, as far as I understand it (which is not very far), is something like this: a polynomial over finite fields that is an injection is a bijection (because of the simpler situation 1),
+However, if, in the infinitary situations that Ax-Grothendieck applies to, there was a counter example, then there would be a corresponding, finitary, "shadow" counterexample, which would be a contradiction.
+
+2. one-hot and thermometer correspondences
 You might fix a correspondence 
 available between the numbers 0 through n and 
 the dimensions or basis vectors of a n-dimensional linear space.
@@ -13,42 +30,24 @@ the initial dimensions 1 and later dimensions 0, like this:
 There are N thermometer vectors spanning N dimensions.
 There are N one-hot vectors spanning N dimensions.
 
-Obviously you can convert from one to the other basis and back.
-There are a pair of 3 by 3 matrices for converting back and forth between these.
-What is the categorification of this one-hot <-> thermometer correspondence?
+I think there are a pair of 3 by 3 matrices for converting back and forth between these,
+What is the utility and/or categorification of this one-hot <-> thermometer correspondence?
 
+3. The factorial formula
 
-2. Initial thinking about categorification of the binomial theorem.
+There is a factorial formula https://en.wikipedia.org/wiki/Binomial_coefficient#Multiplicative_formula
+choose N K = N! / K! (N - K)!
+shich makes me think that something like quotienting a set of size N! such as the elements of S_N, the symmetric group on N elements,
+by some equivalence relation? relating to permutations of K things (the items being selected?) and permutations of (N-K) things
+(the spaces being left behind?).
 
-There's a simple categorification of the binomial theorem:
-
-bin 4 2 = 6
-
-an element of bin 4 2 is a subset of size 2 of the 4-set
-
-The binomial theorem 
-(a + b)^n = the sum from i = 0 to n of bin n i * a^i * b^(n - i)
-
-says something like
-
-functions from n to the disjoint union of A and B
-
-can be put into bijection with
-
-The disjoint union of a bunch of different kinds of triples
-where each triple is:
-1. an element of bin n i
-2. a function from i to a
-3. a function from (n - i) to b
-
-So an element of bin n i 
-is something like a particular way to interleave or shuffle 
-a sequence of things of size i with a sequence of things of size n - i
-
-
-3. Monoids and Commutative Monoids
+4. Monoids and Commutative Monoids
 
 I have another sense, which is that monoids and/or deterministic finite automata could be involved.
+Certainly if you have a set of strings, and then you run them through a finite automaton,
+then the states where they land will partition the set of strings.
+If you know that a string landed in a particular state, then you may be able to
+wield the state's regular expression to get a sort of decompression, or interleaving, or synchronizing function.
 
 Suppose that you have the free monoid on two generators a and b.
 Suppose that you have a finite string of a and b.
@@ -61,70 +60,39 @@ That element `is' the set-with-multiplicity.
 
 Suppose that you have a finite string of a and b.
 You can measure the length of that string.
-You can map it to the free monoid on one generator by identifying a and b.
-You can map that to the free commutative monoid on one generator.
+That is, you can map it to the free monoid on one generator by identifying a and b.
+Furhtermore, you can map that to the free commutative monoid on one generator (though that does not do much).
 
 This square commutes:
-If you start with a finite string of a and b, like abaaab
-and map it into a free commutative monoid on two generators, like a^3 b^2
-and then "measure" it (identify a and b and map it to the free commutative monoid on one generator), like 5
-then you end up at the same spot as if you had measured it (mapped to the free monoid on one generator), like 5
+If you start with a finite string of a and b, like abaaab,
+and map it into a free commutative monoid on two generators, like a^3 b^2,
+and then "measure" it (identify a and b and map it to the free commutative monoid on one generator), like 5,
+then you end up at the same spot as if you had measured it (mapped to the free monoid on one generator), like 5,
 and then enforced commutativity on that (also 5).
+That's true, but I'm not sure that it's going anywhere.
 
-The size of the preimage of a particular element of the free commutative monoid on two generators,
-in the map from the free monoid to the free commutative monoid, 
-will have something to do with the binomial function.
+The cardinality of the preimage of a particular element a^x b^y of the free commutative monoid on two generators,
+in the map from the free monoid to the free commutative monoid, will be the binomial {n+m choose n}.
 
+What's the category-theoretic analog of that statement? 
 
-`particular element' is map from 1 the terminal object to an object.
+The cardinality-analog of the preimage-analog of the element-analog of the free-commutative-monoid-analog,
+in the map from the free-monoid-analog to the free-commutative-monoid-analog
 
-What does preimage correspond to, categorically?
-A preimage is a kind of pullback.
+Maybe cardinality-analog is https://ncatlab.org/nlab/show/groupoid+cardinality
 
+Maybe preimages are a kind of pullback.
 
-Within Set, let's pick out a particular Nat object, call it nat.
-Let's look at maps to nat.
-This is the slice category Set/nat.
-What are arrows in the slice category?
-If there is a triangle a->b, a->nat, b->nat, that commuted, 
-then there is an arrow in the slice category.
-So {(a, b), (c, d)} is a function from {a, c} to {b, d}.
+A particular element is an arrow from the terminal object to an object.
 
+Freeness is a universal property, maybe the inital object in some category?
+There's a monoid to commutative monoid free+forgetful adjunction, too.
 
 
-
-If you take the left hand side (a map from N to a disjoint union of A and B),
-If you have a way of measuring an element of the left hand side,
-using only the tags, not actually the values,
-then can you figure out a disjoint union of triples,
-where the tags of the different parts in the union are the different possible measures,
-and the second and third elements of the triples are
-maps from I to A and maps from N - I to B?
+4. Look it up in nlab! https://ncatlab.org/nlab/show/binomial+theorem#combinatorial_interpretation
 
 
-What does disjoint union correspond to, categorically?
-A disjoint union is a coproduct.
 
-What is the universal property of a coproduct?
-Coproduct X1 X2 has i {1,2} : X {1,2} \to Coproduct (X 1) (X 2)
-Given any other triple of 
-1. a coproduct-alike object Y
-2. an injection-alike arrow f 1 : X1 \to Y
-3. an injection-alike arrow f 2 : X2 \to Y
-then 
-there is a unique morphism from Coproduct (X 1) (X 2) -> Y
-such that 
-i {1,2} ; f = f {1,2}
-
-Given the universal property of a coproduct, 
-what can we say about maps INTO a coproduct?
-
-In order to say something about maps INTO a coproduct,
-we need to construct a triple that we can apply the
-coproduct rule to.
-* What if there was a terminal object in the category?
-* Alternately, what if there was a subobject classifier, 2?
-* Alternately, what if there was a Natural Numbers object in the category?
 
 
 What is that thing about I and N - I?
@@ -172,17 +140,14 @@ Elements of this set are pairs.
 The left side of the pairs are `tagged' with `A' or `B', while the right hand side are tagged with `C' or `D'.
 What can we do with this?
 
-Often it's valuable, in working with data structures,
-to imagine that they are handed to us as an array of face-down cards,
-similar to a game of Memory,
-and to define an operation on the data structure,
-we need to say which cards we will turn over 
-and, depending on what we see,
-decide what we will do with the remaining cards via `bulk' operations without turning them over,
-essentially manipulating them as opaque blobs of cargo.
+
+
+
 
 In writing a proof, `turning over a card' corresponds to analysis by cases;
 In writing a program, `turning over a card' corresponds to pattern matching or definition by cases.
+
+In writing a proof, `
 
 
 In this case, what we can do that's maybe a categorification of distribution of multiplication is
@@ -215,25 +180,6 @@ such that
 i {1,2} ; f = f {1,2}
 
 
-
-Okay, popping the stack and going back to 
-
-
-Regarding Ax-Grothendieck:
-This is a theorem that, in certain circumstances,
-something that is known to be an injection,
-is actually a bijection.
-
-There are two simpler situations:
-1. An injection from a finite set to itself is a bijection.
-
-2. A polynomial function from the reals to themselves that is an injection is a bijection.
-
-The way the Ax-Grothendieck proof proceeds, as far as I understand it (which is not very far), is something like:
-1. A polynomial over finite fields that is an injection is a bijection (because an injection from a finite set to itself is a bijection).
-2. If, in the infinitary situations, that Ax Grothendieck applies to,
-there was a counter example, then there would be a finitary
-counterexample.
 
 
 
