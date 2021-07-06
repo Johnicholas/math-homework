@@ -87,24 +87,28 @@
 Let's do a proof of the binomial theorem, and walk through it,
 and see how we could do a corresponding categorified version.
 
-We take as `definitional' the Pascal's triangle recursion
+We take as `definitional' the Pascal's triangle recursion:
 \begin{align*}
 {n \choose 0} & \coloneqq 1 \\
 {n \choose n} & \coloneqq 1 \\
 {n + 1 \choose k + 1} & \coloneqq {n \choose k} + {n \choose k+1}
 \end{align*}
 
-We're aiming for a theorem, to be proved inductively, that
+We're aiming for this theorem:
 \[
 (a + b)^n = \sum_{i=0}^n {n \choose i} a^i b^{n-i}
 \]
 
+We will prove it inductively.
+
 First we investigate the first few cases of the binomial theorem. In the \(n = 1\) case,
 \begin{align*}
-(a + b)^1 & = a + b \\ % base case of exponentiation
-& = 1 \times 1 \times b + 1 \times a \times 1 \\ % 1 as identity of product
-& = {1 \choose 0} a^0 \times b^{1-0} + {1 \choose 1} \times a^1 \times b^{1-1} \\ % base cases of binomial and exponentiation several times
-& = \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i} % rule of introduction of summation notation?
+(a + b)^1 = & a + b \tag{base case of exp} \\ 
+= & 1 \times 1 \times b + 1 \times a \times 1 \tag{1 as identity of product} \\
+= & {1 \choose 0} \times 1 \times b + {1 \choose 1} \times a \times 1 \tag{base case of binomial, twice} \\
+= & {1 \choose 0} \times a^0 \times b^1 + {1 \choose 1} \times a^1 \times b^0 \tag{base cases of exp, four times} \\
+= & {1 \choose 0} \times a^0 \times b^{1-0} + {1 \choose 1} \times a^1 \times b^{1-1} \tag{properties of subtraction?} \\
+= & \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i} \tag{big-sigma introduction?}
 \end{align*}
 
 In the \(n = 2\) case,
@@ -115,9 +119,12 @@ In the \(n = 2\) case,
 & = \sum_{i=0}^n {2 \choose i} * a^i * b^{1-i} % rule of introduction of summation notation?
 \end{align*}
 
-In the inductive case, we assume that the binomial theorem is true up to a point \(n\), and we expand the left hand and right hand sides until they meet up.
+In the inductive case, we assume that the binomial theorem is true up to a point \(n\), and we show it also is true at \(n+1\). To handwave a bit, the algebra is using the associative, commutative, and distributive properties of addition and multiplication
+with an eye to `register' or `align' two sequences of terms, leaving only a couple very simple terms hanging off the two ends.
+Once they're aligned we can get the coefficients to combine using the recursive definition of the binomial coefficients.
+Finally we recognize the three-term expression consisting of the simple terms on each side of the now-simple middle sequence, as an example of the kind of expression we were looking for.
 \begin{align*}
-& (a + b)^{n+1} \\ 
+(a + b)^{n+1} 
 & = (a + b) \times (\sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i}) \\ 
 & = (b \times \sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i}) + (a \times \sum_{j=0}^n {n \choose j} \times a^j \times b^{n-j}) \\
 & = \left(\sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i+1}\right) + \left(\sum_{j=0}^n {n \choose j} \times a^{j+1} \times b^{n-j}\right) \\
@@ -128,18 +135,12 @@ In the inductive case, we assume that the binomial theorem is true up to a point
 & = \sum_{i=0}^{n+1} {n+1 \choose i} \times a^i \times b^{n+1-i}
 \end{align*}
 
-To handwave a bit, what we're doing is using the associative, commutative, and distributive properties of addition and multiplication
-with an eye to `register' or `align' the two sequences of terms that we have,
-leaving only a couple very simple terms hanging off the two ends.
-Then once they're aligned we can get the coefficients to combine using the definition of choose.
-Finally we recognize the three-term expression as an example of the kind of expression we were looking for.
 
-In doing these algebraic manipulations, I am realizing that I am using the big-sigma indexed sum notation only intuitively or informally,
-by imagining expanding the big-sigma indexed sum to a vaguely large finite binary sum and,
-if it seems plausible according to my imagination (grounded in manipulating associative-commutative binary sums)
-that a manipulation should be legal, then I take it.
 
-I'm not entirely clear on what axioms license these manipulations, and big-sigma indexed sum starts to feel like an alien entity.
+In doing these algebraic manipulations, I am realizing that I am using the big-sigma indexed sum notation only by imagining expanding the big-sigma indexed sum to a vague large finite binary sum and if it seems plausible according to my imagination (grounded in manipulating associative-commutative binary sums)
+that a manipulation should be `legal', then I take it as correct.
+
+I'm not entirely clear on what axioms license these manipulations, and big-sigma indexed sum starts to feel like an alien entity, that maybe I should investigate.
 
 \section{What analogies do we have to work with?}
 
@@ -158,19 +159,13 @@ The algebra in the proof of the the binomial theorem used a lot of a big-sigma i
 
 \subsection{Meandering about C programming}
 
-There's a metaphor that I think about, between category theory and particularly `fancy coproducts' and C programming.
+There's a metaphor that I think about, between category theory and and C programming.
 (I am assuming some familiarity with programming, programming languages, and C here;
 if you are unfamiliar with them, this metaphor will not help.)
-In C programming, there are a few basic types including integers and characters,
-and a few type constructors, such as arrays, structs, and unions.
-Types in programming are a bit like sets in set theory,
-and a bit like objects in category theory.
+In C, there are a few basic types including integers and characters, and a few type constructors, such as arrays,
+structs, and unions. Types in programming are a bit like sets in set theory, and a bit like objects in category theory.
 
-Structs in C are a bit like products in set theory, but they're even more
-similar to definitions of the form "A thing consists of this, that, and the other".
-They're pretty safe and comfortable. One thing to mention is that you can view them
-both as products and as functions from (finite) index sets with an attached guarantee.
-You can view something like:
+Structs in C are a bit like products in set theory, but they're even more similar to mathematical definitions of the form "A \emph{thing} consists of \emph{this}, \emph{that}, and \emph{the other}". The dimensions do not have a first/second or left/right or 1,2 quality. They have names. Structs are pretty safe and comfortable. 
 
 \begin{lstlisting}[language=C]
 struct PointAndLetter {
@@ -178,12 +173,6 @@ struct PointAndLetter {
     char c;
 };
 \end{lstlisting}
-
-in at least two ways:
-\begin{enumerate}
-\item as a product \(int \times char\)
-\item as a function \(\{`x', `c'\} \to (int + char)\) with an attached guarantee, that if you apply it to x it will yield an int, while if you apply it to c will yield a char.
-\end{enumerate}
 
 Arrays in C are somewhat like  partial functions from Nat to some other type,
 which are guaranteed to be defined on some initial section of Nat such as [0..128).
@@ -207,10 +196,9 @@ int sum(int toSum[], int len) {
 \end{lstlisting}
 
 Since the right thing to do is to communicate the size of the array as Nat `beside' the array,
-you might describe the type of the array using an "inverse product" notation.
-\(Array~of~X\) is a type somewhat like \((Nat \to X) / Nat\),
-that is, it's a type that, if you took a cross product between this type and Nat,
-might act a bit like a function from Nat to X.
+you might describe the type of the array using an `inverse product' notation.
+\(\operatorname{Array} X\) is a type somewhat like \((\mathbb{N} \to X) / \mathbb{N}\), or \(X^* / \mathbb{N}\), where we are using Kleene star to mean the type constructor for finite lists. That is, it's a type that, if you took a cross product between this type and \(\mathbb{N}\),
+might act a bit like a function \(\mathbb{N} \to X\) (but you have to promise not to evaluate it on values beyond the size) or like \(X^*\), the set of finite lists of \(X\).
 
 Similarly, unions in C are not as safe and convenient as tagged unions in other programming languages,
 or coproducts in category theory. They're a bit like untagged unions in set theory.
@@ -218,8 +206,7 @@ If you have some types and some names for them, you can construct the union type
 (just like if you have some types and some names for them, you can construct the struct type).
 If you have an element of any of those types, there is a standard map into the union type
 (like a coproduct). However, you cannot in general inspect a union in order to determine which
-thing it came from. So right thing to do is to communicate a union together with a tag or `kind' field,
-often in a struct.
+thing it came from. So right thing to do is to communicate a union together with a `tag' or `kind' field, often in a struct.
 
 \begin{lstlisting}[language=C]
 
@@ -232,18 +219,32 @@ struct TaggedIntOrChar {
 };
 \end{lstlisting}
 
-Similar to array, you might describe union as resulting in some sort of 'inverse product',
+Similar to Array, you might describe Union as resulting in some sort of `inverse product',
 where you can't do much with a bare union. If you combine it with a kind field,
-it acts like a real coproduct. `Union of Int and Char' is a type somewhat 
-like `(Int + Char) / (1 + 1)'.
+it acts like a coproduct. `Union of Int and Char' is a type somewhat 
+like \((\operatorname{Int} + \operatorname{Char}) / (1 + 1)\).
 
-The point of this meandering about datatypes is to motivate some bijections,
-where we manipulate tags, build data structures out of tags.
+The point of this meandering about datatypes is to motivate or ground the stuff that we're trying to do later.
+
+We are going to:
+\begin{enumerate}
+\item View a coproduct as a product of a tag and a residual type, with the property that elements of the residual can be `rehydrated', combined with a corresponding tag, to yield the original element of the coproduct.
+\item Build data structures out of tags.
+\end{enumerate}
+
+\subsection{The Memory metaphor}
+In defining a function, it's sometimes valuable to imagine an array of face-down cards, like the game of Memory. We want to define a procedure where we turn over a few specific cards, and then, 
+based on what we see, move the remaining face-down cards around without looking at them.
+
+In writing a proof, `turning over a card' corresponds to analysis by cases. In writing a program, `turning over a card' corresponds to pattern matching or definition by cases. In writing a proof, `moving a card without turning it over` means doing something like applying an existing function, or pre or post composing a function to yield another function. In writing a program, `moving a card without turning it over` corresponds to a variable being introduced and then used without being decomposed by pattern matching. 
+
 
 \section{Categorifying the Binomial Theorem in Set}
 
 TODO: a canonical bijection is an explicitly given map (we're not asking the reader to make a choice) which has an inverse.
 I am not sure I know how to `work up to unique isomorphism'.
+
+\subsection{lemmas}
 
 Lifting \(x \times 1 = x\) to Set:
 
@@ -293,7 +294,7 @@ Given sets X, Y, Z, there is a canonical bijection between \(X \times (Y + Z)\) 
 A generic element of \(X \times (Y + Z)\) is a pair, the second part of which has a tag, either `Y' or `Z'. If it had tag `Y', we map it to `XY'. If it came from `Z', we map it to `XZ'. In the opposite direction, if was tagged with `XY', we dissect it into its X and Y components, tag the Y component with `Y', and compose to form an element of \(X \times (Y + Z\). 
 \end{proof}
 
-\section{Fancy Coproducts}
+\subsection{Fancy Coproducts}
 
 Let's talk about what we need to do with Fancy Coproducts.
 
@@ -331,20 +332,16 @@ where first we build a Fancy Coproduct that corresponds to nothing (an initial o
 \end{align*}
 
 
-x · y = y · x
-x · (y + z) = x · y + x ·z
-1x = 1
-x1 = x
-(x · y)z = xz · yz
-(xy)z = xy · z.
-
-
-(x · y) · z = x · (y · z)
+% 4. x * y = y * x
+% 5. x * (y + z) = x * y + x * z
+% x^1 = x
+% 10. (x * y)^z = x^z * y^z
+% 11. (x^y)^z = x^{y * z}.
 
 Lifting \((x + y) + z = x + (y + z)\) to Set:
 
 \begin{theorem}
-Given sets X, Y, Z, there is a canonical bijection between the categorical coproduct \(X + Y) + Z\) and the categorical coproduct \(X + (Y + Z)\).
+Given sets \(X, Y, Z\), there is a canonical bijection between the categorical coproduct \((X + Y) + Z\) and the categorical coproduct \(X + (Y + Z)\).
 \end{theorem}
 
 \begin{proof}
@@ -362,66 +359,71 @@ Given sets \(X, Y\), there is a canonical bijection between the categorical copr
 TODO
 \end{proof}
 
-5. There's a correspondence regarding binomial coefficients and lattice paths.
+\subsection{Meandering about lattice paths}
 
-Can we build something relating the lattice path metaphor to something?
-"a lattice path corresponds to a functor from a product of chains to the chain of length 2"?
-a partition of a poset that is a product of chains into an upper set and a lower set?
-A maximal chain in a poset that is a product of chains?
+There's a correspondence regarding binomial coefficients and lattice paths. Can we build something relating the lattice path metaphor to something? Maybe a lattice path corresponds to a partition of a product of chains into an upper and lower set? a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
+
+(Alternately, maybe we have a correspondence between a maximal chain within a poset that is a product of chains, and a binomial coefficient?)
+
+Examples:
+\begin{itemize}
+    \item \({2 \choose 1}\) = 2 = number of monotone maps \(1 \times 1 \to 2\)
+    \item \({3 \choose 1}\) = 3 = number of monotone maps \(1 \times 2 \to 2\)
+    \item \({3 \choose 2}\) = 3 = number of monotone maps \(2 \times 1 \to 2\)
+    \item \({4 \choose 1}\) = 4 = number of monotone maps \(3 \times 1 \to 2\)
+    \item \({4 \choose 2}\) = 6 = number of monotone maps \(2 \times 2 \to 2\)
+    \item \({4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6\)
+
+    \item Conjecture: \({n \choose k}\) = number of monotone maps from \((n - k) \times k \to 2\)
+\end{itemize}
+
 
 How do you "read it out", in order to form a function from, say, 
-A^3 \times B^4 to (A + B)^7?
-Well, suppose that there is a standard interpreter function.
-Base case: (0 \to A) \times (N \to B) \to N \to (A + B) ; project the pair to the second component, then compose it with with the inR function to inject it from B to (A + B)
-Base case 2: (N \to A) \times (0 \to B) \to N \to (A + B) ; symmetry, project the pair to the first component, then compose it with the inL function to inject it from A to (A + B).
-Recursive case: It is guaranteed that (N, M), the top of the product of the N and M chains, is in the chain.
-What about (N-1, M) and (M, N-1)? I think one of them will be in the chain, and so we can decide something,
-such as whether to recurse to
-A \times (N-1 \to A) \times (M \to B) \to N-1 \to A()
+\(A^3 \times B^4 \to (A + B)^7\)? This "read out" function is a sort of interpreter.
 
-Examples
-{2 \choose 1} = 2 = number of maps from chain 1 \times chain 1 to chain 2
-{3 \choose 1} = 3 = number of maps from chain 1 \times chain 2 to chain 2
-{3 \choose 2} = 3 = number of maps from chain 2 \times chain 1 to chain 2
-{4 \choose 1} = 4 = number of maps from chain 3 \times chain 1 to chain 2
-{4 \choose 2} = 6 = number of maps from chain 2 \times chain 2 to chain 2
-{4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6
 
-{n \choose k} = number of monotone maps from chain (n - k) \times chain k to chain 1
+\begin{theorem}
+There is a canonical bijection between monotone maps from product of a chain of length i and a chain of length j to a chain of length 2, and functions \((I \to A) \times (J \to B) \to (I + J) \to (A + B)\).
+\end{theorem}
 
-Theorem:
-
-There is a canonical bijection between monotone maps from product of a chain of length i and a chain of length j to a chain of length 2, and functions (I \to A) \times (J \to B) \to (I + J) \to (A + B).
-
-Proof:
+\begin{proof}
 We will show this by induction on I + J.
 
-Given a map f,
+Given a map \(f\),
 
-Base case 1: If I is zero, then project the pair to the second component, then compose it with with the correct injection function to inject it from B to (A + B).
+\begin{itemize}
+\item (The first base case) If \(I\) is zero, then project the pair to the second component, then compose it with the injection function from B to (A + B).
 
-Base case 2: J is zero, then project the pair to the first component, then compose it with the the correct injection function to inject it from A to (A + B)
+\item (The second base case) is zero, then project the pair to the first component, then compose it with the the correct injection function to inject it from A to (A + B)
 
-Recursive case: I, J are both > 0 and we have the canonical bijection for all (i + j) < (I + J).
+\item Recursive case I, J are both > 0 and we have the canonical bijection for all (i + j) < (I + J).
 If f takes (I, J) to 0, then 
 we use:
 
 TODO: what even is this?
-(I \to A) \times (J \to B) \to N \to (A + B)
-= (by factoring an A out of I \to A? Need a lemma for that?)
-A \times (I-1 \to A) \times (J \to B) \to N \to (A + B)
-= 
-= (by invoking the canonical bijection recursively)
-= (by injecting A \to (A + B))
+
+\begin{align*}
+(I \to A) \times (J \to B) \to N \to (A + B) \\
+= \tag{by factoring an A out of \(I \to A\)? Need a lemma for that?} \\
+A \times (I-1 \to A) \times (J \to B) \to N \to (A + B) \\
+= \\
+= \tag{by invoking the canonical bijection recursively} \\
+= \tag{by injecting \(A \to (A + B)\)}
+\end{align*}
 
 If f takes (I, J) to 1, then
 we use:
 
-(I \to A) \times (J \to B) \to N \to (A + B)
-= (by factoring an A out of I \to A? Need a lemma for that?)
-A \times (I-1 \to A) \times B \times ((J-1) \to B) \to N \to (A + B)
-= (by invoking the canonical bijection recursively)
-= (by injecting A \to (A + B))
+\begin{align*}
+(I \to A) \times (J \to B) \to N \to (A + B) \\
+= \tag{by factoring an A out of \(I \to A\)? Need a lemma for that?} \\
+A \times (I-1 \to A) \times B \times ((J-1) \to B) \to N \to (A + B) \\
+= \tag{by invoking the canonical bijection recursively} \\
+= \tag{by injecting \(A \to (A + B)\)} \\
+\end{align*}
+\end{itemize}
+
+\end{proof}
 
 %    Bibliographies can be prepared with BibTeX using amsplain,
 %    amsalpha, or (for "historical" overviews) natbib style.

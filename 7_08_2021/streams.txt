@@ -1,0 +1,23 @@
+There is a thing, finite integer sequences with pointwise addition and convolution product, which is related to a similar thing, infinite integer sequences with pointwise addition and convolution product. There's a power series perspective on these, and relatedly a generating functions perspective.
+
+There are interesting little gadgets that continuously consume and produce these sequences and some interesting loopy diagrams that accomplish things and some algebra of slipping parts of these loopy diagrams around each other in order to demonstrate things.
+
+For example, sin^2 + cos^2 = 1, or something about continued fractions.
+
+See:
+https://www.cs.ox.ac.uk/people/ralf.hinze/publications/CSC.pdf
+
+and
+
+http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/cfINTRO.html
+
+and
+
+HAKMEM https://dspace.mit.edu/handle/1721.1/6086
+
+Particularly, the Gosper Continued Fraction Arithmetic appendix to HAKMEM: https://perl.plover.com/classes/cftalk/INFO/gosper.txt
+
+The Gosper Continued Fraction Arithmetic appendix is discussed with some Mathematica code here: https://srossd.com/posts/2020-09-18-gosper-1/
+
+The Gosper Continued Fraction Arithmetic appendix is discussed with some C code here:
+https://perl.plover.com/classes/cftalk/

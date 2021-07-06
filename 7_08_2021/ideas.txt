@@ -27,7 +27,7 @@ the initial dimensions 1 and later dimensions 0, like this:
 (1, 0, 0, ..., 0)
 (1, 1, 0, 0, ..., 0)
 (1, 1, ..., 1)
-There are N thermometer vectors spanning N dimensions.
+There are N thermometer vectors spanning N dimensions, or N+1 if we include the all-zeroes vector as a thermometer vector?).
 There are N one-hot vectors spanning N dimensions.
 
 I think there are a pair of 3 by 3 matrices for converting back and forth between these,
@@ -169,15 +169,12 @@ such that
 i {AC, AD, BC, BD} ; f = f {AC, AD, BC, BD}
 
 
-Coproduct X1 X2 has i {1,2} : X {1,2} \to Coproduct (X 1) (X 2)
-Given any other triple of 
-1. a coproduct-alike object Y
-2. an injection-alike arrow f 1 : X1 \to Y
-3. an injection-alike arrow f 2 : X2 \to Y
-then 
-there is a unique morphism from Coproduct (X 1) (X 2) -> Y
-such that 
-i {1,2} ; f = f {1,2}
+
+
+
+
+
+
 
 
 
