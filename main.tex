@@ -23,6 +23,7 @@
 %\usepackage[cmtip,all]{xy}
 \usepackage{mathtools} % for \coloneqq
 \usepackage{listings} % for \lstlisting
+\usepackage[bb=boondox]{mathalfa} % for \mathbb{0}
 
 %     Update the information and uncomment if AMS is not the copyright
 %     holder.
@@ -76,7 +77,12 @@
 
 %    Abstract is required.
 \begin{abstract}
-\emph{TODO}: find a categorification\footnote{https://en.wikipedia.org/wiki/Categorification} of the binomial theorem
+We try to find a categorification\footnote{https://en.wikipedia.org/wiki/Categorification} of the binomial theorem,
+and find two plausible candidates. \({n \choose k}\) corresponds to
+\begin{itemize}
+    \item sequences of zero or one of length \(n\) containing \(k\) ones, and
+    \item functors of ordinals \((n-k) \times k \to \mathbb{2}\).
+\end{itemize} 
 \end{abstract}
 
 \maketitle
@@ -101,28 +107,42 @@ We're aiming for this theorem:
 
 We will prove it inductively.
 
-First we investigate the first few cases of the binomial theorem. In the \(n = 1\) case,
+First we investigate the first few cases of the binomial theorem. In the \(n = 1\) case:
+%\begin{align*}
+%(a + b)^1 = & a + b \tag{base case of exp} \\ 
+%= & 1 \times 1 \times b + 1 \times a \times 1 \tag{1 as identity of product} \\
+%= & {1 \choose 0} \times 1 \times b + {1 \choose 1} \times a \times 1 \tag{base case of binomial, twice} \\
+%= & {1 \choose 0} \times a^0 \times b^1 + {1 \choose 1} \times a^1 \times b^0 \tag{base cases of exp, four times} \\
+%= & {1 \choose 0} \times a^0 \times b^{1-0} + {1 \choose 1} \times a^1 \times b^{1-1} \tag{properties of subtraction?} \\
+%= & \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i} \tag{big-sigma introduction?}
+%\end{align*}
 \begin{align*}
-(a + b)^1 = & a + b \tag{base case of exp} \\ 
-= & 1 \times 1 \times b + 1 \times a \times 1 \tag{1 as identity of product} \\
-= & {1 \choose 0} \times 1 \times b + {1 \choose 1} \times a \times 1 \tag{base case of binomial, twice} \\
-= & {1 \choose 0} \times a^0 \times b^1 + {1 \choose 1} \times a^1 \times b^0 \tag{base cases of exp, four times} \\
-= & {1 \choose 0} \times a^0 \times b^{1-0} + {1 \choose 1} \times a^1 \times b^{1-1} \tag{properties of subtraction?} \\
-= & \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i} \tag{big-sigma introduction?}
+(a + b)^1 = & a + b \\ 
+%= & 1  1  b + 1  a  1 \\
+%= & {1 \choose 0}  1  b + {1 \choose 1}  a  1  \\
+= & {1 \choose 0}  a^0  b^1 + {1 \choose 1}  a^1  b^0  \\
+%= & {1 \choose 0}  a^0  b^{1-0} + {1 \choose 1}  a^1  b^{1-1}  \\
+= & \sum_{i=0}^n {1 \choose i} * a^i * b^{1-i}
 \end{align*}
 
-In the \(n = 2\) case,
+In the \(n = 2\) case:
+%\begin{align*}
+%(a + b)^2 & = b^2 + 2 \times a \times b + a^2 \tag{distribution of multiplication over addition} \\
+%& = 1 \times 1 \times b^2 + 2 \times a \times b + 1 \times a^2 \times 1 \tag{1 is identity of product} \\
+%& = {2 \choose 0} \times a^0 \times b^{2-0} + {2 \choose 1} \times a^1 \times b^{2-1} + {2 \choose 2} \times a^2 \times b^{2-2} \tag{???} \\
+%& = \sum_{i=0}^n {2 \choose i} * a^i * b^{1-i} \tag{big-sgima introduction}
+%\end{align*}
 \begin{align*}
-(a + b)^2 & = b^2 + 2 \times a \times b + a^2 \\ % distribution of multiplication over addition
-& = 1 \times 1 \times b^2 + 2 \times a \times b + 1 \times a^2 \times 1 \\
-& = {2 \choose 0} \times a^0 \times b^{2-0} + {2 \choose 1} \times a^1 \times b^{2-1} + {2 \choose 2} \times a^2 \times b^{2-2} \\
-& = \sum_{i=0}^n {2 \choose i} * a^i * b^{1-i} % rule of introduction of summation notation?
+(a + b)^2 & = b^2 + 2  a  b + a^2 \\
+% & = 1  1  b^2 + 2  a  b + 1  a^2  1 \\
+& = {2 \choose 0}  a^0  b^{2-0} + {2 \choose 1}  a^1  b^{2-1} + {2 \choose 2}  a^2  b^{2-2} \\
+& = \sum_{i=0}^n {2 \choose i} * a^i * b^{1-i}
 \end{align*}
 
-In the inductive case, we assume that the binomial theorem is true up to a point \(n\), and we show it also is true at \(n+1\). To handwave a bit, the algebra is using the associative, commutative, and distributive properties of addition and multiplication
-with an eye to `register' or `align' two sequences of terms, leaving only a couple very simple terms hanging off the two ends.
-Once they're aligned we can get the coefficients to combine using the recursive definition of the binomial coefficients.
-Finally we recognize the three-term expression consisting of the simple terms on each side of the now-simple middle sequence, as an example of the kind of expression we were looking for.
+In the inductive case, we assume that the binomial theorem is true up to a point \(n\), and we show it also is true at \(n+1\). To handwave a bit, we are using the associative, commutative, and distributive properties of addition and multiplication
+ to `register' or `align' two sequences of terms, leaving only a couple very simple terms hanging off the two ends.
+Once they're aligned we can get the corresponding binomial coefficients to combine using the recursive definition of the binomial coefficients.
+Finally we recognize the expression consisting of the simple terms on each side of the simplified middle sequence as an example of the inductive formula we were looking for.
 \begin{align*}
 (a + b)^{n+1} 
 & = (a + b) \times (\sum_{i=0}^n {n \choose i} \times a^i \times b^{n-i}) \\ 
@@ -135,12 +155,10 @@ Finally we recognize the three-term expression consisting of the simple terms on
 & = \sum_{i=0}^{n+1} {n+1 \choose i} \times a^i \times b^{n+1-i}
 \end{align*}
 
+In doing these algebraic manipulations, I am realizing that I am using the big-sigma indexed sum notation only by imagining expanding the big-sigma indexed sum to a vague large finite binary sum and if it seems plausible according to my imagination (which is grounded in manipulating binary associative-commutative sums)
+that a manipulation should be legal, then I take it as legal.
 
-
-In doing these algebraic manipulations, I am realizing that I am using the big-sigma indexed sum notation only by imagining expanding the big-sigma indexed sum to a vague large finite binary sum and if it seems plausible according to my imagination (grounded in manipulating associative-commutative binary sums)
-that a manipulation should be `legal', then I take it as correct.
-
-I'm not entirely clear on what axioms license these manipulations, and big-sigma indexed sum starts to feel like an alien entity, that maybe I should investigate.
+I'm not entirely clear on what axioms license these algebraic manipulations, and big-sigma indexed sum starts to feel like an alien entity, that maybe I should investigate.
 
 \section{What analogies do we have to work with?}
 
@@ -148,14 +166,11 @@ Well, the big three are:
 \begin{itemize}
     \item arithmetic product corresponds to cartesian or categorical product,
     \item arithmetic sum corresponds to disjoint union or categorical coproduct, and
-    \item arithmetic exponentiation corresponds to constructing the set of functions from one set to another.
+    \item arithmetic exponentiation corresponds to the set of functions from one set to another.
 \end{itemize}
 
-To categorify the binomial theorem, we want to extend these correspondences with another, ending up with a bijection that `explains'\footnote{in the narrow technical sense that if we take cardinalities of each side of the bijection, we get the
-binomial theorem; it's not necessarily a clarifying or helpful explanation.}
-the binomial theorem.
-
-The algebra in the proof of the the binomial theorem used a lot of a big-sigma indexed sum, which seems like it is going to correspond to some sort of `fancy coproduct'.
+To categorify the binomial theorem, we want to extend these correspondences with another, ending up with a bijection that `explains'\footnote{In the narrow technical sense that if we take cardinalities of each side of the bijection, we get the
+binomial theorem; it's not necessarily a clarifying or helpful explanation.} the binomial theorem, and in particular yields a concrete set of cardinality \({n \choose k}\).
 
 \subsection{Meandering about C programming}
 
@@ -165,7 +180,7 @@ if you are unfamiliar with them, this metaphor will not help.)
 In C, there are a few basic types including integers and characters, and a few type constructors, such as arrays,
 structs, and unions. Types in programming are a bit like sets in set theory, and a bit like objects in category theory.
 
-Structs in C are a bit like products in set theory, but they're even more similar to mathematical definitions of the form "A \emph{thing} consists of \emph{this}, \emph{that}, and \emph{the other}". The dimensions do not have a first/second or left/right or 1,2 quality. They have names. Structs are pretty safe and comfortable. 
+Structs in C are a bit like products in set theory, but they're even more similar to mathematical definitions of the form "A \emph{thing} consists of \emph{this}, \emph{that}, and \emph{the other}". The different dimensions do not have a first/second or left/right or 0,1 quality; they have names. Structs are pretty safe and comfortable. 
 
 \begin{lstlisting}[language=C]
 struct PointAndLetter {
@@ -294,7 +309,7 @@ Given sets X, Y, Z, there is a canonical bijection between \(X \times (Y + Z)\) 
 A generic element of \(X \times (Y + Z)\) is a pair, the second part of which has a tag, either `Y' or `Z'. If it had tag `Y', we map it to `XY'. If it came from `Z', we map it to `XZ'. In the opposite direction, if was tagged with `XY', we dissect it into its X and Y components, tag the Y component with `Y', and compose to form an element of \(X \times (Y + Z\). 
 \end{proof}
 
-\subsection{Fancy Coproducts}
+\section{Fancy Coproducts}
 
 Let's talk about what we need to do with Fancy Coproducts.
 
@@ -378,7 +393,13 @@ Examples:
 \end{itemize}
 
 
-So it's plausible, since the cardinalities look right, that there might be a natural correspondence. Given a function, say \(3 \times 4 \to 2\), how would you `read it out' in order to define a function from, say, \(A^3 \times B^4 \to (A + B)^7\)? This `read out' function is a sort of interpreter.
+So it's plausible, since the cardinalities look right, that there might be a natural correspondence. Given a map, say \(3 \times 4 \to 2\), how would you `read it out' in order to define a function from, say, \(A^3 \times B^4 \to (A + B)^7\)? \marginpar{This `read out' function looks to a programmer like a kind of interpreter.}
+
+Consider where the functor takes the pair (bottom, top). If (bottom, top) goes to bottom, then the functor also takes (bottom, x) to bottom for all x. If (bottom, top) goes to top, then the functor also takes (x, top) to top.
+
+So the restriction of the domain of the functor doesn't lose any additional information.\marginpar{This `doesn't lose information' concept is interesting, and this step is weak!}
+
+So functors \(i \times j \to 2\), where \(i\) and \(j\) are both greater than 0, have a bijection with \(((i-1) \times j \to 2) + (i \times (j-1) \to 2)\).
 
 \begin{theorem}
 There is a canonical bijection between \(\operatorname{Ch} i \times \operatorname{Ch} j \to \operatorname{Ch} 2\), that is, monotone maps from a product of a chain of length i and a chain of length j to a chain of length 2, and functions \((\operatorname{Ch} i \to A) \times (\operatorname{Ch} j \to B) \to \operatorname{Ch} (i + j) \to (A + B)\),
@@ -394,31 +415,35 @@ Given a map \(f\),
 \item (The first base case) If \(i = 0\), then project the pair to the second component, then compose it with the injection \(B \hookrightarrow (A + B)\).
 
 \item (The second base case) If \(j = 0\), then project the pair to the first component, then compose it with the injection \(A \hookrightarrow (A + B)\).
-
-\item (Recursive case) Remember in this case we have that \(i, j\) are both greater than zero, and we have the inductive bijection for smaller pairs (TODO: what do we need regarding the concept of `smaller pairs'?)
-
-TODO: what even is this?
-
-\begin{align*}
-(I \to A) \times (J \to B) \to N \to (A + B) \\
-= \tag{by factoring an A out of \(I \to A\)? Need a lemma for that?} \\
-A \times (I-1 \to A) \times (J \to B) \to N \to (A + B) \\
-= \\
-= \tag{by invoking the canonical bijection recursively} \\
-= \tag{by injecting \(A \to (A + B)\)}
-\end{align*}
-
-If f takes (I, J) to 1, then
-we use:
-
-\begin{align*}
-(I \to A) \times (J \to B) \to N \to (A + B) \\
-= \tag{by factoring an A out of \(I \to A\)? Need a lemma for that?} \\
-A \times (I-1 \to A) \times B \times ((J-1) \to B) \to N \to (A + B) \\
-= \tag{by invoking the canonical bijection recursively} \\
-= \tag{by injecting \(A \to (A + B)\)} \\
-\end{align*}
 \end{itemize}
+
+Remaining is the recursive case.
+
+Remember in this case we have that \(i, j\) are both greater than zero, and we have the inductive bijection for smaller pairs (TODO: what do we need regarding the concept of `smaller pairs'?)
+
+We apply the 
+
+%TODO: what even is this?
+
+%\begin{align*}
+%(I \to A) \times (J \to B) \to N \to (A + B) \\
+%= \tag{by factoring an A out of \(I \to A\)? Need a lemma for that?} \\
+%A \times (I-1 \to A) \times (J \to B) \to N \to (A + B) \\
+%= \\
+%= \tag{by invoking the canonical bijection recursively} \\
+%= \tag{by injecting \(A \to (A + B)\)}
+%\end{align*}
+
+%If f takes (I, J) to 1, then
+%we use:
+
+%\begin{align*}
+%(I \to A) \times (J \to B) \to N \to (A + B) \\
+%= \tag{by factoring an A out of \(I \to A\)? Need a lemma for that?} \\
+%A \times (I-1 \to A) \times B \times ((J-1) \to B) \to N \to (A + B) \\
+%= \tag{by invoking the canonical bijection recursively} \\
+%= \tag{by injecting \(A \to (A + B)\)} \\
+%\end{align*}
 
 \end{proof}
 
