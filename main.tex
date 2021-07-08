@@ -25,6 +25,9 @@
 \usepackage{listings} % for \lstlisting
 \usepackage[bb=boondox]{mathalfa} % for \mathbb{0}
 
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
 %     Update the information and uncomment if AMS is not the copyright
 %     holder.
 %\copyrightinfo{2009}{American Mathematical Society}
@@ -81,7 +84,7 @@ We try to find a categorification\footnote{https://en.wikipedia.org/wiki/Categor
 and find some plausible candidates. \({n \choose k}\) might correspond to
 \begin{itemize}
     \item sequences of zero or one of length \(n\) containing \(k\) ones, and
-    \item functors of ordinals \(\delta (n-k) \times \delta k \to \delta 2\).
+    \item functors of ordinals \(\Delta (n-k) \times \Delta k \to \Delta 2\).
     % \item total orders of sets of size \(n\), modulo permutations that fix a subset of size \(k).
 \end{itemize} 
 \end{abstract}
@@ -173,7 +176,7 @@ Well, the big three are:
 To categorify the binomial theorem, we want to extend these correspondences with another, ending up with a bijection that `explains'\footnote{In the narrow technical sense that if we take cardinalities of each side of the bijection, we get the
 binomial theorem; it's not necessarily a clarifying or helpful explanation.} the binomial theorem, and in particular yields a concrete set of cardinality \({n \choose k}\).
 
-\subsection{Meandering about C programming}
+\subsection{The C programming metaphor}
 
 There's a metaphor that I think about, between category theory and and C programming.
 (I am assuming some familiarity with programming, programming languages, and C here;
@@ -242,9 +245,9 @@ like \((\operatorname{Int} + \operatorname{Char}) / (1 + 1)\).
 
 The point of this meandering about datatypes is to motivate or ground the stuff that we're trying to do later.
 
-We are going to:
+We are hoping to:
 \begin{enumerate}
-\item View a coproduct as a product of a tag and a residual type, with the property that elements of the residual can be `rehydrated', combined with a corresponding tag, to yield the original element of the coproduct.
+\item View a coproduct as a product of a tag and a residual type, with the property that elements of the residual can be `rehydrated' or `decompressed' that is, combined with a corresponding tag, to yield the original element of the coproduct.
 \item Build data structures out of tags.
 \end{enumerate}
 
@@ -254,13 +257,31 @@ based on what we see, move the remaining face-down cards around without looking 
 
 In writing a proof, `turning over a card' corresponds to analysis by cases. In writing a program, `turning over a card' corresponds to pattern matching or definition by cases. In writing a proof, `moving a card without turning it over` means doing something like applying an existing function, or pre or post composing a function to yield another function. In writing a program, `moving a card without turning it over` corresponds to a variable being introduced and then used without being decomposed by pattern matching. 
 
+\subsection{The Lattice Path metaphor}
 
-\section{Categorifying the Binomial Theorem in Set}
+There's a standard metaphor or story regarding binomial coefficients, that they count how many ways it is to get to a point on a grid, via, for example, `north' and `east' steps; Pascal's Triangle makes the correspondence very clear. Can we build something relating the lattice path metaphor to something? Visualizing the path as extending from the left corner of a diamond to the right corner, maybe we can `shade in' the left side of the path, and say that a lattice path corresponds to a partition of a product of chains into an upper and a lower set? And a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
 
-TODO: a canonical bijection is an explicitly given map (we're not asking the reader to make a choice) which has an inverse.
-I am not sure I know how to `work up to unique isomorphism'.
+(Alternately, maybe we draw the lattice path going `up and down' the diamond, and get a correspondence from binomial coefficients to maximal chains in a poset that is a product of chains?)
 
-\subsection{lemmas}
+Examples:
+\begin{itemize}
+    \item \({2 \choose 1}\) = 2 = number of maps \(\Delta 1 \times \Delta 1 \to \Delta 2\)
+    \item \({3 \choose 1}\) = 3 = number of maps \(\Delta 1 \times \Delta 2 \to \Delta 2\)
+    \item \({3 \choose 2}\) = 3 = number of maps \(\Delta 2 \times \Delta 1 \to \Delta 2\)
+    \item \({4 \choose 1}\) = 4 = number of maps \(\Delta 3 \times \Delta 1 \to \Delta 2\)
+    \item \({4 \choose 2}\) = 6 = number of maps \(\Delta 2 \times \Delta 2 \to \Delta 2\)
+    \item \({4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6\)
+
+    \item Conjecture: \({n \choose k}\) = number of maps from \(\Delta (n - k) \times \Delta k \to \Delta 2\)
+\end{itemize}
+
+
+So it's plausible, since the cardinalities look right, that there might be a natural correspondence. Given a map, say \(3 \times 4 \to 2\), how would you `read it out' in order to define a function from, say, \(A^3 \times B^4 \to (A + B)^7\)? \marginpar{This `read out' function looks to a programmer like a kind of interpreter.}
+
+\section{Lifting the High School Identities}
+
+%TODO: a canonical bijection is an explicitly given map (we're not asking the reader to make a choice) which has an inverse.
+%TODO: I am not sure I know how to `work up to unique isomorphism'.
 
 Lifting \(x \times 1 = x\) to Set:
 
@@ -314,7 +335,7 @@ A generic element of \(X \times (Y + Z)\) is a pair, the second part of which ha
 
 There are more of these `lifted high school identities', but I worry that the details of how I prove them matter, for building on top of them.
 
-\section{Fancy Coproducts}
+\section{Regarding how to use Fancy Coproducts}
 
 Let's talk about what we need to do with Fancy Coproducts.
 
@@ -379,37 +400,23 @@ Given sets \(X, Y\), there is a canonical bijection between the categorical copr
 TODO
 \end{proof}
 
-\subsection{Meandering about lattice paths}
+\section{The substantial section}
 
-There's a standard metaphor or story regarding binomial coefficients, that they count how many ways it is to get to a point on a grid, via, for example, `north' and `east' steps. Can we build something relating the lattice path metaphor to something? Visualizing the path as extending from the left corner of a diamond to the right corner, maybe we can `shade in' the left side of the path, and say that a lattice path corresponds to a partition of a product of chains into an upper and a lower set? And a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
+\begin{theorem}
+Maps \(\Delta i \times \Delta j \to \Delta 2, i > 0, j > 0\) can be put in bijection with \(((\Delta i-1) \times \Delta j \to \Delta 2) + (\Delta i \times \Delta (j-1) \to \Delta 2)\).
+\end{theorem}
 
-(Alternately, maybe we draw the lattice path going `up and down' the diamond, and get a correspondence from binomial coefficients to maximal chains in a poset that is a product of chains?)
+This corresponds to the recursive part of the definition of binomial numbers.
 
-Examples:
-\begin{itemize}
-    \item \({2 \choose 1}\) = 2 = number of maps \(\Delta 1 \times \Delta 1 \to \Delta 2\)
-    \item \({3 \choose 1}\) = 3 = number of maps \(\Delta 1 \times \Delta 2 \to \Delta 2\)
-    \item \({3 \choose 2}\) = 3 = number of maps \(\Delta 2 \times \Delta 1 \to \Delta 2\)
-    \item \({4 \choose 1}\) = 4 = number of maps \(\Delta 3 \times \Delta 1 \to \Delta 2\)
-    \item \({4 \choose 2}\) = 6 = number of maps \(\Delta 2 \times \Delta 2 \to \Delta 2\)
-    \item \({4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6\)
-
-    \item Conjecture: \({n \choose k}\) = number of maps from \(\Delta (n - k) \times \Delta k \to \Delta 2\)
-\end{itemize}
-
-
-So it's plausible, since the cardinalities look right, that there might be a natural correspondence. Given a map, say \(3 \times 4 \to 2\), how would you `read it out' in order to define a function from, say, \(A^3 \times B^4 \to (A + B)^7\)? \marginpar{This `read out' function looks to a programmer like a kind of interpreter.}
-
+\begin{proof}
 Consider where the functor takes the pair (bottom, top). If (bottom, top) goes to bottom, then the functor also takes (bottom, x) to bottom for all x. If (bottom, top) goes to top, then the functor also takes (x, top) to top.
 
 So the restriction of the domain of the functor doesn't lose any additional information.\marginpar{Note this `doesn't lose information' concept is interesting, and this step is weak!}
 
-So functors \(\Delta i \times \Delta j \to \Delta 2\), where \(i\) and \(j\) are both greater than 0, have a bijection with \(((\Delta i-1) \times \Delta j \to \Delta 2) + (\Delta i \times \Delta (j-1) \to \Delta 2)\). This corresponds to the recursive part of the definition of binomial numbers.
+So functors \(\Delta i \times \Delta j \to \Delta 2\), where \(i\) and \(j\) are both greater than 0, have a bijection with \(((\Delta i-1) \times \Delta j \to \Delta 2) + (\Delta i \times \Delta (j-1) \to \Delta 2)\). 
+\end{proof}
 
-Similarly, strings of zeroes and ones of length \(n\) with \(k\) ones, if \(n > 0\), you can inspect the first (or last) element of the string, and obtain an even more direct correspondence. \(\operatorname{Binstring} (n+1) k = (\operatorname{Binstring} n k) + (\operatorname{Binstring}  (k-1))\)
-
-Similarly, 
-
+Similarly, strings of zeroes and ones of length \(n\) with \(k\) ones, if \(n > 0\), you can inspect the first (or last) element of the string, and obtain an even more direct correspondence. \(\operatorname{Binstring} (n+1) k = (\operatorname{Binstring} n k) + (\operatorname{Binstring} n (k-1))\)
 
 
 \begin{theorem}
@@ -428,11 +435,13 @@ Given a map \(f\),
 \item (The second base case) If \(j = 0\), then project the pair to the first component, then compose it with the injection \(A \hookrightarrow (A + B)\).
 \end{itemize}
 
-Remaining is the recursive case.
+Remaining is the recursive case. Remember in this case we have that \(i, j\) are both greater than zero, and we have the inductive bijection for smaller pairs.
+\marginpar{TODO: what do we need regarding the concept of `smaller pairs'?}
 
-Remember in this case we have that \(i, j\) are both greater than zero, and we have the inductive bijection for smaller pairs (TODO: what do we need regarding the concept of `smaller pairs'?)
+We strictly follow the arithmetic proof, wielding the lemmas regarding lifted analogs of the high school identities and fancy coproducts at every step where they were used in the arithmetic
+proof.
 
-We apply the 
+TODO?
 
 %TODO: what even is this?
 
@@ -457,6 +466,14 @@ We apply the
 %\end{align*}
 
 \end{proof}
+
+Since we are using the arithmetic proof so rigidly as a guide for the lifted proof, anything that fits the the base cases and recursive cases of the definition of binomial coefficients, such as \(\operatorname{Binstring}\) would also work.
+
+\section{Extensions}
+
+There is a natural question - if binomials correspond to maps out of pairs, do trinomials correspond to maps out of triples? And I think yes, that is the case. The lattice path becomes a lattice surface spanning six corners of a cuboid, and/or a hexagon tiled with rhombuses. There are two normal ways to decompose a linear string of zeroes and ones, by plucking a boolean off one end or the other. The corresponding decomposition of the hexagon-tiled-with-rhombuses lattice surface has six `ends', the six sides of the cuboid, and you can `pluck' lattice paths off of any of them.
+
+\includegraphics{hexagon}
 
 %    Bibliographies can be prepared with BibTeX using amsplain,
 %    amsalpha, or (for "historical" overviews) natbib style.
