@@ -1,22 +1,15 @@
-I think there is something that must be analogous, in 3d,
-to two-dimensional lattice paths,
-something more like a surface spanning six corners of a cuboid?
-
-Is this just a tiling of a hexagon by diamonds?
-https://puzzling.stackexchange.com/questions/12357/tiling-a-hexagon-with-diamonds
-
-I think you might be able to factor one of these things into a lattice path along one of the sides,
-and a smaller thing which is also a tiling-of-hexagon-by-diamonds,
-in six ways, corresponding to cutting a layer off of each of the six sides of the cuboid,
-analogously to the way you can factor a lattice path into a boolean and a smaller lattice path in two ways (off the front and back of the path).
+"∞-Category Theory for Undergraduates" is a nearly comprehensible talk by Emily Riehl
+https://www.youtube.com/watch?v=A6hXn6QCu0k
+which points to this nearly incomprehensible paper by Riehl and Shulman:
+"A type theory for synthetic infinity categories"
+https://storage.googleapis.com/www.johnicholas.com/assets/a_type_theory_for_syntheic_infinity_categories.pdf
 
 "Puzzles, tableaux, and mosaics" by Kevin Purbhoo has some of this sort of hexagonal diagrams,
 the relationship to a categorification of the trinomials is probably superficial.
 https://link.springer.com/content/pdf/10.1007/s10801-007-0110-3.pdf
 
-
-About writing proofs
+Advice about writing proofs
 http://www.toroidalsnark.net/timhsuproof.pdf
 
-About writing math in paragraph style
+Advice about writing math in paragraph style
 http://www.toroidalsnark.net/timhsuwriting.pdf
