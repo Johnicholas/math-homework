@@ -8,6 +8,9 @@ https://storage.googleapis.com/www.johnicholas.com/assets/a_type_theory_for_synt
 the relationship to a categorification of the trinomials is probably superficial.
 https://link.springer.com/content/pdf/10.1007/s10801-007-0110-3.pdf
 
+Maybe this "How to reach research level math" map is valuable.
+https://mathoverflow.net/questions/217792/derived-algebraic-geometry-how-to-reach-research-level-math/219361#219361
+
 Advice about writing proofs
 http://www.toroidalsnark.net/timhsuproof.pdf
 

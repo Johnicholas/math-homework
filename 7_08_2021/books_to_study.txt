@@ -40,6 +40,9 @@ or the Shoelace Formula
 https://storage.googleapis.com/www.johnicholas.com/assets/Cool-Math-Essay_June-2014_SHOELACE-FORMULA.pdf
 
 
+Maybe something like the Mathematica Guidebooks would help me level up in using Mathematica 
+to assist in doing math?
+inauthor:"Michael Trott" mathematica
 
 
 
