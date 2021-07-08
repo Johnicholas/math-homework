@@ -78,10 +78,11 @@
 %    Abstract is required.
 \begin{abstract}
 We try to find a categorification\footnote{https://en.wikipedia.org/wiki/Categorification} of the binomial theorem,
-and find two plausible candidates. \({n \choose k}\) corresponds to
+and find some plausible candidates. \({n \choose k}\) might correspond to
 \begin{itemize}
     \item sequences of zero or one of length \(n\) containing \(k\) ones, and
-    \item functors of ordinals \((n-k) \times k \to \mathbb{2}\).
+    \item functors of ordinals \(\delta (n-k) \times \delta k \to \delta 2\).
+    % \item total orders of sets of size \(n\), modulo permutations that fix a subset of size \(k).
 \end{itemize} 
 \end{abstract}
 
@@ -277,16 +278,18 @@ Lifting \(x^1 = x\) to Set:
 Given a set X, there is a canonical bijection between \(1 \to X\), the set of functions from the singleton set, and X.
 \end{theorem}
 
+\begin{proof}
+A function from the singleton is a set containing a single pair, the first element of which is \(*\). \({(*, x)} \in 1 \to X \mapsto x\) and \(x \in X \mapsto {(x, *)}\) are the bijection.
+\end{proof}
+
 Lifting \(1^x = 1\) to Set:
 
 \begin{theorem}
-Given a set \(X\), there is a canonical bijection between \(X \to 1\), the set of functions from \(X\) the singleton set
-and the single
-
+Given a set \(X\), there is a canonical bijection between \(X \to 1\), the set of functions from \(X\) to the singleton set, and the singleton set.
 \end{theorem}
 
 \begin{proof}
-A function from \(1\) to \(X\) consists of a single pair \(\{(*, x)\}\) for some \(x \in X\), and \(\{(*, x)\} \mapsto x \mapsto \{(*, x)\}\) is a bijection.
+The only function \(X \to 1\) is the set of pairs \({ (x, *) | x \in X }\); the bijection takes it to \(*\) and back.
 \end{proof}
 
 Lifting \(x^0 = 1\) to Set:
@@ -306,8 +309,10 @@ Given sets X, Y, Z, there is a canonical bijection between \(X \times (Y + Z)\) 
 \end{theorem}
 
 \begin{proof}
-A generic element of \(X \times (Y + Z)\) is a pair, the second part of which has a tag, either `Y' or `Z'. If it had tag `Y', we map it to `XY'. If it came from `Z', we map it to `XZ'. In the opposite direction, if was tagged with `XY', we dissect it into its X and Y components, tag the Y component with `Y', and compose to form an element of \(X \times (Y + Z\). 
+A generic element of \(X \times (Y + Z)\) is a pair, the second part of which has a tag, which we might call either `Y' or `Z'. If it had tag `Y', we map it to `XY'. If it came from `Z', we map it to `XZ'. In the opposite direction, if we get a pair that was tagged with `XY', we dissect it into its X and Y components, tag the Y component with `Y', and compose to form an element of \(X \times (Y + Z\), and treat a pair that was tagged with `XZ' similarly. 
 \end{proof}
+
+There are more of these `lifted high school identities', but I worry that the details of how I prove them matter, for building on top of them.
 
 \section{Fancy Coproducts}
 
@@ -376,20 +381,20 @@ TODO
 
 \subsection{Meandering about lattice paths}
 
-There's a standard metaphor or story regarding binomial coefficients, that they count how many ways it is to get to a point on a grid, via `north' and `east' steps. Can we build something relating the lattice path metaphor to something? Visualizing the path as extending from the left corner of a rectangle to the right corner, maybe we can `shade in' one side of the path, and say that a lattice path corresponds to a partition of a product of chains into an upper and a lower set? And a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
+There's a standard metaphor or story regarding binomial coefficients, that they count how many ways it is to get to a point on a grid, via, for example, `north' and `east' steps. Can we build something relating the lattice path metaphor to something? Visualizing the path as extending from the left corner of a diamond to the right corner, maybe we can `shade in' the left side of the path, and say that a lattice path corresponds to a partition of a product of chains into an upper and a lower set? And a partition of a poset into an upper and lower set corresponds to a monotone map to the chain of length 2? 
 
-(Alternately, maybe we draw the lattice path going `up and down' the rectangle have a correspondence between maximal chains in a poset that is a product of chains, and binomial coefficients?)
+(Alternately, maybe we draw the lattice path going `up and down' the diamond, and get a correspondence from binomial coefficients to maximal chains in a poset that is a product of chains?)
 
 Examples:
 \begin{itemize}
-    \item \({2 \choose 1}\) = 2 = number of monotone maps \(\operatorname{Ch} 1 \times \operatorname{Ch} 1 \to \operatorname{Ch} 2\)
-    \item \({3 \choose 1}\) = 3 = number of monotone maps \(\operatorname{Ch} 1 \times \operatorname{Ch} 2 \to \operatorname{Ch} 2\)
-    \item \({3 \choose 2}\) = 3 = number of monotone maps \(\operatorname{Ch} 2 \times \operatorname{Ch} 1 \to \operatorname{Ch} 2\)
-    \item \({4 \choose 1}\) = 4 = number of monotone maps \(\operatorname{Ch} 3 \times \operatorname{Ch} 1 \to \operatorname{Ch} 2\)
-    \item \({4 \choose 2}\) = 6 = number of monotone maps \(\operatorname{Ch} 2 \times \operatorname{Ch} 2 \to \operatorname{Ch} 2\)
+    \item \({2 \choose 1}\) = 2 = number of maps \(\Delta 1 \times \Delta 1 \to \Delta 2\)
+    \item \({3 \choose 1}\) = 3 = number of maps \(\Delta 1 \times \Delta 2 \to \Delta 2\)
+    \item \({3 \choose 2}\) = 3 = number of maps \(\Delta 2 \times \Delta 1 \to \Delta 2\)
+    \item \({4 \choose 1}\) = 4 = number of maps \(\Delta 3 \times \Delta 1 \to \Delta 2\)
+    \item \({4 \choose 2}\) = 6 = number of maps \(\Delta 2 \times \Delta 2 \to \Delta 2\)
     \item \({4 \choose 2} = {3 \choose 1} + {3 \choose 2} = 6\)
 
-    \item Conjecture: \({n \choose k}\) = number of monotone maps from \(\operatorname{Ch} (n - k) \times \operatorname{Ch} k \to \operatorname{Ch} 2\)
+    \item Conjecture: \({n \choose k}\) = number of maps from \(\Delta (n - k) \times \Delta k \to \Delta 2\)
 \end{itemize}
 
 
@@ -397,12 +402,18 @@ So it's plausible, since the cardinalities look right, that there might be a nat
 
 Consider where the functor takes the pair (bottom, top). If (bottom, top) goes to bottom, then the functor also takes (bottom, x) to bottom for all x. If (bottom, top) goes to top, then the functor also takes (x, top) to top.
 
-So the restriction of the domain of the functor doesn't lose any additional information.\marginpar{This `doesn't lose information' concept is interesting, and this step is weak!}
+So the restriction of the domain of the functor doesn't lose any additional information.\marginpar{Note this `doesn't lose information' concept is interesting, and this step is weak!}
 
-So functors \(i \times j \to 2\), where \(i\) and \(j\) are both greater than 0, have a bijection with \(((i-1) \times j \to 2) + (i \times (j-1) \to 2)\).
+So functors \(\Delta i \times \Delta j \to \Delta 2\), where \(i\) and \(j\) are both greater than 0, have a bijection with \(((\Delta i-1) \times \Delta j \to \Delta 2) + (\Delta i \times \Delta (j-1) \to \Delta 2)\). This corresponds to the recursive part of the definition of binomial numbers.
+
+Similarly, strings of zeroes and ones of length \(n\) with \(k\) ones, if \(n > 0\), you can inspect the first (or last) element of the string, and obtain an even more direct correspondence. \(\operatorname{Binstring} (n+1) k = (\operatorname{Binstring} n k) + (\operatorname{Binstring}  (k-1))\)
+
+Similarly, 
+
+
 
 \begin{theorem}
-There is a canonical bijection between \(\operatorname{Ch} i \times \operatorname{Ch} j \to \operatorname{Ch} 2\), that is, monotone maps from a product of a chain of length i and a chain of length j to a chain of length 2, and functions \((\operatorname{Ch} i \to A) \times (\operatorname{Ch} j \to B) \to \operatorname{Ch} (i + j) \to (A + B)\),
+There is a canonical bijection between \(\Delta i \times \Delta j \to \Delta 2\), that is, monotone maps from a product of a chain of length i and a chain of length j to a chain of length 2, and functions \((\Delta i \to A) \times (\Delta j \to B) \to \Delta (i + j) \to (A + B)\),
 that is, functions from pairs of functions from chains of length i to \(A\) and functions from chains of length j to \(B\) to functions from chains of length i + j to the coproduct of \(A + B\).
 \end{theorem}
 

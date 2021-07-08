@@ -8,6 +8,9 @@ https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)
 Competitive Programmer's Handbook
 https://cses.fi/book/book.pdf
 
+Hammack's Book of Proof
+http://www.people.vcu.edu/~rhammack/BookOfProof/Main.pdf
+
 
 Maybe something like 
 "Introduction to Axiomatic Geometry" https://ohioopen.library.ohio.edu/opentextbooks/1/

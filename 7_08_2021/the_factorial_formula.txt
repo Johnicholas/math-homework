@@ -1,0 +1,20 @@
+The factorial formula
+
+There is a factorial formula https://en.wikipedia.org/wiki/Binomial_coefficient#Multiplicative_formula
+choose N K = N! / K! (N - K)!
+shich makes me think that something like quotienting a set of size N! such as the elements of S_N, the symmetric group on N elements,
+or the elements of the set of total orders of N elements,
+by some equivalence relation? relating to permutations of K things (the items being selected?) and permutations of (N-K) things
+(the spaces being left behind?).
+
+If you have 3 things a, b, c,
+there are six total orders {abc, acb, cab, cba, bca, bac}.
+If I quotient by permutations of {a, b}, then I get {**c, *c*, c**}.
+
+If you have 4 things a, b, c, d
+then there are 24 total orders
+If I quotient by permutations of {a, b} and also quotient by permutations of {c, d},
+then I get a set (of equivalence classes), something like this:
+{**--, *-*-, *--*, -*-*, --**, -**-}
+which has the right cardinality.
+I imagine to `read this out', you ask whether the bottom or top element is of * kind or - kind?

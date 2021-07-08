@@ -1,0 +1,47 @@
+Monoids and Commutative Monoids
+
+I have another sense, which is that monoids and/or deterministic finite automata could be involved.
+
+Certainly if you have a set of strings, and then you run them through a finite automaton,
+then the states where they land will partition the set of strings.
+If you know that a string landed in a particular state, then you may be able to
+wield the regular expression corresponding to that state to get a sort of decompression, or interleaving, or synchronizing function, which would allow you to take a stream of A and a stream of B, and produce a stream of (A+B) - if the finite automaton is big enough, or the strings are short enough, then you don't need any additional information. If there's overlapping going on, you may need more than just which state you landed in to have the compress-followed-by-decompress be the identity.
+
+Suppose that you have the free monoid on two generators a and b.
+Suppose that you have a finite string of a and b.
+Then you can navigate, using that string, to an element; that element `is' the finite string.
+
+Suppose that you have the free commutative monoid on two generators a and b.
+Suppose that you have a set-with-multiplicity of a and b (a function from {a, b} to Nat?).
+Then you can navigate, using that string, to an element of the free commutative monoid.
+That element `is' the set-with-multiplicity.
+
+Suppose that you have a finite string of a and b.
+You can measure the length of that string.
+That is, you can map it to the free monoid on one generator by identifying a and b.
+Furhtermore, you can map that to the free commutative monoid on one generator (though that does not do much).
+
+This square commutes:
+If you start with a finite string of a and b, like abaaab,
+and map it into a free commutative monoid on two generators, like a^3 b^2,
+and then "measure" it (identify a and b and map it to the free commutative monoid on one generator), like 5,
+then you end up at the same spot as if you had measured it (mapped to the free monoid on one generator), like 5,
+and then enforced commutativity on that (also 5).
+That's true, but I'm not sure that it's going anywhere.
+
+The cardinality of the preimage of a particular element a^x b^y of the free commutative monoid on two generators,
+in the map from the free monoid to the free commutative monoid, will be the binomial {n+m choose n}.
+
+What's the category-theoretic analog of that statement? 
+
+The cardinality-analog of the preimage-analog of the element-analog of the free-commutative-monoid-analog,
+in the map from the free-monoid-analog to the free-commutative-monoid-analog
+
+Maybe cardinality-analog is https://ncatlab.org/nlab/show/groupoid+cardinality
+
+Maybe preimages are a kind of pullback.
+
+A particular element is an arrow from the terminal object to an object.
+
+Freeness is a universal property, maybe the inital object in some category?
+There's a monoid to commutative monoid free+forgetful adjunction, too.

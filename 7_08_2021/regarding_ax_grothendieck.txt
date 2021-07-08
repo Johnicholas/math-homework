@@ -1,0 +1,17 @@
+This is a theorem that, in certain circumstances, something that is known to be an injection, is actually a bijection.
+
+Discussed here:
+https://terrytao.wordpress.com/2009/03/07/infinite-fields-finite-fields-and-the-ax-grothendieck-theorem/
+which is elaborated on here:
+https://math.osu.edu/sites/math.osu.edu/files/AxGrothendieck.pdf
+and references this:
+https://arxiv.org/abs/0903.0517
+also references this, which gives a rough dictionary for analogies between `hard' and `soft' analysis:
+https://terrytao.wordpress.com/2007/05/23/soft-analysis-hard-analysis-and-the-finite-convergence-principle/
+
+There are two simpler situations:
+1. If a function from a finite set to itself is injective, then it is bijective.
+2. If a polynomial function from the reals to themselves is injective, then it is bijective.
+
+The way the Ax-Grothendieck proof proceeds, as far as I understand it (which is not very far), is something like this: a polynomial over finite fields that is an injection is a bijection (because of the simpler situation 1),
+However, if, in the infinitary situations that Ax-Grothendieck applies to, there was a counter example, then there would be a corresponding, finitary, "shadow" counterexample, which would be a contradiction.

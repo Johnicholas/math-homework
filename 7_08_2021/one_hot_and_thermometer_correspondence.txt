@@ -1,0 +1,25 @@
+2. one-hot and thermometer correspondences
+
+You might fix a correspondence available between the numbers 0 through n and the dimensions or basis vectors of a n-dimensional linear space.
+
+This is possibly similar to a "one-hot" representation in neural networks.
+
+That is, in order to convey a message from one component A to another component B,
+have N "wires" running from A to B, one for each possible message that A might want to send to B,
+and when A wants to send a message, it makes one wire "hot".
+
+An alternative representation that is sometimes used is the "thermometer" representation,
+where the numbers 0 through n correspond to the vectors with
+the initial dimensions 1 and later dimensions 0, like this:
+(1, 0, 0, ..., 0)
+(1, 1, 0, 0, ..., 0)
+(1, 1, ..., 1)
+There are N thermometer vectors spanning N dimensions (or N+1 if we include the all-zeroes vector as a thermometer vector?).
+There are N one-hot vectors spanning N dimensions.
+
+I think there are a pair of 3 by 3 matrices for converting back and forth between these,
+What is the utility and/or categorification of this one-hot <-> thermometer correspondence?
+
+See for example "THERMOMETER ENCODING: ONE HOT WAY TO RESIST ADVERSARIAL EXAMPLES"
+Jacob Buckman, Aurko Roy, Colin Raffel, Ian Goodfellow
+
