@@ -1,0 +1,11 @@
+This is wonderful, thank you very much! I will study these notes, and definitely become familiar with the first two sections of the shapely monads paper.
+
+One of the concrete motivating examples for me is Conway talking about `knumberings' - it is pages 8-10 here: http://thewe.net/math/conway.pdf - the point for me is that he can gradually extend a partial, symbolic, coloring until it covers the trefoil; it's not necessary to duplicate the underlying knot diagram in order to compute an invariant. 
+
+I also really admire Ralph Hinze's Concrete Stream Calculus: https://www.cs.ox.ac.uk/people/ralf.hinze/publications/CSC.pdf . I'm sure you've encountered this kind of thing before, defining the sequence of fibonacci numbers "coinductively" as a sort of loopback number-manufacturing machine. In Haskell, using lazy evaluation, it would be
+
+fib = 0 : 1 : zipWith (+) fibs (tail fibs)
+
+Bill Gosper did the same kind of loopy stream calculus in defining arithmetic on continued fractions: https://perl.plover.com/classes/cftalk/INFO/gosper.txt 
+
+Unfortunately, I think both Hinze and Gosper don't really explicitly mention wiring diagrams, but in reading their writing, I am certainly imagining them, and I think Hinze and Gosper are `programmer-ish enough' that they are also imagining them.
