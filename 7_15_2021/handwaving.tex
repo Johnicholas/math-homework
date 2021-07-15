@@ -1,0 +1,178 @@
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\documentclass[11pt,noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{enumitem}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage[tracking]{microtype}
+\usepackage{tikz-cd}
+\usepackage{stmaryrd}
+\usepackage{comment}
+\usepackage[scr=esstix]{mathalfa}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+\DeclareMathOperator{\Sym}{Sym}
+
+\makeatletter
+\let\c@equation\c@section
+\let\theequation\thesection
+\makeatother
+
+%found on https://tex.stackexchange.com/a/565122 with improvements from TikZ manual:
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\usepackage[utf8]{inputenc}
+
+\newcommand{\todo}[1]{\footnote{{\sc\color{red}Todo.} #1}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{definition}[thm]{Definition}
+
+\DeclareMathOperator{\Hom}{Hom}
+
+\title{Some handwaving regarding terms}
+\begin{document}
+\maketitle
+
+\bpoint{What is a monad like?}
+
+A monad is like a monoid in the category of endofunctors.
+
+A monad often comes from an adjunction.
+
+The free-forgetful adjunction between the category of sets and the category of pointed sets composes to an endofunctor that adds a new disjoint point to a set. This corresponds to the Maybe monad in programming.
+
+The free-forgetful adjunction between monoids and sets induces an endofunctor \((-)^*: \mathrm{Set} \to \mathrm{Set}\) which takes a set, construed as an alphabet, to the set of strings drawn from that set (the elements of the free monoid, after the monoid structure has been forgotten). This corresponds to the List monad in programming.
+
+The free-forgetful adjunction between the category of sets and the category of commutative monoids might correspond to a "Bag" monad representing multisets.
+
+The free-forgetful adjunction between the category of monoids and the category of commutative monoids might have something to do with binomial coefficients?
+The free commutative monoid corresponding to a monoid adds relations x * y = y * x for every pair of elements in the monoid. 
+When you forget the fact that they're required to be commutative, the commutativity is still there in the binary operation, it's just not forced. I think this is an idempotent monad?
+
+\bpoint{What is a polycategory like?}
+
+If C is a polycategory, then we think of objects of C as wire-labels, and arrows of C as boxes.
+
+The operations of a polycategory now correspond to the elementary wiring operations on such boxes.
+The identity morphisms can be depicted as bare wires; composition \(g_j \circ i_f\) as the plugging of
+the \(i\)th output of \(f\) into the \(j\)th input of \(g\), as on the left below; and exchange
+as the rearrangement of input or output wires, as on the right below.
+
+[Note that the identities of a polycategory involve only a single object rather
+than a list. A geometric explanation for this is that all the graphs occurring
+in polycategorical composition are connected, whereas the identity on a list of
+objects would be an unconnected graph.]
+
+\begin{definition}
+A small (symmetric) polycategory C comprises 
+\begin{itemize}
+\item a set \(ob(C )\) of objects
+\item sets\( C (A; B)\) of morphisms for each pair of lists \(A = (A_1, . . . , A_n)\) and
+\(B = (B1, . . . , Bm)\) of objects
+\item Identity morphisms \(idA \in C (A; A)\) for each object \(A\).
+\item Composition operations giving for each \(f \in C (A; B)\) and \(g \in C (C; D)\) and
+indices \(i, j\) with \(B_i = C_j\), a morphism
+\(g j◦i f \in C (C<j , A, C>j ; B<i, D, B>i)\) ;
+here we use comma to denote concatenation of lists, and write \(C<j\) for the
+list \((C_1, . . . , C_{j−1})\), and so on.
+\item Exchange operations giving for each \(f \in C (A; B)\) and permutations \(\phi \in S_n\)
+(the symmetric group on \(n\) letters) and \(\psi \in S_m\) an element
+\(\psi f \phi  \in C (A_\phi; B_{\psi−1} )\)
+where \(A_\phi\) denotes the list \((A_{phi(1)}, . . . , A_{phi(n)})\) and likewise for \(B_{\phi − 1}\) .
+\end{itemize}
+
+TODO: more properties
+
+\end{definition}
+
+\bpoint{What is a 2-category like?}
+
+
+According to nlab\footnote{https://ncatlab.org/nlab/show/bicategory} 2-category and bicategory are nearly synonyms, with the difference being strictness or weakness. 
+
+(this definition of a bicategory lifted directly from nlab)
+
+\begin{definition}
+A bicategory B consists of:
+\begin{itemize}
+\item a collection of objects or 0-cells,
+\item for each object \(a\) and object \(b\), a collection \(B a b \) or \(\Hom_B a b\) of morphisms or 1-cells \(a \to b\), and
+\item for each object \(a\), object \(b\), morphism \(f :  a \to b\), and morphism \(g : a \to b\), a collection \(B f g\) of 2-morphisms or 2-cells \(f \to g\) or \(f \to g : a \to b\),
+
+\item for each object \(a\), an identity \(1_a : a \to a\) or \(id a : a \to a\),
+\item for each \(a,b,c, f : a \to b\), and \(g : b \to c\), a composite \(f;g : a \to c\),
+\item for each \(f : a \to b\), an identity or 2-identity \(1 f : f \to f\) or \(Id f : f \to f\),
+\item for each \(f,g,h : a \to b \), \(\eta : f \to g\), and \( \theta : g \to h \), a vertical composite \(\eta ; \theta : f \to h \),
+\item for each \(a,b,c, f,g : a \to b, h : b \to c\), and \( \eta : f \to g \), a left whiskering \( h \triangleleft \eta : f; h \to g; h \),
+\item for each \(a,b,c, f:a \to b, g,h : b \to c\), and  \( \eta : g \to h\), a right whiskering \(\eta \triangleright f : f; g \to f; h \),
+\item for each \(f : a \to b\), a left unitor λf:idb∘f⇒f, and an inverse left unitor λ¯f:f⇒idb∘f,
+
+\item for each f:a→b, a right unitor ρf:f∘ida⇒f and an inverse right unitor ρ¯f:f⇒f∘ida, and
+\item for each a→fb→gc→hd, an associator αh,g,f:(h∘g)∘f⇒h∘(g∘f) and an inverse associator α¯h,g,f:h∘(g∘f)⇒(h∘g)∘f,
+\end{itemize}
+such that
+\begin{itemize}
+\item for each \( \eta:f \to g : a \to b \), the vertical composites \((Id f); \eta\) and \(\eta ; (Id g)\) both equal \(\eta\),
+\item for each \( f \to \eta g \to \theta h \to \iota i : a \to b \), the vertical composites \( (\eta ; \theta \ι•(θ•η) and (ι•θ)•η are equal,
+\item for each a→fb→gc, the whiskerings Idg▹f and g◃Idf both equal Idg∘f,
+\item for each f⇒ηg⇒θh:a→b and i:b→c, the vertical composite (i◃θ)•(i◃η) equals the whiskering i◃(θ•η),
+for each f:a→b and g⇒ηh⇒θi:b→c, the vertical composite (θ▹f)•(η▹f) equals the whiskering (θ•η)▹f,
+\item for each η:f⇒g:a→b, the vertical composites λg•(idb◃η) and η•λf are equal,
+\item for each η:f⇒g:a→b, the vertical composites ρg•(η▹ida) and η•ρf are equal,
+\item for each a→fb→gc and η:h⇒i:c→d, the vertical composites α¯i,g,f•(η▹(g∘f)) and ((η▹g)▹f)•α¯h,g,f are equal,
+\item for each f:a→b, η:g⇒h:b→c, and i:c→d, the vertical composites α¯i,h,f•(i◃(η▹f)) and ((i◃η)▹f)•α¯i,g,f are equal,
+\item for each η:f⇒g:a→b and b→hc→id, the vertical composites α¯i,h,g•(i◃(h◃η)) and ((i∘h)◃η)•α¯i,h,f are equal,
+\item for each η:f⇒g:a→b and θ:h⇒i:b→c, the vertical composites (i◃η)•(θ▹f) and (θ▹g)•(h◃η) are equal,
+\item for each f:a→b, the vertical composites λf•λ¯f:f⇒f and λ¯f•λf:idb∘f⇒idb∘f equal the appropriate identity 2-morphisms,
+\item for each f:a→b, the vertical composites ρf•ρ¯f:f⇒f and ρ¯f•ρf:f∘ida⇒f∘ida equal the appropriate identity 2-morphisms,
+\item for each a→fb→gc→hd, the vertical composites α¯h,g,f•αh,g,f:(h∘g)∘f⇒(h∘g)∘f and αh,g,f•α¯h,g,f:h∘(g∘f)⇒h∘(g∘f) equal the appropriate identity 2-morphisms,
+\item for each a→fb→gc, the vertical composite (ρg▹f)•α¯g,idb,f equals the whiskering g◃λf, and
+for each a→fb→gc→hd→ie, the vertical composites ((α¯i,h,g▹f)•α¯i,h∘g,f)•(i◃α¯h,g,f) and α¯i∘h,g,f•α¯i,h,g∘f are equal.
+\end{itemize}
+
+It is quite possible that there are errors or omissions in this list, although they should be easy to correct. The point is not that one would want to write out the definition in such elementary terms (although apparently I just did anyway) but rather that one can.
+\end{definition}
+
+\end{document}

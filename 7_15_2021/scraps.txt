@@ -9,3 +9,4 @@ fib = 0 : 1 : zipWith (+) fibs (tail fibs)
 Bill Gosper did the same kind of loopy stream calculus in defining arithmetic on continued fractions: https://perl.plover.com/classes/cftalk/INFO/gosper.txt 
 
 Unfortunately, I think both Hinze and Gosper don't really explicitly mention wiring diagrams, but in reading their writing, I am certainly imagining them, and I think Hinze and Gosper are `programmer-ish enough' that they are also imagining them.
+

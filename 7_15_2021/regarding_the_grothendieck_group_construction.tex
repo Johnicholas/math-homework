@@ -1,0 +1,46 @@
+In elementary category theory, we learn about initial and final objects.
+
+In some categories (such as vector spaces) the initial object and the final object are isomorphic.
+The collection of all categories where there is an initial object, a final object, and they are isomorphic is called a "pointed category".
+
+There is one linear map from the one-point vector space to any other vector space (zero goes to zero).
+There is one linear map from any vector space to the one-point vector space (everything goes to zero).
+
+There is an idea of "exactness" of a chain of morphisms; I am not going to say the definition of exactness, because I don't understand it well enough yet.
+
+The way I understand it, there are powerful ideas in Set
+"injective", "surjective", and "bijective".
+
+You can say something like "injective" by saying "0 \to X \to Y is exact".
+You can say something like "surjective" by saying "X \to Y \to 0 is exact".
+You can say something like "bijective" by saying "0 \to X \to Y \to 0 is exact".
+
+This motivates asking - what does "0 \to X \to Y \to Z \to 0" mean about the triple X, Y, and Z.
+
+The way I understand it, an example of this in the category of vector spaces is:
+1. The first map from 0 to X might be taking the zero space to the origin, considered as a subspace of the y axis.
+2. The second map from X to Y might be including the y axis into the whole two-dimensional plane. (injective)
+3. The third map from Y to Z might be collapsing the whole two-dimensional plane to the x axis. (surjective)
+4. The fourth map from Z to 0 might be collapsing the whole x axis back to 0.
+
+This concrete example convinces me that maybe an exact sequence 0 \to X \to Y to Z \to 0 is somehow related to viewing Y as some sort of product or sum X \oplus Z.
+
+In the contraction-deletion view of the Tutte invariant,
+there is a skein relation, something like:
+
+f(G)=f(G\setminus e)+f(G/e)
+
+G \setminus e has an inclusion into G
+G has a surjection onto G / e
+
+Is it true that if we have three graphs connected by an injection / surjection pair of graph morphisms,
+then the Tutte invariants of the three graphs will have the corresponding F(Y) = F(X) + F(G) structure?
+
+I have heard (reading wikipedia) that if G is the union of disjoint graphs H and H' then T(G) = T(H) * T(H')
+
+If H and H' were identical, then there would be an injection from H to G, to one of the two copies,
+and a surjection from G to H, a double cover.
+So T(G) is probably not always equal to T(H) + T(H)?
+
+2 x = x * x implies x = 2
+if T(H) were 2, then T would be a graph with

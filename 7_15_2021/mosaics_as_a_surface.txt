@@ -1,0 +1,46 @@
+Kevin Purbhoo's mosaics put diamonds around the sides of 
+Knutson-Tao puzzles, resulting in a hexagonal figure.
+
+I believe a hexagonal figure tiled entirely with diamonds
+corresponds to a `lattice surface', a 3 dimensional generalization
+of the lattice paths that are counted by binomials.
+
+What 3-d sort of thing would have, not just diamonds,
+but also triangles and maybe hexagons in it?
+
+One of the important qualities (probably not the most important,
+because the most important is something about the applicability
+to spectra of zero-sum triples of Hermitian matrices, or Schubert calculus) about a triangle is that the counts of zeroes and ones
+along each of the three edges are equal.
+
+What is a lower-dimensional analog of the mosaic?
+Maybe something like a lattice path with additional kinds of steps?
+Maybe diagonals are allowed?
+What do I know about paths through rectangular lattices where diagonals are sometimes allowed?
+The obvious one is dynamic programming for computing string edit distance.
+
+A pullback is a variation of a product.
+Suppose that you replaced the product with pullback,
+in my little "binomials are maps from delta i times delta j to delta 2" theorem.
+Would you get something like the dynamic programming edit distance algorithm?
+
+
+Imagine that you want to write one string of [01]^* left to right along the top of a rectangle,
+and you want to write one string of [01]^* top to bottom along the left side of a rectangle,
+and you want edge-colored tiles that will fit in the rectangle and guarantee that the number of zeroes and ones are equal.
+
+Base case, 0 along the top, 0 along side.
+1. There is at least one tile with 0 along the top,
+and 0 along the left side.
+2. There is no tile with 0 along the top and
+and 1 along the left side.
+
+Base case, 1 along the top, 1 along the side.
+1. There is at least one tile with 1 along the top,
+and 1 along the left side.
+2. There is no tile with 1 along the top and 0 along the left side.
+
+Recursive case, suppose we have a triangular tiling
+which is already completed. We extend a 1 further...
+
+
