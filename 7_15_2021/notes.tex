@@ -1,0 +1,342 @@
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\documentclass[11pt,noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{enumitem}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage[tracking]{microtype}
+\usepackage{tikz-cd}
+\usepackage{stmaryrd}
+\usepackage{comment}
+\usepackage[scr=esstix]{mathalfa}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\pr}{pr}
+
+\makeatletter
+\let\c@equation\c@section
+\let\theequation\thesection
+\makeatother
+
+%found on https://tex.stackexchange.com/a/565122 with improvements from TikZ manual:
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\usepackage[utf8]{inputenc}
+
+\newcommand{\todo}[1]{\footnote{{\sc\color{red}Todo.} #1}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\DeclareMathOperator{\Hom}{Hom}
+
+\title{Notes for July 15, 2021}
+\begin{document}
+\maketitle
+
+\bpoint{Fibre Products}
+Let \(\mathcal{C}\) be a category and let \(f \colon X \to Z\) and \(g \colon Y \to Z\)
+be morphisms in \(\mathcal{C}\). A \emph{fibre product of \(X\) and \(Y\) over \(Z\)} (with respect
+to \(f\) and \(g\)) is an object \(P\) together with morphisms \(p \colon P \to X\)
+and \(q \colon P \to Y\) that fit into a commutative diagram
+\[
+\begin{tikzcd}
+P \ar[r,"p"] \ar[d,"q"'] & X \ar[d,"f"] \\
+Y \ar[r,"g"'] & Z
+\end{tikzcd}
+\quad\text{that is,}\; f \circ p = g \circ q,
+\]
+such that if \(P'\) is any object with morphisms \(p' \colon P' \to X\) and \(q' \colon P' \to Y\)
+fitting into a commutative square as above---\(f \circ p' = g \circ q'\) as morphisms
+\(P' \to Z\)---then there exists a unique morphism \(h \colon P' \to P\) such that
+the triangles below commute
+\[
+\begin{tikzcd}
+  & P' \ar[d,"h"] \ar[dl,"q'"'] \ar[dr,"p'"] \\
+Y & \ar[l,"q"] P \ar[r,"p"'] & X
+\end{tikzcd}
+\quad\text{that is,}\; p' = p \circ h\;\text{and}\; q' = q \circ h.
+\]
+A fibre product \(P\) is sometimes denoted by \(X \times_Z Y\), or to make
+the dependence on \(f\) and \(g\) explicit, \(X \times_{f,Z,g} Y\).
+
+\point
+I think of this as ``taking the product of \(X\) and \(Y\) with equations
+imposed by \(f\) and \(g\).'' For example, when \(\mathcal{C} = \mathrm{Set}\),
+then the fibre product above can be explicitly identified as
+\[ X \times_{f,Z,g} Y = \set{(x,y) \in X \times Y | f(x) = g(y)}, \]
+that is, this consists of all pairs in the usual Cartesian\footnote{This is the
+same reason why one says that the fibre product diagram above is \emph{Cartesian}!}
+product such that they become equal after mapping to \(Z\). In particular,
+taking \(Z = \{*\}\) the singleton---the terminal object in the category of sets!---we
+recover the usual Cartesian product:
+\[ X \times_{\{*\}} Y = X \times Y \]
+since everything in \(X\) and \(Y\) must map to the single element \(*\).
+
+\bpoint{Exercise.}\label{fibre-product-exercise}
+Compare the diagram defining the Cartesian product and the fibre product
+diagrams. Prove that if a category has a terminal object, then the product is a
+fibre product over the terminal object. Prove that a morphism \(Z \to W\) in
+\(\mathcal{C}\) induces a morphism
+\[ X \times_{Z} Y \to X \times_{W} Y. \]
+In particular, if a category has a terminal object, any fibre product maps to
+the Cartesian product.
+
+\bpoint{Pushouts}
+As is true about every concept in category theory, there is a dual notion whereby
+all arrows are reversed. Let \(i \colon Z \to X\) and \(j \colon Z \to Y\) be morphisms
+in a category \(\mathcal{C}\). Then the \emph{pushout of \(X\) and \(Y\) over \(Z\)}
+(with respect to \(i\) and \(j\)) is an object \(Q\) together with morphisms
+\(u \colon X \to Q\) and \(v \colon Y \to Q\) that fit into a commutative diagram
+\[
+\begin{tikzcd}
+Z \ar[r,"i"] \ar[d,"j"'] & X \ar[d,"u"] \\
+Y \ar[r,"v"'] & Q
+\end{tikzcd}
+\quad\text{that is,}\; u \circ i = v \circ j,
+\]
+such that if \(Q'\) is any object with morphisms \(u' \colon X \to Q'\) and \(v' \colon Y \to Q'\)
+fitting into a commutative square as above---\(u' \circ i = v' \circ j\) as morphisms \(Z \to Q'\)---then
+there exists a unique morphism \(k \colon Q \to Q'\) such that the triangles below commute:
+\[
+\begin{tikzcd}
+Y \ar[r,"v"] \ar[dr,"v'"'] & Q \ar[d,"k"] & \ar[l,"u"'] \ar[dl,"u'"] X \\
+& Q'
+\end{tikzcd}
+\quad\text{that is,}\; u' = k \circ u \;\text{and}\; v' = k \circ v.
+\]
+The pushout \(Q\) is sometimes written \(X \sqcup_{Z} Y\) or \(X \sqcup_{i,Z,j} Y\)
+to make the dependence on \(i\) and \(j\) explicit.
+
+\point
+I think of this as ``glueing \(X\) and \(Y\) along \(Z\).'' For example, when
+\(\mathcal{C} = \mathrm{Set}\), then the pushout can be explicitly computed as
+\[
+X \sqcup_{i,Z,j} Y = (X \sqcup Y)/(i(z) \sim j(z) \;\text{for all \(z \in Z\)}).
+\]
+That is, you first take the disjoint union \(X \sqcup Y\) of \(X\) and \(Y\),
+and then you form the quotient set where you identify all elements of \(X\)
+and \(Y\) that come from the same element of \(Z\).
+
+For an explicit example, let \(X = \set{1,2,3}\) and \(Y = \set{a,b,c,d}\).
+Let \(Z = \set{*}\) be the singleton, and let \(i \colon Z \to X\) be \(* \mapsto 1\),
+and let \(j \colon Z \to Y\) be \(* \mapsto a\). Then
+\[
+X \sqcup_{i,Z,j} Y = \set{1,2,3,a,b,c,d}/(1 \sim a) = \set{2,3,b,c,d,\spadesuit}
+\]
+where \(\spadesuit\) is the equivalence class of \(1\) and \(a\); alternatively,
+you might think of \(\spadesuit = \{1,a\}\).
+
+\bpoint{Exercise}
+Formulate and do the co-Exercise to \ref{fibre-product-exercise}.
+
+\bpoint{Vector Spaces}
+Let \(k\) be a field, which you may think of \(k = \mathbf{R}\) to be concrete.
+Let \(\mathrm{Vect}\) be the category of finite dimensional vector spaces over
+\(k\). Let's think about some properties of this category. Here are a list of
+claims that you might enjoy thinking through: Let \(U\), \(V\), and \(W\)
+be finite dimensional vector spaces over \(k\).
+\begin{enumerate}
+\item The initial and terminal object of \(\mathrm{Vect}\) is the vector space
+\(\{0\}\).
+\item The product and coproduct of \(U\) and \(V\) are given by
+\[
+U \times V = U \sqcup V \eqqcolon U \oplus V \coloneqq \set{(u,v) | u \in U, v \in V}
+\]
+where the structure of a vector space on \(U \oplus V\) is given by
+\[
+(u,v) + (u',v') = (u + u', v + v')
+\quad\text{and}\quad
+\lambda(u,v) = (\lambda u, \lambda v).
+\]
+\item Let \(f \colon U \to W\) and \(g \colon V \to W\) be linear maps. Then
+\[ U \times_{f,W,g} V = \set{(u,v) \in U \oplus V | f(u) = g(v)}. \]
+\item Let \(i \colon U \to V\) and \(j \colon U \to W\) be linear maps. Then
+\[ V \sqcup_{i,U,j} W = (V \oplus W)/\set{(i(u), j(u)) | u \in U}. \]
+In other words, \(V \sqcup_{i,U,j} W\) is the quotient vector space on \(V \oplus W\)
+divided by the image of the map \((i,j) \colon U \to V \oplus W\).
+\end{enumerate}
+
+\bpoint{Exercise}
+Let \(f \colon U \to W\) be a linear map. Express the \emph{kernel} of \(f\),
+\[ \ker(f) \coloneqq \set{u \in U | f(u) = 0} \]
+as a fibre product. Likewise, let \(i \colon U \to V\) be a linear map. Express
+the \emph{cokernel} of \(i\)
+\[ \operatorname{coker}(i) \coloneqq V/\set{i(u) | u \in U} \]
+as a pushout.
+
+\bpoint{Tensor Products}
+Apparently, the product and coproduct of two vector spaces match, and are
+given by the direct sum \(V \oplus W\). Using the relations above, you can
+prove that if
+\begin{enumerate}
+\item \(\set{v_1,\ldots,v_n}\) is a basis for \(V\), and
+\item \(\set{w_1,\ldots,w_m}\) is a basis for \(W\),
+\end{enumerate}
+then \(\set{v_1,\ldots,v_n,w_1,\ldots,w_m}\) is a basis for \(V \oplus W\).
+In particular, this means that
+\[ \dim(V \oplus W) = \dim(V) + \dim(W) \]
+there is an additive relation on the dimension of direct sums. In this sense,
+\(V \oplus W\) is thought of as the sum of the vector spaces \(V\) and \(W\).
+
+Then \emph{tensor product} \(V \otimes W\) of \(V\) and \(W\) is another vector
+space which is better thought of as the product of \(V\) and \(W\); in
+particular, there is a multiplicative relation on dimensions:
+\[ \dim(V \otimes W) = \dim(V) \dim(W). \]
+One way to define the tensor product is as the vector space\footnote{Meaning that
+you are allowed to take \(k\)-linear combinations of the symbols!} on the set
+of symbols
+\[ \set{v \otimes w | v \in V, w \in W} \]
+subject to the following relations: for all \(v, v' \in V\), \(w, w' \in W\),
+and \(\lambda \in k\),
+\begin{enumerate}
+\item \(v \otimes w + v' \otimes w = (v + v') \otimes w\),
+\item \(v \otimes w + v \otimes w' = v \otimes (w + w')\),
+\item \((\lambda v) \otimes w = \lambda (v \otimes w) = v \otimes (\lambda w)\).
+\end{enumerate}
+From these, one can prove that a basis for \(V \otimes W\) is given by
+\[ \set{v_i \otimes w_j | i = 1,\ldots,n \;\text{and}\; j = 1,\ldots,m } \]
+where \(\set{v_1,\ldots,v_n}\) and \(\set{w_1,\ldots,w_m}\) are bases for \(V\)
+and \(W\), as above.\footnote{A word of caution: not all elements of
+\(V \otimes W\) are of the form \(v \otimes w\). It may well be the case that
+an element \(v \otimes w + v' \otimes w'\)  cannot be combined together as
+\(v'' \otimes w''\).}
+
+\bpoint{Symmetric Monoidal Categories}
+The tensor product operation is \emph{not} internal to the category
+\(\mathrm{Vect}\): it is extra \emph{structure} that we can endow
+\(\mathrm{Vect}\). The pair \((\mathrm{Vect}, \otimes)\) is the prototype of
+a \emph{symmetric monoidal category}. In general, this is a category \(\mathcal{C}\)
+together with a binary operation
+\[ \otimes \colon \mathcal{C} \times \mathcal{C} \to \mathcal{C} \]
+that is ``commutative'' and ``has a unit''. One has to be a bit careful to state
+this, since in the setting of categories, you do not necessarily want an \emph{equality}
+between \(A \otimes B\) and \(B \otimes A\), but rather an isomorphism. Then there
+are conditions that you have to impose on this isomorphism to make it sensible.
+See the Wikipedia page \href{https://en.wikipedia.org/wiki/Symmetric_monoidal_category}{here}
+for some details, but the short of it is:
+a symmetric monoidal category is a category \(\mathcal{C}\) with a operation
+\(\otimes\) which allows you to multiply objects together.
+
+\bpoint{Example}
+The \(\otimes\) does not need to be really extra structure. For instance,
+\(\mathcal{C} = \mathrm{Set}\) with \(\otimes = \times\), the usual Cartesian
+product, makes the category of sets into a symmetric monoidal category.
+
+\bpoint{Monoids}
+A \emph{monoid} is a set \(M\) with a binary operation \(\mu \colon M \times M \to M\)
+such that:
+\begin{enumerate}
+\item There is a unit: there exists \(e \in M\) such that \(\mu(e,m) = \mu(m, e) = m\)
+for all \(m \in M\).
+\item It is associative: \(\mu(m, \mu(n, p) = \mu(\mu((m, n), p\) for all
+\(m,n,p \in M\).
+\end{enumerate}
+
+Now let \((\mathcal{C},\otimes)\) be a (symmetric)\footnote{Symmetry, that is, that
+\(\otimes\) is ``commutative'', is not strictly necessary here.} monoidal
+category with a terminal object \(\mathbf{1}\). A \emph{monoid object} in
+\(\mathcal{C}\) is an object \(\mathbf{M}\) in \(\mathcal{C}\) together with
+morphisms
+\[ e \colon \mathbf{1} \to \mathbf{M} \quad\text{and}\quad  \mu \colon \mathbf{M} \otimes \mathbf{M} \to \mathbf{M} \]
+such that the following two diagrams commute:
+\[
+\begin{tikzcd}
+\mathbf{1} \otimes \mathbf{M} \ar[r,"e \otimes \id_\mathbf{M}"] \ar[dr,"\mathrm{pr}_2"']  & \mathbf{M} \otimes \mathbf{M} \dar["\mu"] & \ar[l,"\id_\mathbf{M} \otimes e"'] \ar[dl,"\pr_1"]  \mathbf{M} \otimes \mathbf{1} \\
+& \mathbf{M}
+\end{tikzcd}
+\quad\text{and}\quad
+\begin{tikzcd}
+\mathbf{M} \otimes \mathbf{M} \otimes \mathbf{M} \ar[r,"\mu \otimes \id_\mathbf{M}"] \ar[d,"\id_\mathbf{M} \otimes \mu"'] & \mathbf{M} \otimes \mathbf{M} \ar[d,"\mu"] \\
+\mathbf{M} \otimes \mathbf{M} \ar[r,"\mu"'] & \mathbf{M}.
+\end{tikzcd}
+\]
+The left diagram is the fact that \(e \colon \mathbf{1} \to M\) behaves like a
+unit; and the right diagram is associativity of the multiplication operation
+\(\mu\).
+
+\bpoint{Exercise}\label{monoid-exercise}
+Let \(\mathbf{M}\) be a monoid object in \(\mathcal{C}\). Let \(X\) be any other object
+in \(\mathcal{C}\) and let \(\mathbf{M}(X) \coloneqq \mathcal{C}(X,\mathbf{M})\) be the
+set of arrows from \(X\) to \(\mathbf{M}\) in \(\mathcal{C}\). Verify that \(e\) and \(\mu\)
+induce maps \(e(X) \colon \mathbf{1}(X) \to \mathbf{M}(X)\) and \(\mu(X) \colon \mathbf{M}(X) \times \mathbf{M}(X) \to \mathbf{M}(X)\)
+and show that \((\mathbf{M}(X), e(X), \mu(X))\) is a monoid in the usual sense.\footnote{Hint: \(\mathbf{1}\) is
+a terminal object, so there is a only one map from anything to \(\mathbf{1}\).}
+
+\bpoint{Modules and Algebras}
+Let \((M,e,\mu)\) be a (plain old) monoid. A \emph{module} over \(M\) is an
+set \(P\) together with an action map \(\alpha \colon M \times P \to P\) such that:
+For every \(m,n \in M\) and \(p \in P\),
+\begin{enumerate}
+\item The action is compatible with multiplcation: \(\alpha(\mu(m,n),p) = \alpha(m,\alpha(n,p))\).
+\item The identity acts trivially: \(\alpha(e,p) = p\).
+\end{enumerate}
+An \emph{algebra} over \(M\) is a module \(A\) over \(M\)
+together with a binary operation \(\nu \colon A \times A \to A\) such that
+for all \(a,b,c \in A\),
+it commutes with the action of \(M\):
+\[ \nu(\alpha(m,a), \alpha(n,b)) = \alpha(\mu(m,n),\nu(a,b)). \]
+We may also ask that \(\nu\) is associative and/or has an identity element, or
+place other conditions on \(\nu\).
+
+Now let \((\mathcal{C},\otimes)\) be a symmetric monoidal category with
+terminal object \(\mathbf{1}\) and finite products. Let \((\mathbf{M},e,\mu)\)
+be a monoid object in \(\mathcal{C}\). A \emph{module} over \(\mathbf{M}\)
+is an object \(\mathbf{P}\) of \(\mathcal{C}\) together with a morphism
+\(\alpha \colon \mathbf{M} \otimes \mathbf{P} \to \mathbf{P}\) such that the
+following diagrams commute:
+\[
+\begin{tikzcd}
+\mathbf{M} \otimes \mathbf{M} \otimes \mathbf{P} \ar[r,"\mu \otimes \id_{\mathbf{P}}"] \ar[d,"\id_{\mathbf{M}} \otimes \alpha"'] &
+\mathbf{M} \otimes \mathbf{P} \dar["\alpha"] \\
+\mathbf{M} \otimes \mathbf{P} \rar["\alpha"'] & \mathbf{P}
+\end{tikzcd}
+\quad\text{and}\quad
+\begin{tikzcd}
+\mathbf{1} \otimes \mathbf{P} \ar[rr,"e \otimes \id_{\mathbf{P}}"] \ar[dr,"\pr_2"'] &&  \mathbf{M} \otimes \mathbf{P} \ar[dl,"\mu"] \\
+& \mathbf{P}.
+\end{tikzcd}
+\]
+The left diagram expresses the compatibility between the action map and the multiplication
+of the monoid object, and the right expresses the fact that the identity does nothing.
+
+\bpoint{Exercise}
+Formulate and repeat Exercise \ref{monoid-exercise} for modules over monoid objects.
+Finish the definition of an algebra over a monoid object, and also verify the
+corresponding property on morphisms.
+
+\end{document}
