@@ -1,0 +1,112 @@
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\documentclass[11pt,noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{enumitem}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage[tracking]{microtype}
+\usepackage{tikz-cd}
+\usepackage{stmaryrd}
+\usepackage{comment}
+\usepackage[scr=esstix]{mathalfa}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+\DeclareMathOperator{\Sym}{Sym}
+
+\makeatletter
+\let\c@equation\c@section
+\let\theequation\thesection
+\makeatother
+
+%found on https://tex.stackexchange.com/a/565122 with improvements from TikZ manual:
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\usepackage[utf8]{inputenc}
+
+\newcommand{\todo}[1]{\footnote{{\sc\color{red}Todo.} #1}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\DeclareMathOperator{\Hom}{Hom}
+
+\title{The Eckmann-Hilton argument}
+\begin{document}
+\maketitle
+
+
+"The Eckmann-Hilton argument, higher operads and En-spaces." by M. Batanin starts by saying "The classical Eckmann-Hilton argument shows that two monoid structures on a set, such that one is a homomorphism for the other, coincide and, moreover, the resulting monoid is commutative."
+
+TODO: work on understanding this:
+\url{https://link.springer.com/content/pdf/10.1007/BF01451367.pdf}
+
+\tpoint{6.1 of "Group-like Structures":}
+\label{6.1}
+
+\tpoint{For any \(D \in \mathfrak{D}, A \in \mathfrak{C}, f_j : S A \to D\) in \(\mathfrak{D},  j = \{ 1, 2 \} \),}
+\begin{align}
+\label{6.6}
+\eta \{ f_1, f_2 \} = \{ \eta f_1, \eta f_2 \}
+\end{align}
+
+\tpoint{\( \eta \) is isomorphism of \( \underline{M} \)-sets}
+\label{6.7}
+
+\begin{proof}
+\begin{align*}
+\eta ( \mu \circ \{ f_1, f_2 \} ) = & T \mu \circ \eta \{ f_1 , f_2 \} \tag{By \ref{6.1}} \\
+= & T \mu \circ \{ \eta f_1 , \eta f_2 \} \tag{By \ref{6.6}}
+\end{align*}
+\end{proof}
+
+
+
+\tpoint{Theorem 6.8 of "Group-like Structures" says: (Eckman-Hilton)}
+Let \( m_T\) be a natural family of \(\underline{H}\)-structures in \(\mathfrak{C}\) and let \(\mu\) be an \(\underline{H}\)-structure. Under these hypotheses \(m_TB = T \mu\) and is commutative.
+
+\begin{proof}
+Let \(A\) be a fixed but arbitrary object of \(\mathfrak{C}\). Then \( H ( S A , B ) \) receives structure either from the \(\overline{H}\)-structure \( n_{S A} \) given by \ref{6.3} or from the structure \( \mu \) in \( B \). By Theorem \ref{4.17} these two \( \underline{H} \)-structures coincide in \( H( S A , B ) \) 
+
+On the other hand \( \eta : H( S A, B ) \to H (A , T B) \) is an isomorphism of \( \underline{H} \) -sets either if we use the structures \( n_{S A} \) and \( m_{T B} \) (Theorem \ref{6.4} ) or if we use the structure \( \mu \) and \(T \mu \) (Prop \ref{6.7}).
+
+It follows that the structures \( m_{T B} \) and \(T \mu\) induce the \emph{same commutative} structure in \( H(A, T B) \). Since this is true for every \( A \)  in \( \mathfrak{C} \), we must have \( m_{T B} = T \mu \) and each is commutative.
+
+\end{proof}
+
+
+UGH, what does this mean.
+
+\end{document}
