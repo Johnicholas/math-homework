@@ -63,205 +63,62 @@
 
 \DeclareMathOperator{\Hom}{Hom}
 
-\title{Notes for July 8, 2021}
+\title{Homework for July 22, 2021}
 \begin{document}
 \maketitle
 
-\bpoint{Binomial Coefficients}
-Let \(n\) and \(k\) be positive integers. Then the binomial coefficient
-\[
-\binom{n}{k} \coloneqq \frac{n!}{k!(n-k)!}
-\]
-has many combinatorial interpretations including:
-\begin{enumerate}
-\item it is the number of binary strings of length \(n\) with exactly
-\(k\) appearances of \(1\);
-\item it is the number of Dyck paths of length \(n\) with exactly \(k\)
-upward steps;
-\item it is the number of size \(k\) subsets of a size \(n\) set.
-\end{enumerate}
-One categorification of the binomial coefficient in the category of sets then
-might be:
-\begin{align*}
-\binom{-}{-} \colon \mathrm{Set} \times \mathrm{Set} \to \mathrm{Set}
-(N,K) & \mapsto \set{S \in \Hom(N,[2]) | S\;\text{is isomorphic to}\;K}.
-\end{align*}
-In words, this is the functor that takes a pair of finite sets \((N,K)\),
-produces the set \(\Hom(N,[2])\) of all subsets of \(N\)---binary strings
-correspond to subsets of \(N\)!---and then picks out the subsets with the same
-size as \(K\).\footnote{Note, however, that in order to make this into an
-honest functor, one might have to be careful about what morphisms to take in
-the categories of sets in question.} This is a categorification of the binomial
-coefficient in the sense that the following diagram commutes:
-\[
-\begin{tikzcd}
-\mathrm{Set} \times \mathrm{Set} \ar[r,"\binom{-}{-}"] \ar[d,"\#"'] & \mathrm{Set} \ar[d,"\#"] \\
-\mathbf{Z}_+ \times \mathbf{Z}_+ \ar[r,"\binom{-}{-}"] & \mathbf{Z}_+
-\end{tikzcd}
-\]
-which means, explicitly, given finite sets \(N\) and \(K\) with sizes \(n \coloneqq \#N\)
-and \(k \coloneqq \#K\), there is the relation
-\[ \#\binom{N}{K} = \binom{\#N}{\#K} = \binom{n}{k}. \]
 
-This might be carried out in other categories, too! The only thing that was
-special to the category of sets was the construction of the set of all subsets
-of \(N\). But this amounted to saying that the object \([2]\) had the property
-that \(\Hom(N,[2])\) classified subobjects of \(N\): in other words, \([2]\)
-is a \emph{subobject classifier} in the category of sets. So we might
-perform the same construction in a general category \(\mathsf{C}\) by replacing
-\([2]\) in the above formula with a subobject classifier \(\Omega\) in \(\mathsf{C}\).
+What would happen to \( \mathbf{Set} \) if we added an additional special synthetic arrow from the singleton set (terminal) back to the empty set (initial)?
 
-\bpoint{Representations of Finite Groups}
-Let \(G\) be a group. A \emph{representation of \(G\)} on a finite-dimensional
-complex vector space \(V\) is a linear action of \(G\) on \(V\): that is, this
-is a binary operator \(\cdot \colon G \times V \to V\)
-such that for every \(g, h \in G\), \(v,w \in V\), and \(\lambda \in \mathbf{C}\),
-\begin{enumerate}
-\item \(g \cdot (v + \lambda w) = (g \cdot v) + \lambda (g \cdot w)\),
-\item \(h \cdot (g \cdot v) = (hg) \cdot v\), and
-\item \(e \cdot v = v\),
-\end{enumerate}
-where \(e \in G\) is the identity element. Equivalently, let
-\[ \mathrm{GL}(V) \coloneqq \set{T \colon V \to V | T\;\text{an invertible linear transformation}}, \]
-then the data of a representation of \(G\) on \(V\) amounts to a
-homomorphism \(\rho \colon G \to \mathrm{GL}(V)\).\footnote{Note that when \(V =
-\mathbf{C}^{\oplus n}\) is the standard \(n\)-dimensional vector space, then
-\(\mathrm{GL}(V) = \mathrm{GL}_n(\mathbf{C})\) is none other than the group of
-invertible square complex matrices of size \(n\): this is the correspondence
-between linear transformations and matrices, upon picking a basis.} A subspace
-\(W \subseteq V\) is a \emph{subrepresentation} if
-\[ g \cdot w \in W \quad\text{for all}\;g \in G\;\text{and all}\; w \in W. \]
-A representation \(V\) is called \emph{irreducible} if whenever \(W \subseteq V\)
-is a subrepresentation, then either \(W = \{0\}\) or \(W = V\).
+Let's call this weird category \( \mathbf{SetPlus} \).
 
-The basic problem of representation theory is to classify irreducible
-representations of finite groups \(G\), the point being that irreducible
-representations are the building blocks of all representations. Over the complex
-numbers, all representations are built out of irreducible ones in the simplest
-possible way:
+It's not entirely clear that we can finish this construction. How do we patch up the composition operator?
 
-\tpoint{Maschke's Theorem}
-\emph{Let \(G\) be a finite group. Then for every complex representation \(V\),
-there is a decomposition
-\[ V \cong \bigoplus\nolimits_{i \in I} V_i \]
-where \(I\) is a finite index set, and the \(V_i\) are irreducible
-representations of \(G\).}
+\tpoint{\( \mathbf{SetPlus} \) is connected} One thing that is going to happen is that now given an arbitrary ordered pair of objects, there is definitely at least one arrow from the first to the second.
 
-\point
-Moreover, the essential data of an irreducible representation turns out to be
-something quite intrinsic to \(G\). Namely, let \(V\) be a representation of
-\(G\), with associated homomorphism \(\rho \colon G \to \mathrm{GL}(V)\).
-The \emph{character} of this representation is the homomorphism
-\[ \chi \coloneqq \mathrm{trace} \circ \rho \colon G \to \mathrm{GL}(V) \to \mathbf{C} \]
-obtained by taking an element \(g \in G\), considering the linear
-transformation \(\rho(g) \in \mathrm{GL}(V)\), choosing any basis of \(V\) to
-make \(\rho(g)\) into a complex matrix, and then taking the trace of the
-resulting matrix. The properties of the trace ensure that this is independent
-of the choice of basis chosen, and hence this is really an invariant of the
-representation \(\rho\) itself. Then the classification theorem for irreducible
-representations is
+\begin{proof}
+There already was an arrow from the first to the terminal, then there's this new arrow from the terminal to the initial, then there already was an arrow from the initial to the second, and so the composition is an arrow from the first to the second.
+\end{proof}
 
-\tpoint{Character Theory of Finite Groups}
-\emph{Let \(G\) be a finite group. Let \(V\) and \(W\) be irreducible
-representations of \(G\) with characters \(\chi\) and \(\psi\), respectively.
-Then \(V\) and \(W\) are isomorphic representations if and only if \(\chi\) and
-\(\psi\) are the same function on \(G\).}
+Let's call the arrows formed like this the zero arrows. Questions come up in my mind - what does the composition of a zero arrow and a zero arrow look like? Are the set of zero arrows closed under composition? what does the composition of a nonzero arrow and a zero arrow look like? I don't know the answers (yet). 
 
-\point
-Thus the problem of classifying irreducible representations of \(G\) is greatly
-aided by the characters. Here are a few more facts:
-\begin{enumerate}
-\item characters are \emph{class functions}, that is, if \(g, h \in G\)
-are in the same \href{https://en.wikipedia.org/wiki/Conjugacy_class}{conjugacy
-class}\footnote{Read: if up to a change of labels/coordinates, they are the
-same.}, then \(\chi(g) = \chi(h)\);
-\item the set of all complex-valued class functions out of \(G\) is a
-vector space with dimension equal to the number of conjugacy classes of \(G\):
-take the indicator function for each conjugacy class;
-\item there is an inner product on the space of class functions;
-\item the irreducible characters form an orthogonal basis for the space of
-class functions;
-\item each irreducible representations of \(G\) is a direct summand, appearing
-exactly once, of the \emph{regular representation} of \(G\):
-\[ \mathbf{C}G \coloneqq \Set{\sum\nolimits_{g \in G} a_g g | a_g \in \mathbf{G}} \]
-this is the vector space spanned by symbols indexed by elements of \(G\) and
-\(G\) acts on this by multiplication on the symbols.
-\end{enumerate}
+\tpoint{Maybe}
+What happens to our idea that an arrow from the terminal object to some set is `like' an element of the set? Well, all of the arrows from the terminal element to a set still exist, but there's also a new zero arrow from the terminal element. So maybe the operation of going from \( \mathbf{Set} \) to \( \mathbf{SetPlus} \) is like adding a special disjoint element to all the sets.
 
-\bpoint{Young Diagrams, Tableaux}
-A \href{https://en.wikipedia.org/wiki/Young_tableau}{\emph{Young diagram}} is a
-set of boxes that is justified in some fashion. There are many conventions, but
-let's use the so-called English convention in which the boxes are left and upper
-aligned. The number of boxes in each row of a Young diagram \(\mathsf{Y}\)
-form a partition  \(\lambda = (\lambda_1 \geq \lambda_2 \geq \lambda_3 \geq \ldots)\),
-that is, a non-increasing sequence of nonnegative integers. The relevance of
-Young diagrams appears in their connection with the representation theory of
-the symmetric group: the set of irreducible representations of the symmetric
-group \(S_n\) on \(n\) elements are naturally indexed by a Young diagram with \(n\)
-boxes. In fact, given a Young diagram \(\mathsf{Y}\) with \(n\) boxes, the
-corresponding \href{https://en.wikipedia.org/wiki/Specht_module}{irreducible
-representation} can be made by making a vector space whose basis consists of
-certain fillings of \(\mathsf{Y}\).
+I know of a move that adds a special disjoint element to all the sets: The Maybe monad. Is adding a synthetic morphism from terminal to initial object the same as the Maybe monad? Maybe.
 
-Another related thing involves \href{https://en.wikipedia.org/wiki/Symmetric_function}{symmetric functions}.
-There are certain symmetric polynomials called the
-\href{https://en.wikipedia.org/wiki/Schur_polynomial}{Schur polynomials}, and
-they can be specified by taking and counting certain Young diagrams. These are
-related to the irreducible polynomial representations of the general linear
-group \(\mathrm{GL}_n(\mathbf{C})\), which in turn is related to the symmetric
-group situation via what is known as \href{https://en.wikipedia.org/wiki/Schur%E2%80%93Weyl_duality}{Schur--Weyl duality}.
-Everything is connected!
+So there are two guarantees regarding arrows from the terminal to itself, or from the initial to itself - the identity arrow is guaranteed because \( \mathbf{SetPlus} \) is a category, and the zero arrow is also guaranteed. If those two were equal, then the initial and terminal objects would become isomorphic, but they would stay having only one self arrow. This is the situation in \( \mathbf{Vec} \), the initial and terminal objects are isomorphic.
 
-\bpoint{Universal Invariants}
-Finally we discussed the notion of finding some sort of universal way of making
-an algebraic invariant for some type of object, satisfying some set of
-relations. The one that I know best is the notion of an \emph{Euler characteristic}.
-The basic example would be: I am looking for an invariant \(\chi\) on the set
-\(\mathrm{Vect}\) of finite-dimensional vector spaces such that
-if I can write \(V = V_1 \oplus V_2\), then
-\[ \chi(V) = \chi(V_1) + \chi(V_2). \]
-Well, what sort of structure do I need to make sense of this? I just need to
-be able to add my invariants, so I am probably looking for a function
-\[ \chi \colon \mathrm{Vect} \to G \]
-for some abelian group \(G\). I want this to be \emph{universal} in the sense
-that if I have any other map \(\psi \colon \mathrm{Vect} \to H\) to some
-other abelian group \(H\), then I would like there to be a unique homomorphism
-\(\bar\psi \colon G \to H\) such that the following diagram commutes:
-\[
-\begin{tikzcd}
-\mathrm{Vect}\rar["\chi"] \ar[dr,"\psi"']  & G \ar[d,"\bar\psi"] \\ & H
-\end{tikzcd}
-\quad\text{that is,}\; \psi = \bar\psi \circ \chi.
-\]
-To prove that this exists, I need to construct such an object. And the right
-thing to do is the least lossy thing possible: take \(G\) to be the free
-abelian group generated on isomorphism classes of objects on \(\mathrm{Vect}\),
-subject to the additive relations. Explicitly, the isomorphism classes of objects
-in \(\mathrm{Vect}\) are represented by the standard vector spaces \(\mathbf{C}^n\)
-of dimension \(n\), for each integer \(n \geq 0\). Then I would like to set \(G\) to be
-the abelian group generated by symbols \([\mathbf{C}^n]\). But I need to
-subject these to the direct sum relation. Note, however, that
-\[
-\mathbf{C}^n
-= \mathbf{C}^{n-1} \oplus \mathbf{C}
-= \cdots \mathbf{C} \oplus \mathbf{C} \oplus \cdots \oplus \mathbf{C}
-\]
-by peeling off coordinates. So this means that I need to impose the relations
-\[ [\mathbf{C}^n] = [\mathbf{C}] + [\mathbf{C}] + \cdots + [\mathbf{C}] = n[\mathbf{C}]. \]
-Hence \(G\) is the free abelian group generated on the single symbol \([\mathbf{C}]\), and hence
-is the group of integers \(G \cong \mathbf{Z} \cdot [\mathbf{C}]\)
-and the function \(\chi \colon \mathrm{Vect} \to G\) is none other than the
-dimension function!
+\tpoint{What happens to a finite chain of arrows?}
+Let's imagine a finite chain of arrows, all either from Set, or an occurrence of the new arrow, connected target-to-source. Due to associativity, we can use the composition in Set, which is not supposed to be changing, to reduce it as far as we can, to some sort of normal form. 
 
-\point
-This construction can be repeated when the category of vector spaces is replaced
-by any other category \(\mathcal{A}\) in which some notion of ``an object is
-the sum of two others'' is represent. This is axiomitized in the notion of a
-\href{https://en.wikipedia.org/wiki/Abelian_category}{abelian category}
-and the resulting construction is known as the
-\href{https://en.wikipedia.org/wiki/Grothendieck_group}{Grothendieck group} of
-the associated category.
+It might reduce all the way to an arrow in Set; the whole chain of arrows must have always been from Set, and the chain's source and the chain's target were always connected like this.
 
+It might reduce to a function from the chain's source, to the terminal object, a single occurrence of the new arrow, and then a function from the initial object to the chain's target. This is precisely the zero map from the chain's source to the chain's target.
 
+It might reduce to an arrow from the chain's source to the terminal object, then several `bubbles', then one last use of the new arrow, then a map from the initial to the chain's target. The bubbles take the new arrow `up' from the terminal set to the initial set, followed by the arrow from the initial set to the terminal set. Here we are using the fact that there is exactly one function from the initial to the terminal, in \( \mathbf{Set} \).  So one of these things looks a lot like the zero map from the chain's source to the chain's target, but with a count of bubbles. 
+
+So let's distinguish two possibilities. The `free SetPlus' option is to not equate anything that we're not forced to equate. This has the new map, the new zero maps, and also for each zero map, at least a countable infinity of these `zero maps with a counter of bubbles attached'.  (Here I am using the term `free' informally or metaphorically - I don't mean to say that I understand the setting in which this construction could be formally free.)  The `cofree SetPlus' option is to add as little as possible, identifying new things where possible. (Again, I am using `cofree' informally or metaphorically.)
+
+\tpoint{Composition with zero maps}
+If we pre- or post- compose a nonzero map onto a zero map, we get a zero map. 
+
+\begin{proof}
+By associativity of composition.
+\end{proof}
+
+If we are in the cofree \( \mathbf{SetPlus} \) scenario, then the compose of zero maps is a zero arrow. If we are in the free  \( \mathbf{SetPlus} \) scenario, then the collection of `zero arrows with zero bubbles` is not closed: you can create a bubble if you don't start with a bubble. So the natural thing in this scenario is to define `zero arrows' to mean the collection that \emph{is} closed, zero arrows with some number of bubbles. 
+
+\tpoint{Revisiting the finite chain of arrows}
+Let's revisit the finite chain scenario in the free  \( \mathbf{SetPlus} \) world. Let's imagine a finite chain of arrows, all either an arrow in \( \mathbf{Set} \), or a zero arrow.
+
+Again, this might reduce to an arrow in \( \mathbf{Set} \), if the arrows were all from \( \mathbf{Set} \). Or it might reduce to a zero arrow; the counts of bubbles add. 
+
+So whether we're in the free or cofree worlds, we are not forced by this argument to add anything more than these zero maps.
+
+\tpoint{Exactness}
+There's a new thing that we can do, now that there's a distinguished collection of maps (the zero maps). Two arrows that fit source-to-target are called exact at their shared object, if they compose to a zero map. 
+
+0 \to A \to B
 
 \end{document}

@@ -1,0 +1,7 @@
+There is an application of linear algebra / tensor products that I am vaguely familiar with.
+I think it is in some sense as far as you can go towards neural networks without doing backprop.
+
+Spatter Code:
+https://people.engr.tamu.edu/choe/choe/mirror/kanerva.ANALOGY98-kanerva.pdf
+
+http://www.j-paine.org/hrr.html
