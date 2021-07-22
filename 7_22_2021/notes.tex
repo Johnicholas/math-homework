@@ -1,0 +1,291 @@
+\documentclass[11pt, noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage{hyperref}
+
+\usepackage{tikz-cd}
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\title{Notes for July 22, 2021}
+\begin{document}
+\maketitle
+
+\bpoint{Objects and Functors}
+Let \(\mathcal{C}\) be a category and \(f \colon X \to Y\) be an arrow between
+two objects of \(\mathcal{C}\). Let \(Z\) be any other object of \(\mathcal{C}\).
+Then there is an induced map of sets
+\[ f_{*,Z} \colon \mathcal{C}(Z,X) \to \mathcal{C}(Z,Y) \]
+from the set of arrows from \(Z\) to \(X\), to that from \(Z\) to \(Y\). This,
+of course, can be described directly: given an arrow \(g \colon Z \to X\),
+set \(f_{*,Z}(g) \coloneqq f \circ g \colon Z \to X \to Y\).
+
+There are two ways that this can be packaged conceptually. A first is to think
+of \(f_{*,Z}\) as the result of applying the functor
+\[ \mathcal{C}(Z,-) \colon \mathcal{C} \to \mathrm{Set} \]
+which takes objects of \(\mathcal{C}\) to the set of arrows it receives from
+\(Z\). In this case, \(f_{*,Z}\) is perhaps viewed as part of the
+\emph{construction} of the functor \(\mathcal{C}(Z,-)\).
+
+A second way to think of \(f_{*,Z}\) is that it defines a natural transformation
+between the two representable functors
+\[
+\mathcal{C}(-,X) \colon \mathcal{C}^{\mathrm{opp}} \to \mathrm{Set}
+\quad\text{and}\quad
+\mathcal{C}(-,Y) \colon \mathcal{C}^{\mathrm{opp}} \to \mathrm{Set}.
+\]
+That is: \(f_* \colon \mathcal{C}(-,X) \to \mathcal{C}(-,Y)\) is the natural
+transformation such that its component \(f_{*,Z}\) on an object \(Z\) of
+\(\mathcal{C}\) is described as above.
+
+\bpoint{Monoid Objects, Revisited}
+Let \((\mathcal{C},\otimes)\) be a symmetric monoidal category, and let
+\((\mathbf{M}, e, \mu)\) be a monoid object therein; recall that this consists
+of an object \(\mathbf{M}\) together with two morphisms
+\[
+e \colon \mathbf{1} \to \mathbf{M}
+\quad\text{and}\quad
+\mu \colon \mathbf{M} \otimes \mathbf{M} \to \mathbf{M}
+\]
+in \(\mathcal{C}\) satisfying some relations that may be expressed in diagrams,
+see notes from last week. Let \(X\) be any object of \(\mathcal{C}\). The
+discussion above induces maps of sets
+\[
+e_{*,X} \colon \mathbf{1}(X) \to \mathbf{M}(X)
+\quad\text{and}\quad
+\mu_{*,X} \colon (\mathbf{M} \otimes \mathbf{M})(X) \to \mathbf{M}(X)
+\]
+where \(\mathbf{1}(X) \coloneqq \mathcal{C}(X,\mathbf{1})\),
+\(\mathbf{M}(X) \coloneqq \mathcal{C}(X,\mathbf{M})\), and
+\((\mathbf{M} \otimes \mathbf{M})(X) \coloneqq \mathcal{C}(X,\mathbf{M} \otimes \mathbf{M})\).
+This almost gives the set \(\mathbf{M}(X)\) a binary operation, but
+\((\mathbf{M} \otimes \mathbf{M})(X)\) might be a bit different from
+\(\mathbf{M}(X) \times \mathbf{M}(X)\) as sets. Nonetheless, there is a
+canonical map from the latter to the former. The relations for \(e\)
+and \(\mu\) then carry over to relations for \(e_{*,X}\) and \(\mu_{*,X}\)
+that translate to the usual monoid relations.
+
+\bpoint{Extending Diagrams}
+Many categorical constructions are of the following nature: Fix your favourite
+category \(\mathcal{C}\). Let \(\mathcal{D}\) be a category which is thought
+of as a diagram expressing arrows between objects. Let
+\(\mathrm{draw} \colon \mathcal{D} \to \mathcal{C}\) be a functor, which might
+be thought of as drawing the diagram \(\mathcal{D}\) in \(\mathcal{C}\). Then
+a question one might ask would be: can \(\mathrm{draw}(\mathcal{D})\) be
+extended to some (fixed) bigger diagram? For example, consider the following
+augmentations of \(\mathcal{D}\):
+\begin{enumerate}
+\item \(\mathcal{D}_\vee\) is \(\mathcal{D}\) together with a new terminal
+object, maybe thought of as an object below, receiving a unique map from everything else.
+\item \(\mathcal{D}^\wedge\) is \(\mathcal{D}\) together with a new initial
+object, maybe thought of as an object on top, giving a unique map to everything else.
+\item \(\mathcal{D}(\star)\) is \(\mathcal{D}\) together with a new object
+giving and receiving \(5\) distinct maps to every other object in \(\mathcal{D}\).
+\end{enumerate}
+Generally, this might be a situation in which we have another category
+\(\tilde{\mathcal{D}}\) together with a functor
+\(\iota \colon \mathcal{D} \to \tilde{\mathcal{D}}\), perhaps be assumed to be
+faithful and injective on objects for sanity's sake. Then we are asking for all
+ways to fill in the dashed arrow
+\[
+\begin{tikzcd}
+\mathcal{D} \rar["\mathrm{draw}"] \dar["\iota"'] & \mathcal{C} \\
+\tilde{\mathcal{D}} \ar[dashed,ur]
+\end{tikzcd}
+\]
+so that the diagram commutes, perhaps up to natural isomorphisms. The first
+question to ask is: does there \emph{exist at least one} dashed arrow? Then, if
+so, is there a \emph{best} dashed arrow amongst all possible choices?
+
+To make sense of the notion of best, consider all possible ways of filling
+in the dashed arrow. One way to do this is to consider category
+\([\tilde{\mathcal{D}}, \mathcal{C}]\) of all functors from \(\tilde{\mathcal{D}}\)
+to \(\mathcal{C}\). Therein, we would like to consider the full subcategory of
+all possible dashed arrows:
+\[
+[\tilde{\mathcal{D}}, \mathcal{C}]_{\mathrm{draw}} \coloneqq
+\{F \colon \tilde{\mathcal{D}} \to \mathcal{C} \mid \mathrm{draw} \cong F \circ \iota\}.
+\]
+Then our questions above amount to asking whether or not this category is
+nonempty, and, if so, whether or not there is either a terminal or initial
+object.
+
+To relate this with some concrete notions, consider the examples above:
+\begin{enumerate}
+\item A terminal object in \([\mathcal{D}_\vee,\mathcal{C}]_{\mathrm{draw}}\)
+is a \emph{colimit} of \(\mathcal{D}\) in \(\mathcal{C}\).
+\item An initial object in \([\mathcal{D}^\wedge,\mathcal{C}]_{\mathrm{draw}}\)
+is a \emph{limit} of \(\mathcal{D}\) in \(\mathcal{C}\).
+\end{enumerate}
+(The way I remember which is which is to imagine products and coproducts. Then
+a product is a limit and a coproduct is a colimit.)
+
+\bpoint{Abelian groups}
+Consider the category \(\mathrm{Ab}\) of abelian groups. This is a category with
+a lot of structure. For instance, the zero abelian group \(\{0\}\) is the initial
+and terminal object of the category. For any pair of abelian groups \(A\) and
+\(B\), the product \(A \times B\) and coproduct \(A \sqcup B\) coincide and
+are given by the direct sum
+\[ A \times B = A \sqcup B = A \oplus B \coloneqq \{(a,b) \mid a \in A, b \in B\}, \]
+the group structure being pointwise addition. Thus, despite their names as
+products, it is helpful to think of this structure as yielding a way of ``adding
+two abelain groups'' to make a bigger abelian group.
+
+To continue below, recall also the following: For any homomorphism
+\(f \colon A \to B\) of abelian group, the categorical
+\href{https://en.wikipedia.org/wiki/Kernel_(category_theory)}{\emph{kernel}} and
+\href{https://en.wikipedia.org/wiki/Cokernel}{\emph{cokernel}} exist
+and are given by
+\[
+\ker(f) \coloneqq \{a \in A \mid f(a) = 0\}
+\quad\text{and}\quad
+\operatorname{coker}(f) \coloneqq B/f(A)
+\]
+the latter being the quotient abelian group.
+
+But there are perhaps other ways to combine abelian groups. Namely, given an
+injection of abelian groups \(f \colon A \to B\), we might think of \(A\) as being ``smaller''
+than \(B\). The difference is then measured by the quotient group \(C \coloneqq B/A\);
+this has a surjection \(g \colon B \to C\), so we might think of \(B\) as ``bigger'' than \(C\).
+In a way, \(B\) is then the sum of the pieces \(A\) and \(B\), and we may express
+this idea by writing
+\[ 0 \to A \xrightarrow{f} B \xrightarrow{g} C \to 0 \]
+and saying that this is an \emph{exact sequence} of abelian groups. In general,
+given three abelian groups \(A\), \(B\), and \(C\), and homomorphisms \(f \colon A \to B\)
+and \(g \colon B \to C\), say that the sequence above is a \emph{short exact sequence}
+if
+\begin{enumerate}
+\item \(f\) is injective,
+\item \(g\) is surjective, and
+\item \(\ker(g) = \operatorname{coker}(f)\).
+\end{enumerate}
+These conditions express the fact that \(A\) is a subgroup of \(B\), \(C\) is a
+quotient group of \(B\), and that the subgroup of \(B\) you are dividing out by
+to get \(C\) is \(A\).
+
+For a simple example, consider the direct sum \(B = A \oplus C\) of two groups
+\(A\) and \(C\). Let \(i \colon A \to A \oplus C\) be the inclusion into the first factor
+and \(p \colon A \oplus C \to C\) the projection onto the second factor. Then these maps
+fit into a short exact sequence
+\[ 0 \to A \xrightarrow{i} A \oplus C \xrightarrow{p} C \to 0. \]
+Such short exact sequences are called \emph{split} sequences. In general, a
+short exact sequence is said to be \emph{split} if there exists a commutative
+diagram of short exact sequences
+\[
+\begin{tikzcd}
+0 \rar & A \rar["f"] \dar & B \rar["g"] \dar & C \dar \rar & 0 \\
+0 \rar & A \rar["i"] & A \oplus C \rar["p"] & C \rar & 0
+\end{tikzcd}
+\]
+such that each of the vertical maps are isomorphisms.
+
+But not all short exact sequences are of this form in \(\mathrm{Ab}\): for example,
+consider \(A = \mathbf{Z}\) \(B = \mathbf{Z}\), and \(f \colon \mathbf{Z} \to \mathbf{Z}\)
+given by multiplication by \(2\). Then, setting \(C = \mathbf{Z}/2\mathbf{Z}\)
+and \(g \colon \mathbf{Z} \to \mathbf{Z}/2\mathbf{Z}\) the reduction map, we
+have a short exact sequence
+\[ 0 \to \mathbf{Z} \xrightarrow{\times 2} \mathbf{Z} \to \mathbf{Z}/2\mathbf{Z} \to 0 \]
+and \(\mathbf{Z}\) is certainly not isomorphic to \(\mathbf{Z} \oplus \mathbf{Z}/2\mathbf{Z}\):
+for instance, there is no nonzero element \(x\) of \(\mathbf{Z}\) such that \(x + x = 0\).
+In this case, we say that the short exact sequence is \emph{not split}.
+
+\bpoint{Exercise}
+Prove the ``Splitting Lemma'': given a short exact sequence
+\[ 0 \to A \xrightarrow{f} B \xrightarrow{g} C \to 0 \]
+the following are equivalent:
+\begin{enumerate}
+\item the short exact sequence is split,
+\item there exists a homomorphism \(s \colon C \to B\) such that \(g \circ s = \operatorname{id}_C\), and
+\item there exists a homomorphism \(r \colon B \to A\) such that \(r \circ f = \operatorname{id}_A\).
+\end{enumerate}
+
+\bpoint{Enriched Category}
+Let \(\mathcal{C}\) be a category. Then taking the set of arrows between objects
+might be viewed as a functor
+\[ \mathcal{C}(-,-) \colon \mathcal{C}^{\mathrm{opp}} \times \mathcal{C} \to \mathrm{Set}. \]
+One might ask whether or not this can be lifted to a functor with values in a
+category \(\mathcal{A}\) other than \(\mathrm{Set}\). If this is possible, then
+we say that \(\mathcal{C}\) is \emph{enriched in \(\mathcal{A}\)}.
+
+For instance, when \(\mathcal{C} = \mathrm{Ab}\) is the category of abelian
+groups, then the sets \(\mathrm{Ab}(A,B)\) of homomorphism between two groups
+\(A\) and \(B\) is itself an abelian group under pointwise addition, and
+unit coming from the zero morphism. Likewise, when \(\mathcal{C} = \mathrm{Vect}\)
+is the category of vector spaces, the sets \(\mathrm{Vect}(V,W)\) of linear maps
+between two vector space is itself a vector space under pointwise addition and
+scaling.
+
+\bpoint{Tensor Product Universally}
+Consider the category \(\mathrm{Vect}\) of finite dimensional vector spaces
+over a field \(k\). The tensor product furnishes \(\mathrm{Vect}\) with a
+functor
+\[ \otimes \colon \mathrm{Vect} \times \mathrm{Vect} \to \mathrm{Vect}. \]
+This functor is universal in some sense, most easily made clear as follows.
+Let \(U\) and \(V\) be a pair of vector spaces. Then for every vector space
+\(W\) and \emph{bilinear} map \(b \colon U \times V \to W\)\footnote{This means that
+\(b(\lambda u + u', v) = \lambda b(u,v) + b(u',v)\) and \(b(u,\lambda v + v') = \lambda b(u,v) + b(u,v')\)
+for every \(u,u' \in U\), \(v,v' \in V\), and \(\lambda \in k\).}, there exists
+a unique \emph{linear} map \(\tilde b \colon U \otimes V \to W\) such that the diagram
+\[
+\begin{tikzcd}
+U \times V \rar \ar[dr,"b"'] & U \otimes V \dar["\tilde b"] \\ & W
+\end{tikzcd}
+\]
+commutes. Here, the map \(U \times V \to U \otimes V\) is the bilinear map
+\((u,v) \mapsto u \otimes v\). In other words, the tensor product is the
+universal way to transform \emph{bilinear} maps out of two vector spaces to a
+\emph{linear} map out of a single vector space.
+
+\bpoint{Hom-Tensor Adjunction}
+Let \(U\), \(V\), and \(W\) be finite-dimensional vector spaces. Then there is
+a canonical isomorphism
+\[ \mathrm{Vect}(U \otimes V, W) \cong \mathrm{Vect}(U, \mathrm{Vect}(V,W)). \]
+Here, we view \(\mathrm{Vect}(V,W)\) as a vector space as explained above.
+One way to see this is to use the universal property above: \(\mathrm{Vect}(U \otimes V,W)\)
+is the set of bilinear maps \(U \times V \to W\). But by partially evaluating a
+bilinear map in the first argument, I obtain a linear map \(V \to W\). This
+proves the equality.
+
+Then what the above expresses is that the two functors
+\[
+- \otimes V \colon \mathrm{Vect} \to \mathrm{Vect}
+\quad\text{and}\quad
+\mathrm{Vect}(V,-) \colon \mathrm{Vect} \to \mathrm{Vect}
+\]
+are adjoint to one another, with \(-\otimes V\) the left adjoint (because it
+is on the left side of the set of maps), and \(\mathrm{Vect}(V,-)\) the right
+adjoint. This structure may be abstracted to a general symmetric monoidal category,
+yielding the notion of an \href{https://ncatlab.org/nlab/show/internal+hom}{\emph{internal hom}}
+and a \href{https://ncatlab.org/nlab/show/closed+monoidal+category}{\emph{closed monoidal category}}.
+\end{document}
