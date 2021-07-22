@@ -231,7 +231,10 @@ TODO: not finished
 
 
 \end{proof}
-\tpoint{diagramming that \(B'\) combinator}
+\tpoint{diagramming}
+
+The \(B'\) combinator has a type \((A \to B) \to (B \to C) \to A \to C\), and a proof \(\lambda x y z .\ y(xz)\). The parse tree of the type, if you unify the nodes representing the generic types \(A, B, C\) can be rearranged to form a fairly reasonable, familiar, triangular diagram of how \(B'\) works. Each of the nodes of the parse tree of the proof has an associated type, and the types are all subformulas of the \(B'\) combinator, and so you can decorate the triangular diagram of the type of \(B'\) with the parse tree of the proof of \(B'\).
+
 \[
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
@@ -269,6 +272,10 @@ TODO: not finished
 	\end{pgfonlayer}
 \end{tikzpicture}
 \]
+
+Ralph Hinze's Concrete Stream Calculus talks about defining integer sequences 
+
+\includegraphics{images/NatStreamParseTree}
 
 \tpoint{Meandering regarding section 6 of Shapely Monads paper}
 
