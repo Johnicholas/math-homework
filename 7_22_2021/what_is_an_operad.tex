@@ -1,3 +1,126 @@
-https://www.ams.org/notices/200406/what-is.pdf
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\documentclass[11pt,noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{enumitem}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage[tracking]{microtype}
+\usepackage{tikz-cd}
+\usepackage{stmaryrd}
+\usepackage{comment}
+\usepackage[scr=esstix]{mathalfa}
 
-https://alistairsavage.ca/pubs/Samchuck-Schnarch-Operads.pdf
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\pr}{pr}
+
+\makeatletter
+\let\c@equation\c@section
+\let\theequation\thesection
+\makeatother
+
+%found on https://tex.stackexchange.com/a/565122 with improvements from TikZ manual:
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\usepackage[utf8]{inputenc}
+
+\newcommand{\todo}[1]{\footnote{{\sc\color{red}Todo.} #1}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\Fin}{Fin}
+
+\title{Notes regarding "What is... an Operad"}
+\begin{document}
+\maketitle
+
+
+\url{https://www.ams.org/notices/200406/what-is.pdf}
+
+\url{https://alistairsavage.ca/pubs/Samchuck-Schnarch-Operads.pdf}
+
+The most fundamental example of an operad is the endomorphism operad, consisting of functions from the \(n\)-fold product of \(X\) with itself to \(X\), together with the operation that `splices' a function into a particular spot of another function,
+creating a new function.
+\[
+\circ : \Fin n \times (\Vect\ n\ X \to X) \times (\Vect\ m\ X \to X) \to \Vect\ (n + m - 1)\ X \to X
+\]
+
+An operad \((\mathcal{O}, \circ)\) consists of a graded collection of objects, \(\mathcal{O}\) and an operator 
+
+\[
+\circ : \Fin n \times \mathcal{O} n \times \mathcal{O} m \to \mathcal{O} (n + m - 1)
+\]
+
+satisfying the relations manifest in the example of the endomorphism operad.
+
+\section{Tree operad}
+
+The tree operad has for objects, rooted trees with \(n\) labeled leaves.
+
+The \(\circ\) operator constructs a tree by grafting a tree onto another tree.
+
+\section{Little 2-cubes operad}
+
+The 2-cubes operad has for objects, squares with \(n\) axis-aligned, disjoint rectangular holes. 
+The \(\circ\) operator constructs a new square-with-holes by grafting a square-with-holes into a particular hole.
+
+\section{Algebra}
+
+An algebra over an operad is like a group action.
+
+\section{Finite operads}
+
+In order to create a finite operad, we can quotient one of the other examples
+by a coarse relation. For example, the Fiver relation, from Watership Down, considers all numbers greater than four to be equivalent. 
+
+So in the Tree operad quotiented by the Fiver relation, there are six positions where \(\circ\) can graft, 0, 1, 2, 3, 4, and `many'. The trees quotiented by the Fiver relation are trees with 0, 1, 2, 3, 4, or `many' leaves. 
+
+An algebra for this finite operad presumably has some sort of `saturated' value or values, and a `saturating' function or functions, such that when you splice a non-saturating function with a saturating function, in either order, you don't need to keep track of precisely where you spliced it - it's going to be a saturating function. 
+
+Another big relation might be even/odd. Suppose that there's a kind of \(n\)-ary function that alternates in how it treats its arguments - for example, if it sums all the even-index arguments, and all the odd-index arguments, and returns the difference. When you splice another function into this function, you might need to know the parity of where you've spliced, but not more than that.
+
+\section{Finitely presented operads}
+
+Lots of groups, and other algebraic objects, can be expressed as `the free object on this finite list of generators, quotiented by these equational laws a.k.a. relations'. If the list of generators is finite, and the list of equations is finite, then you might call it finitely presented, even if the set of values is infinite.
+
+
+
+
+
+\end{document}

@@ -1,0 +1,124 @@
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\documentclass[11pt,noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{enumitem}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage[tracking]{microtype}
+\usepackage{tikz-cd}
+\usepackage{stmaryrd}
+\usepackage{comment}
+\usepackage[scr=esstix]{mathalfa}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+\DeclareMathOperator{\Sym}{Sym}
+
+\makeatletter
+\let\c@equation\c@section
+\let\theequation\thesection
+\makeatother
+
+%found on https://tex.stackexchange.com/a/565122 with improvements from TikZ manual:
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\usepackage[utf8]{inputenc}
+
+\newcommand{\todo}[1]{\footnote{{\sc\color{red}Todo.} #1}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\DeclareMathOperator{\Hom}{Hom}
+
+\title{Adding one synthetic arrow}
+\begin{document}
+\maketitle
+
+
+What would happen to \( \mathbf{Set} \) if we added an additional special synthetic arrow from the singleton set (terminal) back to the empty set (initial)?
+
+Let's call this weird category \( \mathbf{SetPlus} \).
+
+It's not entirely clear that we can finish this construction. How do we patch up the composition operator?
+
+\tpoint{\( \mathbf{SetPlus} \) is connected} One thing that is going to happen is that now given an arbitrary ordered pair of objects, there is definitely at least one arrow from the first to the second.
+
+\begin{proof}
+There already was an arrow from the first to the terminal, then there's this new arrow from the terminal to the initial, then there already was an arrow from the initial to the second, and so the composition is an arrow from the first to the second.
+\end{proof}
+
+Let's call the arrows formed like this the zero arrows. Questions come up in my mind - what does the composition of a zero arrow and a zero arrow look like? Are the set of zero arrows closed under composition? what does the composition of a nonzero arrow and a zero arrow look like? I don't know the answers (yet). 
+
+\tpoint{Maybe}
+What happens to our idea that an arrow from the terminal object to some set is `like' an element of the set? Well, all of the arrows from the terminal element to a set still exist, but there's also a new zero arrow from the terminal element. So maybe the operation of going from \( \mathbf{Set} \) to \( \mathbf{SetPlus} \) is like adding a special disjoint element to all the sets.
+
+I know of a move that adds a special disjoint element to all the sets: The Maybe monad. Is adding this synthetic morphism a functor? Maybe? Is adding a synthetic morphism from terminal to initial object the same as the Maybe monad? Maybe. 
+
+So there are two guarantees regarding arrows from the terminal to itself, or from the initial to itself - the identity arrow is guaranteed because \( \mathbf{SetPlus} \) is a category, and the zero arrow is also guaranteed. If those two were equal, then the initial and terminal objects would become isomorphic, but they would stay having only one self arrow. This is the situation in abelian categories, the initial and terminal objects are isomorphic.
+
+\tpoint{What happens to a finite chain of arrows?}
+Let's imagine a finite chain of arrows, all either from Set, or an occurrence of the new arrow, connected target-to-source. Due to associativity, we can use the composition in Set, which is not supposed to be changing, to reduce it as far as we can, to some sort of normal form. 
+
+It might reduce all the way to an arrow in Set; the whole chain of arrows must have always been from Set, and the chain's source and the chain's target were always connected like this.
+
+It might reduce to a function from the chain's source, to the terminal object, a single occurrence of the new arrow, and then a function from the initial object to the chain's target. This is precisely the zero map from the chain's source to the chain's target.
+
+It might reduce to an arrow from the chain's source to the terminal object, then several `bubbles', then one last use of the new arrow, then a map from the initial to the chain's target. The bubbles take the new arrow `up' from the terminal set to the initial set, followed by the arrow from the initial set to the terminal set. Here we are using the fact that there is exactly one function from the initial to the terminal, in \( \mathbf{Set} \).  So one of these things looks a lot like the zero map from the chain's source to the chain's target, but with a count of bubbles. 
+
+So let's distinguish two possibilities. The `free SetPlus' option is to not equate anything that we're not forced to equate. This has the new map, the new zero maps, and also for each zero map, at least a countable infinity of these `zero maps with a counter of bubbles attached'.  (Here I am using the term `free' informally or metaphorically - I don't mean to say that I understand the setting in which this construction could be formally free.)  The `cofree SetPlus' option is to add as little as possible, identifying new things where possible. (Again, I am using `cofree' informally or metaphorically.)
+
+\tpoint{Composition with zero maps}
+If we pre- or post- compose a nonzero map onto a zero map, we get a zero map. 
+
+\begin{proof}
+By associativity of composition.
+\end{proof}
+
+If we are in the cofree \( \mathbf{SetPlus} \) scenario, then the compose of zero maps is a zero arrow. If we are in the free  \( \mathbf{SetPlus} \) scenario, then the collection of `zero arrows with zero bubbles` is not closed: you can create a bubble if you don't start with a bubble. So the natural thing in this scenario is to define `zero arrows' to mean the collection that \emph{is} closed, zero arrows with some number of bubbles. 
+
+\tpoint{Revisiting the finite chain of arrows}
+Let's revisit the finite chain scenario in the free  \( \mathbf{SetPlus} \) world. Let's imagine a finite chain of arrows, all either an arrow in \( \mathbf{Set} \), or a zero arrow.
+
+Again, this might reduce to an arrow in \( \mathbf{Set} \), if the arrows were all from \( \mathbf{Set} \). Or it might reduce to a zero arrow; the counts of bubbles add. 
+
+So whether we're in the free or cofree worlds, we are not forced by this argument to add anything more than these zero maps.
+
+\tpoint{Exactness}
+There's a new thing that we can do, now that there's a distinguished collection of maps (the zero maps). Two arrows that fit source-to-target are called exact at their shared object, if they compose to a zero map. 
+
+0 \to A \to B
+
+\end{document}
