@@ -1,0 +1,7 @@
+https://twitter.com/str4d/status/1420047758203965440
+"*slaps roof of circuit* this bad boy can fit so many constraints in it"
+
+https://zcash.github.io/halo2/concepts/arithmetization.html
+
+Possibly this is relevant to "spatter code" and "computing with semirings"
+

@@ -1,0 +1,5 @@
+I loved "Computing with Semirings and Weak Rig Groupoids"
+by Jacques Carette and Amr Sabry
+
+https://www.cas.mcmaster.ca/~carette/publications/esop2.pdf
+

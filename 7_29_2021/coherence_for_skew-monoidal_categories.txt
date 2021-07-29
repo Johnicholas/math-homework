@@ -1,0 +1,11 @@
+I enjoyed "Coherence for Skew-Monoidal Categories"
+by Tarmo Uustalu. It seems basic / introductory / mundane in some ways,
+in the same way that the Sabry and Carette paper does,
+but maybe even more basic / introductory / mundane.
+
+Both this paper, and the Sabry and Carette, said that they're basically
+deformalizations of some Agda code.
+
+Andrej Bauer described the difference between his prover (Andromeda 2)
+and Agda as "Coq, Agda, Lean, … – fixed type theory"
+Presumably Andromeda 2 allows the user to customize the type theory.

@@ -1,341 +1,442 @@
-\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
-\documentclass[11pt,noamsfonts]{amsart}
-\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
-\usepackage[svgnames]{xcolor}
-
-\usepackage{mathtools}
-\usepackage{braket}
-\usepackage{enumitem}
-\usepackage[charter,expert]{mathdesign}
-\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
-\usepackage[tracking]{microtype}
-\usepackage{tikz-cd}
-\usepackage{stmaryrd}
-\usepackage{comment}
-\usepackage[scr=esstix]{mathalfa}
-
-\usepackage{caption}
-\usepackage{subcaption}
-
-\usepackage{hyperref}
-\linespread{1.04}
-
-\usepackage{enumitem}
-\setlist[1]{labelindent=\parindent}
-\setlist[enumerate]{labelsep=0.5em}
-\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
-\setlist[itemize]{label={--}}
-
-\DeclareMathOperator{\Sym}{Sym}
-
-\makeatletter
-\let\c@equation\c@section
-\let\theequation\thesection
-\makeatother
-
-%found on https://tex.stackexchange.com/a/565122 with improvements from TikZ manual:
-\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
-
-\usepackage[utf8]{inputenc}
-
-\newcommand{\todo}[1]{\footnote{{\sc\color{red}Todo.} #1}}
-
-% Point Formats
-\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
-\newcommand{\point}{\pointheader~}
-\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
-\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
-\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
-
-% QED Symbol
-\newcommand{\psqedsymb}{\(\blacksquare\)}
-\renewcommand{\qed}{~\hfill{\psqedsymb}}
+\documentclass[a4paper]{article}
+\title{Notes for July 29}
+\author{Johnicholas Hines}
+\date{\today}
+\renewcommand\today{July 23, 2021}
 
 
-\makeatletter
-\newcommand*{\coloneqq}{\mathrel{\rlap{%
-           \raisebox{0.3ex}{$\m@th\cdot$}}%
-           \raisebox{-0.3ex}{$\m@th\cdot$}}%
-           =}
-\newcommand{\eqqcolon}{=%
-           \mathrel{\rlap{%
-           \raisebox{0.3ex}{$\m@th\cdot$}}%
-           \raisebox{-0.3ex}{$\m@th\cdot$}}}
-\makeatother
+% Things that start with a % (percent sign) are ignored by LaTeX.  They are `comments' and are set off in blue on writeLaTeX.com.  They will never appear in the final output.
 
-\DeclareMathOperator{\Hom}{Hom}
-\DeclareMathOperator{\pr}{pr}
-\DeclareMathOperator{\op}{op}
-\DeclareMathOperator{\id}{id}
+\usepackage{mathtools} % for align*
+\usepackage{amsthm} % for environment proof
 
-% This stuff is for the TikZit diagram
-\tikzstyle{none}=[inner sep=0pt]
-\tikzstyle{simple}=[-,draw=Black,line width=2.000]
-\tikzstyle{arrow}=[-,draw=Black,postaction={decorate},decoration={markings,mark=at position .5 with {\arrow{>}}},line width=2.000]
-\tikzstyle{tick}=[-,draw=Black,postaction={decorate},decoration={markings,mark=at position .5 with {\draw (0,-0.1) -- (0,0.1);}},line width=2.000]
-\pgfdeclarelayer{edgelayer}
-\pgfdeclarelayer{nodelayer}
-\pgfsetlayers{edgelayer,nodelayer,main}
+\usepackage{tikz}
+\usetikzlibrary{cd} % for commutative diagrams
 
+%\usepackage{graphicx}            % easy inclusion and manipulation of images
+%\usepackage{microtype}           % just for fun: really hone in with the typography
+%\usepackage{booktabs}            % nice looking tables that present the content first and foremost
+%\usepackage{multicol}            % multiple columns in a local context
+\usepackage[hidelinks]{hyperref} % clickable references in the output, but hide them visually
 
-\title{Homework for July 22, 2021}
+% These are called macros.  They aren't actually this simple, but you can think of it like a smart `find and replace' for most of your needs.
+% Macros are case-sensitive.   See section 2.
+
+% These two lines tell LaTeX that I want to
+% 1) create a new piece of markup called `term' that takes one `thing' and puts single quotes around it
+% 2) create a new piece of markup called `pkg' that takes one `thing' and sets it in a sans-serif font
+% 3) redefine an existing piece of markup that doesn't take any `things' and just puts the text you see there.
+%\newcommand\term[1]{`#1'}
+%\newcommand\pkg[1]{\textsf{#1}}
+%\newcommand\writeLaTeX{{\sffamily Overleaf}}
+% The above macro (\writeLaTeX) is a good example of when macros come in handy.  This online service recently rebranded itself from 'writeLaTeX' to 'Overleaf'.  All references to the company have been replaced with this one change!  In all honesty this is not *unique* to TeX, but it is exceptionally *easy* in TeX.
+
+% The next few macros use moderately advanced TeX.  They've been fine-tuned for appearance according to personal taste; you should never have to worry about this in your documents.  Ignore these macros except for the logical meanings: `control sequence' (formal term for a TeX macro) and `environment'.
+\newcommand\embrace[1]{\texttt{\char`\{#1\char`\}}}
+\newcommand\env[1]{\embrace{#1}}
+\newcommand\cs[1]{\texttt{\string#1}}
+\newcommand\csarg[2]{\cs{#1}\embrace{#2}}
+
+\newtheorem{theorem}{Theorem}
+
+\DeclareMathOperator{\B}{B}
+
 \begin{document}
 \maketitle
 
-%\bpoint{Fibre product exercise:}\label{fibre-product-exercise}
-%Compare the diagram defining the Cartesian product and the fibre product
-%diagrams. Prove that if a category has a terminal object, then the product is a
-%fibre product over the terminal object. Prove that a morphism \(Z \to W\) in
-%\(\mathcal{C}\) induces a morphism
-%\[ X \times_{Z} Y \to X \times_{W} Y. \]
-%In particular, if a category has a terminal object, any fibre product maps to
-%the Cartesian product.
+\begin{abstract}
+TODO: write an abstract
+\end{abstract}
 
-\tpoint{If a category has a terminal object, then the product is a fibre product over the terminal object}
-\begin{proof}
-Suppose a category has a terminal object, and binary fibre products.
+%\tableofcontents
 
-Let \(X\) and \(Y\) be generic objects in this category. Take the fibre product of \(X\) and \(Y\) over the terminal object. This is an object \( X \times_1 Y \) which will turn out to be the product object,
-%We might call this \( X \times_{X \to 1, 1, Y \to 1} Y \) if we were trying to be fully ambiguous or emphasizing that the morphisms are part of the fibre product, but we will usually call it \( X \times_1 Y \)
-and a pair of morphisms \(X \times_{1} Y \to X\) and \(X \times_{1} Y \to Y\) which will turn out to be the projections.
+\section{The Eckmann-Hilton argument}
 
-%Now we need to use the fibre product's guarantee to establish the product's guarantee.
+The Eckmann-Hilton argument, as far as I understand it, says that if something (such as a 2-dimensional homotopy group or a 2-dimensional category-like thing) is a monoid in two apparently different ways, but the apparently different operators are compatible with one another in a moderately nice way, then actually the two monoid operators are identical, and moreover the monoid operation is commutative.
 
-Suppose there was an object \( Z \) and a pair of morphisms \(Z \to X, Z \to Y \).
-%(This is the antecedent of the product definition).
-Recall there is a terminal object, \( 1 \). So there are morphisms \( X \to 1, Y \to 1 \) and \( Z \to X ; X \to 1 = Z \to Y ; Y \to 1 = Z \to 1 \). \footnote{Where it is fairly clear from context (because there is only one inhabitant of the type relevant to the argument) we will use types as names, rather than introducing names and then immediately using them only once. So for example \( X \to 1 ; 1 \to 1 = X \to 1 \).}
-Recall we are using the semicolon operator for flipped composition of morphisms.
-
-Now we have a commuting square. So by the fibre product property there is a unique morphism \( Z \to X \times_1 Y \), such that \(Z \to X \times_1 Y ; X \times_{1} Y \to X = Z \to X\) and \( Z \to X \times_1 Y ; X \times_{1} Y \to X = Z \to Y \).
-
-% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBpiBdUkANwEMAbAVxiRAA0ACAHW7wFt4AfWKcAmiAC+pdJlz5CKMgAYqtRizYAtKTJAZseAkWXk19Zq0QddswwqIAmM9QubrE6XfnGlpR+YaViDEUmowUADm8ESgAGYAThD8SGQgOBBIAMxeIInJqdQZSI65+SmIpumZiDl65UhVxYil9UkVac3KZe3ZRTUALD0FLf1IQxSSQA
-\begin{tikzcd}
-             & Z \arrow[rd] \arrow[ld] \arrow[d] &              \\
-X \arrow[rd] & X \times_1 Y \arrow[r] \arrow[l]  & Y \arrow[ld] \\
-             & 1                                 &             
-\end{tikzcd}
-
-That is, the fibre product over the terminal object is a product.
-
-%We have shown that if a category has a terminal object, and binary fibre products, then it has binary products, constructed as the fibre product over the terminal object.
-\end{proof}
-
-\bpoint{Meandering about functors between categories instead of morphisms and objects within one category}
-I believe there might be an alternate way of phrasing this, where we talk about several categories and functors between them, instead of objects within a particular category and morphisms between them.
-
-The product, and the fibre product, and many things of this sort in category theory, are universal properties which all have a logical structure, which I attempt to informally gesture at here: for all diagrams A, there exists an extended diagram B, such that among all similar extended diagrams B', B is `best' in some sense.
-
-You can construct the category of functors from a finite discrete two-objects category (let's call this category \(D_2\)) to the category in question (let's call this functor category \( D_2 \to C \)). A particular object of this functor category picks out two objects in the category in question, just like the first part of the universal property of the product.
-%\[
-%\begin{tikzcd}
-%x & y
-%\end{tikzcd}
-%\]
-Similarly, you can take a finite three-objects category with two non-identity arrows pointing from two of the objects at a third object (Let's call this category \( V \)), and construct the category of functors to the category in question (Let's call this functor category \( V \to C \)). A particular object of this functor category picks out two objects with two morphisms to a third shared object, just like the first part of the universal property of the fibre product.
+\begin{theorem}
+Suppose \( \star \) and \( \circ \) are two binary operators, with units, on the 
+same set and further suppose that one distributes over the other: \( 
+(a \star b) \circ (c \star d) = (a \circ c) \star (b \circ d) \). Then
 \[
-\begin{tikzcd}
-x \arrow[r] & z & x \arrow[l]
-\end{tikzcd}
+a \star  b = a \circ b = b \star a 
 \]
-The inclusion of the first part of one of these universal properties into the second part corresponds to a particular (injective) functor from one of these finite diagram categories into another finite diagram category. Saying that every antecedent diagram can be completed to a consequent diagram is a map; almost certainly this map should be a functor related to the inclusion functor between the finite diagrams categories. That is, we're considering the product to be an object of the functor category \( (D_2 \to C) \to V^{\op} \to C \). \footnote{As a type-formation operator, and as a sentential logical operator, and as the functor category-formation operator, the rightward arrow associates to the right. \( W \to X \to Y \to Z\) is equivalent to \( W \to (X \to (Y \to Z)) \). Being consistent about this, using the minimum number of parentheses to be unambiguous, is helpful for writing and thinking, in the same way that omitting parentheses in formulas involving binary associative operators is helpful for writing and thinking.}
-
-In order to similarly give an expression for the functor category where the fibre product lives, I need a way to name the finite commutative square category. I think \( 2 \times 2 \) is a reasonable name for it: the product of the category with two objects and one non-identity arrow from one to the other with itself results in a commutative square.
-
-So the fibre product ought to be a nice map from \( V \) shaped diagrams in \( C \) to commuting squares in \( C \), that is, it is an object of the functor category \( (V \to C) \to 2 \times 2 \to C \).
-
-How do I express the compatibility of the product functor \( (D_2 \to C) \to V^{\op} \to C \) with the product inclusion \( D_2 \hookrightarrow V^{\op} \) ?
-There's a generic theorem \( B': (A \to B) \to (B \to C) \to A \to C = \lambda x y z . y (x z) \), and so \(B'\) is a reasonable name for the functor that takes functors \( A \to B \) to functors between functor categories \( (B \to C) \to A \to C \).\footnote{Though by the convention previously established, the type expression is itself also an unambiguous name for the functor.}
-
-The inclusion of diagrams \( D_2 \hookrightarrow V^{\op} \) is specified as part of the problem and if we apply \( B' \) to it, we get a functor in the opposite direction to the product functor \( B' (D_2 \hookrightarrow V^{\op}) : (V^{\op} \to C) \to D_2 \to C \). Maybe the way to express the compatibility of the product functor with the product inclusion is to say that if we first apply the product functor, and then do this lifted product inclusion functor back, then we should get the identity. 
-\[
-(\times) ; B' (D_2 \hookrightarrow V^{\op}) = \id (D_2 \to C)
-\]
-
-Similarly, the fibre product \( \times_{X} \) followed by the lifted inclusion of diagrams \( B' (V \hookrightarrow 2 \times 2) : (2 \times 2 \to C) \to V \to C \) should be the identity.
-\[
-(\times_X) ; B' (V \hookrightarrow 2 \times 2) = \id (V \to C)
-\]
-
-From any category, you can take the full subcategory of the objects satisfying some criterion, which is a subcategory. The universal property of both the product and the fibre product is that they are terminal objects in, not the \emph{complete} functor categories corresponding to their types, but in the full subcategory of those functor categories expressing the way that they're compatible with their respective inclusion functors between finite `diagram' categories.
-
-The notation that I'm familiar with is set-builder notation; maybe something like this:
-
-\[
-\{ X \in (V \to C) \to 2 \times 2 \to C \mid  
-X ; B' (V \hookrightarrow 2 \times 2) = \id (V \to C)
-\}
-\]
-
-ought to mean something like ``the category consisting of the full subcategory of functors from functors from the V-shaped diagram to the category in question, to functors from the commutative square diagram to the category in question, such that the object composed with the functor resulting from applying the well-known \( B' \) generic functor to the inclusion functor of the V-shaped diagram to the square is equal to the identity on the category of functors from the V-shaped diagram to the category in question''. The fibre product would presumably be the terminal object of this category.
-
-%In this idiom, the idea is to transport a pair of guarantees, that a binary fibre product exists uniquely and a terminal object exists uniquely, into a guarantee that a product exists uniquely.
-In order to `move' and `combine' guarantees, like the guarantee that a binary fibre product exists uniquely, I would need lemmas regarding how operations that define categories (such as the functor category construction, the direct product category construction, and the full subcategory construction) interact with guarantees. I think these lemmas might use terms like `preserves' and `reflects' limits and colimits.
-
-
-
-
-\tpoint{A morphism \(Z \to W\) in \(\mathcal{C}\) induces a morphism  \(X \times_{Z} Y \to X \times_{W} Y \)}
+\end{theorem}
 
 \begin{proof}
-Given a morphism \(m_1 : Z \to W\), and a fibre product over \(Z\) with morphisms \(m_2 : X \to Z, m_3 : Y \to Z\), and a fibre product over \(W\) with morphisms \(m_4 : X \to W , m_5 : Y \to W\).
- \footnote{Recall we are using the semicolon operator for flipped composition of morphisms}
-
-There already is a commuting square with corners \( X \times_Z Y, X, Y, Z \). We can construct another commuting square, with \(W\) replacing \(Z\) in the corner, using the composed morphisms \( m_2 ; m_1 \) and \( m_3 ; m_1 \).
-This commutes because of the associativity of composition. \( X \times_W Y \) is terminal among these commuting squares, and so there is a unique morphism  \(X \times_Z Y \to X \times_W Y \).
-
-% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0ACAHW7wFt4AfQBanAJogAvqXSZc+QigBMpAIxVajFmy68BwgOoTpskBmx4CRACyllm+s1aIQI03MuKiANlIBmR20XEEMPc3krJWQAVnIg5zZJGU8FaxQ1AISdV3ZpTRgoAHN4IlAAMwAnCH4kVRAcCCR-agY6ACMYBgAFSO9XLDBsWBBqJxyQfiE1cKqapDIGpsRMkAZBkKgIHBxC2eraxEXGpBiUkDnD4+Wbc8ukOyW61o6u3q90kEHh1jHgtim-n280QcSeiHqbU6PT6n2+WBGf0SrimymBh1WJ0QtzM92x1CxLTWrxhHyUXyGCN+WmRkyEMXRSExyzOuIOpwJyyJULesPJ8MRNImUxs+SkQA
-\begin{tikzcd}
-X \times_Z Y \arrow[rrd, dotted] \arrow[rddd] \arrow[rrrrr] &                                                                    &                                       &  &                                  & Y \arrow[ldd, "m_3" description] \arrow[rddd, "m_5" description] &   \\
-                                                            &                                                                    & X \times_W Y \arrow[rrru] \arrow[ldd] &  &                                  &                                                                  &   \\
-                                                            &                                                                    &                                       &  & Z \arrow[rrd, "m_1" description] &                                                                  &   \\
-                                                            & X \arrow[rrru, "m_2" description] \arrow[rrrrr, "m_4" description] &                                       &  &                                  &                                                                  & W
-\end{tikzcd}
-
-TODO: I am not sure whether the fibre product over \(W\) is any fibre product over \(W\), as I described above, or whether we are actually talking about \( X \times_{m_2;m_1, W, m_3, m_1} Y \). 
+  \begin{align*}
+      a \star b = & (a \circ 1_\circ) \star (1_\circ \circ b) \\
+      = & (a \star 1_\circ) \circ (1_\circ \star b) \\
+      = & (a \circ b) \\
+      = & (1 \star a) \circ (b \star 1) \\
+      = & (1 \circ b) \star (a \star 1) \\
+      = & b \star a
+  \end{align*}
 \end{proof}
 
-\tpoint{If a category has a terminal object, any fibre product maps to
-the Cartesian product.}
+We will now use \(\otimes\) for the operator; the distributive law now 
+looks like \((a \otimes b) \otimes (c \otimes d) = (a \otimes c)
+\otimes (b \otimes d)\).
+
+\begin{theorem}
+Suppose \( \star \) and \( \circ \) are two binary operators, with units, on the 
+same set and further suppose that one distributes over the other:
+\( (a \star b) \circ (c \star d) = (a \circ c) \star (b \circ d) \). 
+Their units are identical.
+\end{theorem}
 
 \begin{proof}
-Since the fibre product over the terminal object is the Cartesian product, and morphisms of the corner objects induce morphisms of corresponding fibre products, the morphism to from the corner object to the terminal object induces a morphism from any fibre product to the Cartesian product.
+  \begin{align*}
+      1_\star = & 1_\star \otimes 1_\circ = 1_\circ
+  \end{align*}
 \end{proof}
 
-\bpoint{Exercise}\label{monoid-exercise}
-Let \(\mathbf{M}\) be a monoid object in \(\mathcal{C}\). Let \(X\) be any other object
-in \(\mathcal{C}\) and let \(\mathbf{M}(X) \coloneqq \mathcal{C}(X,\mathbf{M})\) be the
-set of arrows from \(X\) to \(\mathbf{M}\) in \(\mathcal{C}\). Verify that \(e\) and \(\mu\)
-induce maps \(e(X) \colon \mathbf{1}(X) \to \mathbf{M}(X)\) and \(\mu(X) \colon \mathbf{M}(X) \times \mathbf{M}(X) \to \mathbf{M}(X)\)
-and show that \((\mathbf{M}(X), e(X), \mu(X))\) is a monoid in the usual sense.\footnote{Hint: \(\mathbf{1}\) is
-a terminal object, so there is a only one map from anything to \(\mathbf{1}\).}
+Now we will use \(1\) to refer to the single identity.
+
+\begin{theorem}
+Suppose \( \star \) and \( \circ \) are two binary operators, with units, on the 
+same set and further suppose that one distributes over the other:
+\( (a \star b) \circ (c \star d) = (a \circ c) \star (b \circ d) \).
+Then the operator is associative. 
+\end{theorem}
 
 \begin{proof}
-Okay, we have a monoidal category - we have finite tensor products of objects,
-the tensor product is associative, and there's a terminal object, because it's the tensor product of zero things.
-
-Furthermore, there's a monoid object \(M\). 
-
-There's some generic object \(X\), and we're looking at the set of arrows \(X \to M\).
-
-We want to show that we can use the tensor product of the monoidal category, 
-and the way the tensor product is reflected in the monoid object, to give
-this set of arrows the structure of a monoid.
-
-\(e X : (X \to 1) \to X \to M\)
-\(\mu X : (X \to M) \times (X \to M) \to X \to M\)
-
-What is the candidate for the monoid operation?
-We want to use the monoidal category operation, but that takes objects, not arrows.
-
-TODO: not finished
-
-
+\begin{align*}
+(a \otimes b) \otimes c = & (a \otimes b) \otimes (1 \otimes c) \\
+= & (a \otimes 1) \otimes (b \otimes c) \\
+= & a \otimes (b \otimes c)
+\end{align*}
 \end{proof}
-\tpoint{diagramming}
-
-The \(B'\) combinator has a type \((A \to B) \to (B \to C) \to A \to C\), and a proof \(\lambda x y z .\ y(xz)\). The parse tree of the type, if you unify the nodes representing the generic types \(A, B, C\) can be rearranged to form a fairly reasonable, familiar, triangular diagram of how \(B'\) works. Each of the nodes of the parse tree of the proof has an associated type, and the types are all subformulas of the \(B'\) combinator, and so you can decorate the triangular diagram of the type of \(B'\) with the parse tree of the proof of \(B'\).
-
-\[
-\begin{tikzpicture}
-	\begin{pgfonlayer}{nodelayer}
-		\node [style=none] (0) at (0, 5.75) {1 hyp};
-		\node [style=none] (2) at (5, -2.25) {2 hyp};
-		\node [style=none] (4) at (-7, 3.5) {3 hyp};
-		\node [style=none] (5) at (6, 3.5) {4 mp};
-		\node [style=none] (6) at (0, -4.75) {5 mp};
-		\node [style=none] (7) at (-4.5, -2.25) {6 II};
-		\node [style=none] (8) at (0, 0) {7 II};
-		\node [style=none] (10) at (1.5, 2.75) {8 II};
-	\end{pgfonlayer}
-	\begin{pgfonlayer}{edgelayer}
-		\draw [bend right, looseness=0.50] (4.center) to (7.center);
-		\draw [style=simple, bend right, looseness=0.50] (7.center) to (6.center);
-		\draw [bend left=15, looseness=0.75] (5.center) to (2.center);
-		\draw [style=simple, in=15, out=-135] (2.center) to (6.center);
-		\draw [bend right=15] (2.center) to (8.center);
-		\draw [style=simple, bend right, looseness=0.75] (8.center) to (7.center);
-		\draw [bend left=15, looseness=0.75] (4.center) to (0.center);
-		\draw [style=simple, bend left=15, looseness=0.75] (0.center) to (5.center);
-		\draw [bend left, looseness=0.75] (0.center) to (10.center);
-		\draw [style=simple, bend left, looseness=0.75] (10.center) to (8.center);
-
-		% these are drawn "mp reliance" style, consider adding a style
-		\draw [style=simple] (0.center) to (5.center);
-		\draw [style=simple] (5.center) to (6.center);
-		\draw [style=simple] (2.center) to (6.center);
-		\draw [style=simple] (4.center) to (7.center);
-		\draw [style=simple] (7.center) to (6.center);
-		\draw [style=simple] (8.center) to (7.center);
-		\draw [style=simple] (2.center) to (8.center);
-		\draw [style=simple] (10.center) to (8.center);
-		\draw [style=simple] (10.center) to (0.center);
-	\end{pgfonlayer}
-\end{tikzpicture}
-\]
-
-Ralph Hinze's Concrete Stream Calculus talks about defining integer sequences 
-
-\includegraphics{images/NatStreamParseTree}
-
-\tpoint{Meandering regarding section 6 of Shapely Monads paper}
-
-\bpoint{What is a comma category?} The comma category is a way of constructing a new category by combining two functors to the same category. It generalizes and extends the slice over category constructor, the slice under category constructor, and the arrow category constructor. It combines two functors with the same target. 
-
-If you combine the identity functor with the inclusion functor picking out a particular object using comma, then you get the slice over and under constructors. If you combine the identity functor with itself then you get the arrow category. Combining two inclusion functors using comma results in a category, the objects of which are in bijective correspondence with morphisms from one object to another.
 
 
-\bpoint{What is a subterminal object?} An object such that every object has at most one morphism into it.
+I did not learn the Eckmann-Hilton argument from the primary source; I 
+tried to read the primary source\cite{eckmann1962group} and bounced 
+off. I learned it from Eugenia Cheng's video:  
+\url{https://www.youtube.com/watch?v=Rjdo-RWQVIY} and wikipedia: 
+\url{https://en.wikipedia.org/wiki/Eckmann\%E2\%80\%93Hilton_argument}
 
-\bpoint{What is a Diers Spectrum?}
+\section{Metamathematical reflections}
 
-Osmond 2012 says:
+You can sometimes argue for a fact `the fibre product maps to the cartesian product, in categories that have a terminal object', where your argument seems to be mentioning and manipulating objects and morphisms `inside' the category in question. You can sometimes find a similar, corresponding, or equivalent argument that mentions and manipulates categories and functors `outside' the category in question.
 
-Spectra have played a prominent role in several regions of mathematics: for instance, 
+Let's suppose that there's some formal proof system that mentions and manipulates objects and morphisms.
+Let's suppose that there's some formal proof system that mentions and manipulates categories and functors.
+If we can systematically translate (some) proofs from one vocabulary to the other, that would be an example of metamathematical reasoning - a proof by induction on the structure of mathematical proofs is metamathematics.
+(Metamathematics is mathematics, of course.)
+
+It's quite common for recognizably `the same' arguments to recur, in an apparently different context and/or vocabulary.
+For example, the combinator \(B : (A \to B) \to (C \to A) \to C \to B\) can be viewed as a tautological statement: `A implies B implies that C implies A implies C implies B', or it can be viewed as a statement about morphisms `Morphisms from an object A to an object B induce maps on the collection of morphisms from C to A to the collection of morphisms from C to B', or it can be viewed as a statement about categories and functors `The category of functors from functors from A to B to functors from C to A to functors from C to B is inhabited, for generic categories A, B, C.'
+
+Let's call these `In some as-yet-unformalized sense the same thing, but different in the context where it arises', a `metamathematical reflection'. The term `metamathematical reflection' is supposed to indicate a degree of understanding of the relationship a bit more detailed than a mysterious, as-yet-unexplained coincidence, but a bit less than either
+\begin{enumerate}
+    \item a clear theorem about a general case that has several clear specializations, or
+    \item a clear formal proof with multiple familiar semantic models where it can be interpreted.
+\end{enumerate} 
+
+(I also believe, though I don't have a good example, that there's also
+routine reflections which extend `inside' the objects of a category. If you are reasoning about `elements' or `points' that are imagined to be `inside' a an object of a category, then the argument probably has reflections `up' or `outside' the object, regarding several objects and several maps within one category.)
+
+\subsection{A monoidal category}
+
+(This text is taken from Wikipedia) 
+
+A monoidal category is a category \(\mathbf{C} \) equipped with a monoidal structure. A monoidal structure consists of:
+
 \begin{itemize}
-\item algebraic geometry could resume in some sense as the study of the different flavors of spectra of commutative rings, while 
-\item Stone duality is about spectra of distributive lattices and ordered structure; more loosely,
-\item categorical model theory is in some sense the study of “spectra of theories”, for a still-to-define notion of 2-dimensional spectra.
-\end{itemize} We could sum up the central philosophy behind this notion though
-the following claim: spectra arise when free construction fails. A very broad overview of the situation is the following: one starts with a category of algebraic `ambient' objects, and a class of
-objects and maps between them one wants to see as `local data', but fails to associate canonically
-one local object under an ambient object: one ends up rather with a family of canonical local
-objects under an ambient object, which is universal in some sense. The spectrum of an ambient
-object is a space whose points index this canonical family under it, equipped with a structural
-sheaf whose purpose is to gather those local objects, and it defines a left adjoint to a comparison
-functor between categories of `structured spaces'.
+    \item a functor \(\otimes \colon \mathbf {C} \times \mathbf {C} \to \mathbf {C}\) called the tensor product or monoidal product,
+    \item an object \( I \) called the unit object or identity object, and
+    \item a natural (in each of three arguments \(A, B, C\) isomorphism \(\alpha\), called associator, with components
+    \( \mathop{\alpha} A B C \colon A\otimes (B\otimes C) \to (A\otimes B)\otimes C\),
+    \item two natural isomorphisms \(\lambda\)  and \(\rho\), respectively called left and right unitor, with components \( \mathop{\lambda} A \colon I\otimes A \to A\) and \(\mathop{\rho} A \colon A\otimes I \to A \)
+\end{itemize}
+The coherence conditions for these natural transformations are:
+\begin{itemize}
+    \item for all \(A, B, C\) and \(D\) in \(\mathbf {C}\), the pentagon diagram commutes:
 
-What is the category of elements? nlab says it's a way to construct a category from a functor to Set. It's also a comma category \( * \downarrow C \to Set \). It's a special case of something called the Grothendieck construction. 
+% https://tikzcd.yichuanshen.de/
+\begin{tikzcd}
+& A \otimes (B \otimes (C \otimes D)) \arrow[ldd, "\operatorname{\alpha} A B (C \otimes D)" description] \arrow[rd, "(\operatorname{id} A) \otimes (\operatorname{\alpha} B C D)" description] & \\
+& & A \otimes ((B \otimes C) \otimes D) \arrow[dd, "\operatorname{\alpha} A (B \otimes C) D" description] \\
+(A \otimes B) \otimes (C \otimes D) \arrow[rdd, "\operatorname{\alpha} (A \otimes B) C D" description] & & \\
+& & (A \otimes (B \otimes C)) \otimes D \arrow[ld, "(\operatorname{\alpha} A B C) \otimes (\operatorname{id} D)" description] \\
+& ((A \otimes B) \otimes C) \otimes D &                   
+\end{tikzcd}
 
-Definition 3.7 from the Shapely Monads paper says: The `Diers 1978 spectrum' of a small pointwise familial functor 
-\(F : \mathcal{A} \to \mathcal{PC}\) is the presheaf \(S_F \in \mathcal{PC}\) given by
-\[
-SF (c) = \{ t \in y_c \downarrow F : \tilde{t} = t \}
-\]
-and
-\[
-S_F (f : d \to c) : t \mapsto \tilde{t y_f}
-\]
+    \item for all \(A\) and \(B\) in \(\mathbf{C}\), the triangle diagram commutes:
 
-From nLab Diers Spectrum page: Suppose that \(U: A \to B\)
-is a functor that has a left multiadjoint.
-The Diers spectrum of \(U\) is the functor
-\(B^{\op} \to Set\) that sends an object
-\( X \in B \) to the set
-\( I \) that indexes the value
-\( (g_i : B \to U(A_i))_{i \in I} \)
-of the left multiadjoint of \( U \) at
-\( X \). A morphism
-\( f : X \to X' \) is sent to the induced map \( I' \to I \) that assigns to \( i' \in I' \) the unique \( i \in I \) such that \( g i' \circ f : X \to U( A' i ) \) factors through \( g_i \).
+% https://tikzcd.yichuanshen.de/
+\begin{tikzcd}
+A \otimes (I \otimes B) \arrow[rr, "\mathop{\alpha} A I B" description] \arrow[rd, "(\mathop{id} A) \otimes (\mathop{\lambda} B)" description] & & (A \otimes I) \otimes B \arrow[ld, "(\mathop{\rho} A) \otimes (\mathop{id} B)" description] \\
+& A \otimes B &                                                                                            
+\end{tikzcd}
+    
+\end{itemize}
 
+Aside: This definition is not obviously the correct categorification of the the concept of a monoid. I think the intent is something like `every equation that is true in a free monoid on the objects, with \(\otimes\) as binary operator and \(I\) as unit, has a corresponding isomorphism, and furthermore any two proofs, that a particular equation that is true in a free monoid on the objects, has a corresponding natural transformation'. 
 
-What is a bordage?
+Aside: Why did Mac Lane phrase it this way (where showing that this definition captures that intent is a theorem to be proved: Mac Lane's coherence theorem), rather than the other way (where showing that a monoidal category can be presented by a pentagon law plus a triangle law would be the theorem to be proved)? Maybe it was an accident / no meaning. Maybe it was a fashion in mathematics. Maybe it has something to do with infinities? I feel comfortable thinking about finite and countable things, and handwaving off bigger infinities, saying something like `if you care about bigger infinities, I am sure there's a generalization of the theorems regarding finite and countable things that would be relevant there' (Downward Lowenheim-Skolem: \cite{lowenheim1915moglichkeiten, skolem1919untersuchungen, skolem1922einige, burris2001downward}) - but Mac Lane might not be that sort of mathematician? 
 
-What is a Freyd-Kelly factorization system?
+The pentagon is two closely related things, on the one hand, it is the local confluence of directed rewriting that (combined with well-ordering) yields global confluence and therefore a decision procedure, and an associahedron.
 
-What is the Freyd Adjoint Functor Theorem?
+Knuth-Bendix completion is an algorithm that can turn a set of equational identities into a decision procedure, by first orienting the equations, and then finding `critical pairs', expressions that can be rewritten in more than one way. If all of the critical pairs can be replaced with a rewrite rule `completing' the critical pair, and those rewrite rules do not introduce further critical pairs, then Knuth-Bendix completion terminates with a confluent rewrite system. Running  There is a law of associativity, \( a ( b c ) = (a b) c \). If you choose to orient that law to the right, then you have a rewrite rule that reassociates things `to the left'. \( a ( b c ) \to (a b) c\) but you don't have a confluent rewrite system. Running Knuth-Bendix on the rewrite system consisting of the one rewrite rule, you will find there is a critical pair, an expression that can be rewritten in more than one way, the starting point of the pentagon. Completing the pentagon means adding a rewrite rule from the starting point to the ending point of the pentagon. With that rule, there are no more critical pairs, and so Knuth-Bendix returns with a confluent rewriting system. 
 
+This leads to some natural questions:
+\begin{enumerate}
+    \item If you have an equational theory (such as the theory of rigs? According to \url{https://ncatlab.org/nlab/show/rig+category}, coherence for rig categories was worked out in (Laplaza 1972) and (Kelly 1974)?), by running Knuth-Bendix on it, you can find out what the analogs of the pentagon and the triangle laws would be, and so what the Mac Lane style categorification of that equational theory would be. See \cite{beke2011categorification}.
+    \item There's a quality of rewrite rules, that typically mathematicians use patterns that match anywhere in an expression, but programmers for efficiency routinely use patterns that can only match at the root, and add `bureaucratic' or `administrative' rules that `walk' the root (with `chroot'-like rotations) through the whole term to be processed, explicitly. What would the categorification of this idea be? 
+    \item If Buchberger's algorithm is an extension or variant of Knuth-Bendix, then you might wonder - what category-theoretic concepts do its outputs correspond to?
+    \item If resolution is an extension or variant of Knuth-Bendix, then what category-theoretic concepts do its outputs correspond to?
+
+\end{enumerate}
 
 
+\section{A monoid object within a monoidal category}
+
+A \emph{monoid object} in
+\(\mathcal{C}\) is an object \(\mathbf{M}\) in \(\mathcal{C}\) together with
+morphisms
+\[ e \colon \mathbf{1} \to \mathbf{M} \quad\text{and}\quad  \mu \colon \mathbf{M} \otimes \mathbf{M} \to \mathbf{M} \]
+such that the following two diagrams commute:
+
+% https://tikzcd.yichuanshen.de/
+\begin{tikzcd}
+\mathbf{1} \otimes \mathbf{M} \arrow[rrdd, "\mathop{pr} 2" description] \arrow[rr, "\mathop{e} \otimes (\mathop{id} \mathbf{M})" description] &  & \mathbf{M} \otimes \mathbf{M} \arrow[dd, "\mu" description] &  & \mathbf{M} \otimes \mathbf{1} \arrow[ll, "(\mathop{id} \mathbf{M}) \otimes \mathop{e}" description] \arrow[lldd, "\mathop{pr} 1" description] \\
+ &  &  &  &  \\
+&  & \mathbf{M} &  &                                                                                                                                              
+\end{tikzcd}
+
+\quad\text{and}\quad
+
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12BbOnACwBGAM2ABZAL4ACThDxd407r0EiJi2VnlxFPfsLFSQ40uky58hFACZyVWoxZtOulQfVyFz5folGTIDGw8AiIbKzt6ZlZEDiU9VXE-UyCLIjJw6kjHGK94txkPbVzXX3E7GCgAc3giUCEAJwguJDIQHAgkAGZqBjoBGAYABTNgyxAsMGxYEEyHaJAACiwoHW8EgEp3TU84ksTjOsbmxG62jsQbEF7+oZHUmImp1lmop24mJJAGppbqdqQAIw9PoDYYpEIPSbLZ72V45d5bLSSJYrYo+cTrT7fY5As5IS7XUF3CHjKHTF7ZWJcD5lcRAA
+\begin{tikzcd}
+\mathbf{M} \otimes \mathbf{M} \otimes \mathbf{M}  \arrow[dd, "(id \mathbf{M}) \otimes \mathbf{M}" description] \arrow[rr, "\mu \otimes (id \mathbf{M})" description] &  & \mathbf{M} \otimes \mathbf{M} \arrow[dd, "\mu" description] \\
+&  & \\
+\mathbf{M} \otimes \mathbf{M} \arrow[rr, "\mu" description] &  & \mathbf{M}                                                 
+\end{tikzcd}
+
+Okay, we want to prove that the monoid object induces a monoid structure to the set of maps from a generic object into the monoid object.
+
+ENDORSE: The combinator \(B\) lifts the \(e\) morphism to a map from morphisms into \(\mathbf{1}\) to morphisms into the monoid object. There is a unique map into the terminal object. So \(B e (X \to 1) : X \to M\) is a particular element of the set of morphisms from \(X \to M\). \footnote{Recall we are using Haskell-like syntax for function application, \(f x\) means `the result of applying the function \(f\) to \(x\)', and also we are using types as names of values, if there is only one relevant value of that type.} 
+
+TRUE BUT DEAD END? Any two morphisms \(f: X \to M, g: X \to M\) corresponds
+to a single morphism \(f \times g: X \times X \to M \times M\) in the product category.
+That morphism is mapped by the \(\otimes\) functor to an arrow \( (\otimes) (f \times g) : X \otimes X \to M \otimes M \).
+
+OBSTACLE: I don't see a way to get from \(X\) to \(X \otimes X\).
+
+TRUE BUT DEAD END? The combinator \(B'\) is characterized by taking \(\mathop{B'} x y z \mapsto y (x z)\).
+It can be given a type (which per usual is a tautology if \(\to\) is interpreted as implication):
+\((A \to B) \to (B \to C) \to A \to C\). It sortof corresponds to the semicolon `followed by' or `flipped function composition' operator. If we apply \(\mathop{B'}\) to the monoid object map \(\mu\) we get \(\mathop{B'} \mu : (M \to X) \to M \otimes M \to X\). Not sure how that's helpful.
+
+TRUE BUT DEAD END? The combinator \(B\) is characterized by \(\mathop{B} x y z \mapsto x (y z)\). 
+It can be given a type: \((B \to C) \to (A \to B) \to A \to C\). It sortof corresponds to the \(\circ\) `function composition' operator. \(\mathop{B} \mu : (X \to M \otimes M) \to X \to M\)
+
+TRUE BUT DEAD END? The combinator \(C\) is defined as \(\mathop{C} x y z \mapsto x z y\).
+It can be given a type \((A \to B \to C) \to B \to A \to C\). It's some sort of curried commutativity principle. In order to use it, I need a something that is a map that goes into a function type.
+
+TRUE BUT DEAD END? There's a principle that a map out of a product \(X \times Y \to Z\) is equivalent to a map into a function type \(X \to Y \to Z\). If we call that transformation \(\mathop{Curry}\),
+then we could say that \( \mathop{Curry} (\otimes) : X \to Y \to X \otimes Y \). That's a map into an arrow type, but it wouldn't do us any good to apply \(C\) to it.
+
+\(S\) is a combinator that might work. \( S : (A \to B \to C) \to (A \to B) \to A \to C\). 
+\(S (\mathop{Curry} (\otimes)) : (X \to Y) \to X \to X \otimes Y\). Okay, that looks promising. 
+
+Here's a sketch of a sketch of how to define a binary operator on morphisms \(f : X \to M, g : X \to M\):
+\begin{itemize}
+    \item \(S (\mathop{Curry} (\otimes)) \mathop{id} : X \to X \otimes X\).
+    \item \( \mathop{B'} (S (\mathop{Curry} (\otimes)) \mathop{id}) (f \otimes g) : X \to M \otimes M\).
+    \item \( \mathop{B'} (\mathop{B'} (S (\mathop{Curry} (\otimes)) \mathop{id}) (f \otimes g)) \mu : X \to M \).
+\end{itemize}
+
+TODO: use the monoid object laws to show that this binary operator is associative and respects the proposed identity element.
+
+\section{DRY: Don't Repeat Yourself}
+
+The skein tree is a technique for calculating knot invariants;
+this illustration was drawn by Louis Kauffman, who invented the Kauffman polynomial, a knot invariant:
+
+\includegraphics[scale=0.25]{images/The-Trefoil-Skein-Tree}
+
+The illustration of the skein tree consists of multiple entire knots, which are connected together in a tree, where adjacent knots are related by being almost entirely duplicates, with a small exception at one crossing.
+
+An equational proof, such as the Eckman-Hilton ones earlier, is not normally considered to be a diagram, but if you replace each of the expressions by its parse tree,
+it is clear that the parse trees are related to one another in a chain, where they are almost entirely duplicated, with only a small exception (called the redex in term rewriting).
+
+A Gentzen sequent proof \footnote{See for example \url{https://en.wikipedia.org/wiki/Sequent_calculus}, it's too disgusting to illustrate here} is not normally considered to be a diagram, but if you replace each of the sequents by its parse tree, the sequent proof forms a tree, where the parse trees of adjacent sequents are related to one another by being almost entirely duplicates, with only a small exception.
+
+There's a slogan in programming: `Don't Repeat Yourself' - that suggests that `factoring out' this duplication would be a good thing to do.
+That is, if you can turn aside from whatever project you
+are working on to clear away a tangle of duplication (whether
+you consider it `notation' or not), you can often see further,
+and clearer, than if you kept plugging away in the usual way.
+
+
+
+\bibliographystyle{amsplain}
+\bibliography{refs}
 
 
 \end{document}
+
+\section{Some \LaTeX\ Examples}
+\label{sec:examples}
+
+%Now that you know the idea behind \LaTeX, let's get into some concrete examples.  If you haven't read the introduction (\autoref{sec:what-is}), I strongly urge you to; things from here on out will make more sense.  I encourage you to read along with the source; if you have been you already know how to
+%  emphasize text with \cs\emph,
+%  start a bulleted list with \env{itemize},
+%  start a section with \cs\section,
+%  give a footnote with \cs\footnote,
+%  and use a cross-reference using \cs\label and \cs\autoref.\footnote{%
+%    Actually, this command is given by the \pkg{hyperref} package.
+%    The standard command to use is \cs\ref,
+%      but \cs\autoref will insert the appropriate label in front
+%      (like `section') when \pkg{hyperref} knows it.
+%    Of course, you can teach the package new things.}
+%You also know that \LaTeX\ doesn't really pay attention to
+%  inconsistent        inter-word    spacing   or
+%  random
+%     line
+%    breaks.  The only    real `rule':
+%           if it encounters a \emph{blank} line---whitespace only---%
+%           it starts     a new          paragraph.
+           
+% You can also `skip' spaces using the comment character.
+% If you take the following, for example:
+% 
+%     Lorem ipsum doler---
+%       sit amet.
+% 
+% You will see that there is an unwanted space after the dash.
+% If we had a comment character to `comment out' the rest of the line:
+% 
+%     Lorem ipsum doler---%
+%       sit amet.
+% 
+% This yields the desired result.
+
+% Note also that it is generally poor practice to have excessively long lines -- it even makes your content harder for you to read while you're writing it -- so I make sure that my view of the content never makes the lines very long.  I will squeeze the window to be thinner (soft-wrapping the content) or tell my text editor to hard-wrap it into shorter lines to make sure I can easily read my content.  (Shorter lines also come in handy if you choose to use version control -- an advanced topic for another day.)
+
+%\subsection{How to Organize Your Document}
+
+%As you've already seen, \LaTeX\ comes with at least one command to organize your document: %\cs\section.  There are, in fact, many others:
+%\begin{multicols}{3}
+%\begin{enumerate}
+%\item \cs\part
+%\item \cs\chapter
+%\item \cs\section
+%\item \cs\subsection
+%\item \cs\subsubsection
+%\item \cs\paragraph
+%\item \cs\subparagraph
+%\end{enumerate}
+%\end{multicols}
+%Actually, the availability of these commands\footnote{Or \term{control sequences} as they are more properly called.} depends on the \term{document class} you use.  For example, \csarg\documentclass{article} doesn't define \cs\part or \cs\chapter, but \csarg\documentclass{book} does.
+
+\subsection{How to Make Lists}
+% Very slightly adapted from the stock text by writeLaTeX.com
+
+You can make lists with automatic numbering using \env{enumerate}\dots
+\begin{enumerate}
+\item Like this,
+\item and like this.
+\end{enumerate}
+\dots or bullet points using \env{itemize}\dots
+\begin{itemize}
+\item Like this,
+\item and like this.
+\end{itemize}
+\dots or with words and descriptions using \env{description}\dots
+\begin{description}
+\item[Word] Definition
+\item[Concept] Explanation
+\item[Idea] Text
+\end{description}
+
+\subsection{How to Include Figures}
+% adapted from the stock text by writeLaTeX.com
+
+See the code for \autoref{fig:frog} in this section for an example.
+\begin{enumerate}
+\item Upload the image file (JPEG, PNG or PDF) from your computer to \writeLaTeX\ using the upload link the project menu.
+\item Use the \cs\includegraphics command to include it in your document.
+\item Use the \env{figure} environment and the \cs\caption command to add a number and a caption to your figure.
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.3\textwidth]{images/hexagon}
+\caption{This hexagon was uploaded to \writeLaTeX\ via the project menu.}
+\label{fig:frog}
+\end{figure}
+
+\subsection{How to Make Tables}
+
+Use the \env{table} and \env{tabular} commands for basic tables---see \autoref{tab:widgets} on page~\pageref{tab:widgets}, for example.  \cs\toprule, \cs\midrule, and \cs\bottomrule are all provided by \pkg{booktabs}.  The standard command to use is \cs\hline, but see the \pkg{booktabs} documentation\footnote{\url{http://texdoc.net/texmf-dist/doc/latex/booktabs/booktabs.pdf}} for some nice reading on why the tables it suggests are better.
+% the \url command is provided by the `hyperref' package.
+
+\begin{table}
+\centering
+\begin{tabular}{lr}
+\toprule
+Item & Quantity \\
+\midrule
+Widgets & 42 \\
+Gadgets & 13 \\
+\bottomrule
+\end{tabular}
+\caption{An example table.}
+\label{tab:widgets}
+\end{table}
+
+\subsection{How to Write Mathematics}
+% adapted from stock example for correctness and best practices
+
+\LaTeX\ is great at typesetting mathematics.  Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+\[S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
+      = \frac{1}{n}\sum_{i}^{n} X_i\]
+denote their mean.  Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
+
+% Back to totally me
+I have no idea what \emph{any} of that means, so see \autoref{eq:simple}.
+If you want to be concise about it, you can also use \cs\eqref: see~\eqref{eq:simple}.
+\begin{thm}
+  If this, then that.
+\end{thm}
+\begin{proof}
+  Since we know that
+  \begin{equation}
+    \text{this} \implies \text{that},
+    \label{eq:simple}
+  \end{equation}
+  the result directly follows.
+\end{proof}
+There is a lot more to mathematics typesetting, but that's beyond the scope of this article.  There may be another that looks at this in-depth.
+
+\section{Getting Help}
+
+\LaTeX\ comes with very thorough documentation.  For online use, simply Google-search \texttt{texdoc (package)} to look up the official documentation for \pkg{package}.  This mirrors the command-line tool, \texttt{texdoc}, which is used in the same way.  For everything else, usually a simple search for \texttt{LaTeX (thing)} for information on \cs\thing or \env{thing}.  For everything else, including specific help, there's the \TeX~StackExchange.\footnote{\url{http://tex.stackexchange.com}}
+
+\section{Next Steps}
+
+\subsection{Getting \LaTeX}
+
+\writeLaTeX\ is a useful resource and I encourage you to use it to the fullest.  However, \LaTeX\ is a program that can run on \emph{your} computer just as easily as it can run online.  It is absolutely free.
+My recommendations are as follows:
+\begin{description}
+\item[Windows] \TeX~Live\footnote{\url{http://www.tug.org/texlive/windows.html}} (but MiK\TeX\footnote{\url{http://www.miktex.org}} is another popular option).
+\item[Mac] Mac\TeX\footnote{\url{http://www.tug.org/mactex}} is by \emph{far} the best.  I highly recommend it.
+\item[Linuxes] \TeX~Live\footnote{\url{http://www.tug.org/texlive}} is your \emph{only} option, and I actually recommend against using your distribution's package manager to install it and encourage you to use install script provided upstream.  The versions are almost always several years behind, and \LaTeX\ package development is very active.  If you absolutely must use the package manager, install \texttt{texlive-full} or similar---trust me when I say that it makes life \emph{much} easier.
+\end{description}
+
+To make links easier to work with, download the PDF using the appropriate button above on the top bar.  This is what \LaTeX\ actually produced for \writeLaTeX; it is fully clickable and otherwise interactive.  (It also just looks \emph{nicer} somehow\dots)
+
+\subsection{Choosing an Editor}
+
+Your experience with \LaTeX\ will largely be impacted by your choice of editor.  For learning on any platform, TUG's own \TeX works is a good starting point.  When you find you're repeating yourself a lot, I recommend moving onto \TeX maker (also cross-platform).  If you are comfortable using it---I won't lie and say it's immediately intuitive for a beginner---the venerable Emacs editor has an excellent mode called \textsc{Auc\TeX}.  It is \emph{extremely} good.  \TeX maker and Emacs will see you through from then on, and both are absolutely free.
+
+\vfill
+
+\begin{center}
+Happy \TeX ing!
+\end{center}
+
+\vfill

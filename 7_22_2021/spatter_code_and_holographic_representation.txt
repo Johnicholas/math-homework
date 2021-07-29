@@ -4,4 +4,6 @@ I think it is in some sense as far as you can go towards neural networks without
 Spatter Code:
 https://people.engr.tamu.edu/choe/choe/mirror/kanerva.ANALOGY98-kanerva.pdf
 
+binary holographic reduced representation
+
 http://www.j-paine.org/hrr.html

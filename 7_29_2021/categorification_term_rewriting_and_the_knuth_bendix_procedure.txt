@@ -1,0 +1,5 @@
+I enjoyed  "CATEGORIFICATION, TERM REWRITING AND THE KNUTH–BENDIX
+PROCEDURE" by TIBOR BEKE
+
+Abstract: An axiomatization of a finitary, equational universal algebra by a convergent term rewrite system gives rise to a finite, coherent categorification of the algebra.
+
