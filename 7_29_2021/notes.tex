@@ -1,0 +1,241 @@
+\documentclass[11pt, noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage{hyperref}
+
+\usepackage{tikz-cd}
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
+
+
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
+
+\title{Notes for July 29, 2021}
+\begin{document}
+\maketitle
+
+Let's think a little bit about vector spaces.
+
+\bpoint{Fields}
+A \emph{field}, informally speaking, is a place where you can do all the
+familiar arithmetic operations, namely, addition, subtraction, multiplication,
+and division. More precisely, a \emph{field} \(k\) is a set together with two
+commutative, associative binary operations
+\[
++ \colon k \times k \to k
+\quad\text{and}\quad
+\cdot \colon k \times k \to k
+\]
+called \emph{addition} and \emph{multiplication}, respectively, in which
+\begin{enumerate}
+\item \(+\) has a unit called \(0 \in k\);
+\item \(+\) has all inverses;
+\item \(\cdot\) has a unit called \(1 \in k\) when restricted to the subset
+\(k^\times \coloneqq k \setminus \{0\}\);
+\item \(\cdot\) has all inverses when restricted to \(k^\times\); and
+\item multiplication distributes over addition: \(a \cdot (b + c) = (a \cdot b) + (a \cdot c)\).
+\end{enumerate}
+The basic examples of fields are the fields of rational numbers \(\mathbf{Q}\),
+real numbers \(\mathbf{R}\), complex numbers \(\mathbf{C}\), and finite fields
+\(\mathbf{F}_q\) for \(q = p^e\) a power of a prime number \(p\). For a slightly
+more sophisticated example, fix a base field \(k\) and consider the set of
+rational functions in \(1\) variable over \(k\):
+\[
+k(t) \coloneqq
+\Bigg\{\frac{f(t)}{g(t)} :
+f(t) \;\text{and}\; g(t) \;\text{are polynomials in \(t\), and \(g(t) \neq 0\)}\Bigg
+\}.
+\]
+This set is a field in which addition and multiplication are done by the usual
+ways of adding polynomials. Note, for instance, \(k\) could be \(\mathbf{C}\)
+or \(\mathbf{F}_q\).
+
+\bpoint{Characteristic of a field}
+There is one strong qualitative distinction between the fields \(\mathbf{C}\)
+and \(\mathbf{C}(t)\), and the fields \(\mathbf{F}_p\) and \(\mathbf{F}_p(t)\).
+Namely, in the latter two fields,
+\[ p = 1 + 1 + \cdots + 1 = 0, \]
+the sum of the additive unit \(p\) times is \(0\). In general, let \(k\) be a
+field. The \emph{characteristic} of \(k\) is the smallest positive integer
+\(n\) such that \(n = 1 + 1 + \cdots + 1\) is \(0\) in \(k\); if such an \(n\)
+does not exist, then the characteristic of \(k\) is declared to be \(0\).
+So for example, the characteristic of each of \(\mathbf{Q}\), \(\mathbf{R}\),
+and \(\mathbf{C}\) is \(0\), whereas the characteristic of \(\mathbf{F}_q\) and
+\(\mathbf{F}_q(t)\) is \(p\), where \(q = p^e\).
+
+\tpoint{Proposition}
+\emph{Let \(k\) be a field. Then the characteristic of \(k\) is either \(0\)
+or a prime number \(p\).}
+
+\begin{proof}
+We need to show that if the characteristic of \(k\) is a positive integer \(n\),
+then it is a prime number. So suppose \(n = pm\) for a prime number \(p\) and
+a positive integer \(m\). Then by definition of characteristic, we have, on the
+one hand,
+\[ pm = n = 0 \]
+and on the other hand, \(m \neq 0\) in \(k\) since \(n\) is the smallest positive
+integer that vanishes in \(k\) and \(m = n/p < n/2\), since \(p\) is a prime. Therefore
+we may divide by \(m\) to see that \(p = n/m = 0/m = 0\). Minimality of
+\(n\) now implies \(m = 1\) and \(n = p\).
+\end{proof}
+
+\bpoint{Vector spaces}
+Let \(k\) be a field. A vector space over \(k\) is an abelian group \(V\)
+together with an action of \(k\). More explicitly, a vector space over \(k\)
+consist of a set \(V\) together with two binary operations
+\[
++ \colon V \times V \to V
+\quad\text{and}\quad
+\cdot \colon k \times V \to V
+\]
+called \emph{addition} and \emph{scalar multiplication}, such that \(+\) is a
+commutative, associative, unital operation, and \(\cdot\) distributes over
+addition in \(V\) and is compatible with the arithmetic operations in \(k\).
+A list of axioms expanding on this may be found on
+\href{https://en.wikipedia.org/wiki/Vector_space#Definition}{Wikipedia}.
+
+Let \(V\) and \(W\) be vector spaces. A \emph{linear map} from \(V\) to \(W\)
+is a homomorphism of abelian groups compatible with the action of \(k\). Explicitly,
+this is a set map \(f \colon V \to W\) such that
+\[
+f(\lambda v + v') = \lambda f(v) + f(v')
+\quad\text{for all}\; v,v' \in V\;\text{and}\; \lambda \in k.
+\]
+The identity map \(\mathrm{id}_V \colon V \to V\) of any vector space is a
+linear map, and the composition of two linear maps is a linear map. Therefore
+we have a category \(\mathrm{Vect}_k\) of vector spaces over a fixed ground field.
+
+\bpoint{Examples}
+Here are a collection of basic examples of vector spaces.
+\begin{enumerate}
+\item The zero vector space \(\{0\}\) is a vector space over \(k\).
+\item Let \(n\) be a positive integer and let \(V = k^{\oplus n}\) be the
+set of column vectors of length \(n\) with entries in \(k\). Component-wise
+addition and scalar multiplication makes \(V\) into a vector space. This is the
+\emph{standard vector space of dimension \(n\)}.
+\item More generally, arranging a collection of elements of \(k\) in any shape
+and doing component-wise operations will yield a vector space. For instance,
+the space \(\mathrm{Mat}_{n \times m}\) of \(n \times m\) matrices with entries
+in \(k\) is a vector space over \(k\).
+\item Let \(S\) be any set and let \(\operatorname{Set}(S,k)\) be the set of all set maps
+from \(S\) to \(k\). Then pointwise addition and scalar multiplication makes
+this into a vector space.
+\item The set \(k[t]\) of univariate polynomials over \(k\) with usual addition
+and scalar multiplication is a vector space.
+\end{enumerate}
+
+\bpoint{Subspaces and span}
+Let \(V\) be a vector space over \(k\). A \emph{subspace of \(V\)} is a subset
+\(U \subseteq V\) that is closed under addition and scalar multiplication.
+Observe that the intersection \(U_1 \cap U_2\) of two subspaces \(U_1\) and
+\(U_2\) of a vector space \(V\) is itself a subspace of \(V\). In fact, more
+generally, the intersection of an arbitrary collection of subspaces of \(V\) is
+again a subspace of \(V\).
+
+\bpoint{Span}
+Given a subset \(S \subset V\) which is not necessarily a subspace, we may form
+the intersection
+\[ \mathrm{span}(S) \coloneqq \bigcap_{S \subset U} U \]
+of all subspaces \(U \subset V\) containing the set \(S\). This is the smallest
+subspace of \(V\) containing \(S\), and is called the \emph{span of \(S\)}.
+
+\bpoint{Exercise}
+Prove that a concrete description of the span of \(S\) is
+\[
+\mathrm{span}(S) =
+\{ a_1v_1 + a_2v_2 + \cdots + a_m v_m :
+m \in \mathbf{Z}_{\geq 0},
+v_1,\ldots,v_m \in S,
+a_1,\ldots,a_m \in k\}
+\]
+the set of all finite \(k\)-linear combinations of elements of \(S\).\footnote{Hint:
+Do so by proving the inclusions \(\subseteq\) and \(\supseteq\) separately.
+That \(\supseteq\) holds is due to the minimality condition on
+\(\mathrm{span}(S)\), whereas \(\subseteq\) follows by showing all \(U\)
+appearing in the intersection must contain the set on this right hand side.}
+
+\bpoint{Linear dependence}
+Let \(S\) be any subset of \(V\). We say that the set of vectors \(S\) is
+\emph{linearly dependent} if there exists a vector \(v \in S\) such that
+\[ \mathrm{span}(S) = \mathrm{span}(S \setminus \{v\}). \]
+Using the concrete definition of the span, this means that there exists a
+positive integer \(m\), vectors
+\(v_1,\ldots,v_m \in S \setminus \{v\}\), and scalars \(a_1,\ldots,a_m \in k\)
+which are not all zero, such that
+\[ v = a_1 v_1 + \cdots a_m v_m \]
+which is to say that \(v\) is a nontrivial linear combination of other vectors
+in \(S\). If a set \(S\) is not linearly dependent, we say it is \emph{linearly
+independent}.
+
+\bpoint{Bases and dimensions}
+Let \(V\) be a vector space over \(k\). A \emph{basis} of \(V\) is a maximally
+linearly independent subset of \(V\). Two fundamental facts: every vector
+space \(V\) has a basis, and all bases of \(V\) have the same cardinality. The
+\emph{dimension} of a vector space \(V\) is the cardinality of any basis.
+
+\bpoint{Exercise}
+Prove that if \(B \subset V\) is a basis, then \(\operatorname{span}(B) = V\).
+
+\bpoint{Exercise}
+The fundamental facts are a bit delicate for general vector spaces \(V\). But
+in the case that \(V\) is \emph{finite dimensional}, they are much more concrete.
+First, call a vector space \(V\) \emph{finite dimensional} if there exists a finite
+subset \(S \subseteq V\) such that \(\operatorname{span}(S) = V\). Prove that:
+\begin{enumerate}
+\item there exist a subset \(B \subseteq S\) such that \(B\) is a basis of \(V\);
+\item if \(B_1\) and \(B_2\) are two bases of \(V\), then there exists \(v_1 \in B_1\)
+and \(v_2 \in B_2\) such that \((B_1 \setminus \{v_1\}) \cup \{v_2\}\) is a basis
+of \(V\); and
+\item any two bases of \(V\) have the same size \(\#B\).
+\end{enumerate}
+
+\bpoint{Exercise}
+Let \(V = k^{\oplus n}\) be the standard vector space of dimension \(n\).
+For each \(i = 1,\ldots,n\), let \(e_i\) be the column vector whose
+\(i\)\textsuperscript{th} entry is \(1\) and all other entries are \(0\). Prove
+that \(\{e_1,\ldots,e_n\}\) is a basis for \(V\). This is the \emph{standard
+basis of \(k^{\oplus n}\)}.
+
+\bpoint{Exercise}
+Let \(V\) and \(W\) be vector spaces. Let \(B \subset V\) be a basis of \(V\).
+Let \(f \colon B \to W\) be a map of sets. Prove that there exists a unique
+linear map \(F \colon V \to W\) such that the restriction of \(F\) to \(B\)
+is \(f\).
+
+\bpoint{Finite dimensional vector spaces}
+Let \(\mathrm{Vect}^{\mathrm{fin}}_k\) be the full subcategory of finite dimensional
+vector spaces. Let \(\mathrm{Vect}^{\mathrm{std}}_k\) be the full subcategory
+consisting of the zero vector space and the standard vector spaces \(k^{\oplus n}\)
+where \(n\) ranges over all positive integers. Then the inclusion functor
+\[ \mathrm{Vect}^{\mathrm{std}}_k \subset \mathrm{Vect}^{\mathrm{fin}}_k \]
+is an equivalence of categories. This is a consequence of the exercises above.
+
+\end{document}
