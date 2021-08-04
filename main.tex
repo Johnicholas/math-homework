@@ -1,448 +1,330 @@
-\documentclass[a4paper]{article}
-\title{Notes for July 29}
-\author{Johnicholas Hines}
-\date{\today}
-\renewcommand\today{July 23, 2021}
+\documentclass[11pt, noamsfonts]{amsart}
+\usepackage[left=1.5in, right=1.5in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage[charter,expert]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}% matches the size used in math
+\usepackage{hyperref}
+\usepackage{syntax} % for a BNF spec
+
+\usepackage{tikz-cd}
+\tikzset{>={Straight Barb[length=2pt,width=4pt]}, commutative diagrams/arrow style=tikz}
+
+\linespread{1.04}
+
+\usepackage{enumitem}
+\setlist[1]{labelindent=\parindent}
+\setlist[enumerate]{labelsep=0.5em}
+\setlist[enumerate,1]{label={\upshape (\roman*)}, ref={\upshape (\roman*)}}
+\setlist[itemize]{label={--}}
+
+% Point Formats
+\newcommand{\pointheader}{\vspace{2mm}\noindent\refstepcounter{section}\textbf{\thesection.}}
+\newcommand{\point}{\pointheader~}
+\newcommand{\tpoint}[1]{\pointheader~{\bf #1. ---}}
+\newcommand{\epoint}[1]{\pointheader~{\em #1.}}
+\newcommand{\bpoint}[1]{\pointheader~{\bf #1.}}
+
+% QED Symbol
+\newcommand{\psqedsymb}{\(\blacksquare\)}
+\renewcommand{\qed}{~\hfill{\psqedsymb}}
 
 
-% Things that start with a % (percent sign) are ignored by LaTeX.  They are `comments' and are set off in blue on writeLaTeX.com.  They will never appear in the final output.
+\makeatletter
+\newcommand*{\coloneqq}{\mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}%
+           =}
+\newcommand{\eqqcolon}{=%
+           \mathrel{\rlap{%
+           \raisebox{0.3ex}{$\m@th\cdot$}}%
+           \raisebox{-0.3ex}{$\m@th\cdot$}}}
+\makeatother
 
-\usepackage{mathtools} % for align*
-\usepackage{amsthm} % for environment proof
-
-\usepackage{tikz}
-\usetikzlibrary{cd} % for commutative diagrams
-
-%\usepackage{graphicx}            % easy inclusion and manipulation of images
-%\usepackage{microtype}           % just for fun: really hone in with the typography
-%\usepackage{booktabs}            % nice looking tables that present the content first and foremost
-%\usepackage{multicol}            % multiple columns in a local context
-\usepackage[hidelinks]{hyperref} % clickable references in the output, but hide them visually
-
-% These are called macros.  They aren't actually this simple, but you can think of it like a smart `find and replace' for most of your needs.
-% Macros are case-sensitive.   See section 2.
-
-% These two lines tell LaTeX that I want to
-% 1) create a new piece of markup called `term' that takes one `thing' and puts single quotes around it
-% 2) create a new piece of markup called `pkg' that takes one `thing' and sets it in a sans-serif font
-% 3) redefine an existing piece of markup that doesn't take any `things' and just puts the text you see there.
-%\newcommand\term[1]{`#1'}
-%\newcommand\pkg[1]{\textsf{#1}}
-%\newcommand\writeLaTeX{{\sffamily Overleaf}}
-% The above macro (\writeLaTeX) is a good example of when macros come in handy.  This online service recently rebranded itself from 'writeLaTeX' to 'Overleaf'.  All references to the company have been replaced with this one change!  In all honesty this is not *unique* to TeX, but it is exceptionally *easy* in TeX.
-
-% The next few macros use moderately advanced TeX.  They've been fine-tuned for appearance according to personal taste; you should never have to worry about this in your documents.  Ignore these macros except for the logical meanings: `control sequence' (formal term for a TeX macro) and `environment'.
-\newcommand\embrace[1]{\texttt{\char`\{#1\char`\}}}
-\newcommand\env[1]{\embrace{#1}}
-\newcommand\cs[1]{\texttt{\string#1}}
-\newcommand\csarg[2]{\cs{#1}\embrace{#2}}
+\DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\Span}{Span}
 
 \newtheorem{theorem}{Theorem}
 
-\DeclareMathOperator{\B}{B}
-
+\title{Math homework for August 5, 2021}
 \begin{document}
 \maketitle
 
-\begin{abstract}
-TODO: write an abstract
-\end{abstract}
-
-%\tableofcontents
-
-\section{The Eckmann-Hilton argument}
-
-The Eckmann-Hilton argument, as far as I understand it, says that if something (such as a 2-dimensional homotopy group or a 2-dimensional category-like thing) is a monoid in two apparently different ways, but the apparently different operators are compatible with one another in a moderately nice way, then actually the two monoid operators are identical, and moreover the monoid operation is commutative.
-
-\begin{theorem}
-Suppose \( \star \) and \( \circ \) are two binary operators, with units, on the 
-same set and further suppose that one distributes over the other: \( 
-(a \star b) \circ (c \star d) = (a \circ c) \star (b \circ d) \). Then
+\bpoint{Exercise}
+Prove that a concrete description of the span of \(S\) is
 \[
-a \star  b = a \circ b = b \star a 
+\mathrm{span}(S) =
+\{ a_1v_1 + a_2v_2 + \cdots + a_m v_m :
+m \in \mathbf{Z}_{\geq 0},
+v_1,\ldots,v_m \in S,
+a_1,\ldots,a_m \in k\}
 \]
-\end{theorem}
+the set of all finite \(k\)-linear combinations of elements of \(S\).\footnote{Hint:
+Do so by proving the inclusions \(\subseteq\) and \(\supseteq\) separately.
+That \(\supseteq\) holds is due to the minimality condition on
+\(\mathrm{span}(S)\), whereas \(\subseteq\) follows by showing all \(U\)
+appearing in the intersection must contain the set on this right hand side.}
 
-\begin{proof}
-  \begin{align*}
-      a \star b = & (a \circ 1_\circ) \star (1_\circ \circ b) \\
-      = & (a \star 1_\circ) \circ (1_\circ \star b) \\
-      = & (a \circ b) \\
-      = & (1 \star a) \circ (b \star 1) \\
-      = & (1 \circ b) \star (a \star 1) \\
-      = & b \star a
-  \end{align*}
-\end{proof}
+A linear expression in terms of a set \(S\) is a finite tree consisting of scalar multiplication branches, sum branches, the zero vector, and leaves. Scalar multiplication branches are labeled with a scalar, while leaves are labeled with elements of the set \(S\).
 
-We will now use \(\otimes\) for the operator; the distributive law now 
-looks like \((a \otimes b) \otimes (c \otimes d) = (a \otimes c)
-\otimes (b \otimes d)\).
+\begin{grammar}
 
-\begin{theorem}
-Suppose \( \star \) and \( \circ \) are two binary operators, with units, on the 
-same set and further suppose that one distributes over the other:
-\( (a \star b) \circ (c \star d) = (a \circ c) \star (b \circ d) \). 
-Their units are identical.
-\end{theorem}
+<linear expression> ::= <scalar> <linear expression> 
+\alt `(' <linear expression> `+' <linear expression> `)'
+\alt `0'
+\alt <s>
 
-\begin{proof}
-  \begin{align*}
-      1_\star = & 1_\star \otimes 1_\circ = 1_\circ
-  \end{align*}
-\end{proof}
+\end{grammar}
 
-Now we will use \(1\) to refer to the single identity.
+A linear expression can be normalized, using the law of distribution of scalar multiplication, to not contain any sums-below-scalars, and using the law of scalar multiplication, to have at most one scalar (called coefficient) above each leaf. We can introduce scalar multiplication nodes multiplying by the scalar multiplicative unit to create exactly one coefficient above each leaf.  We can introduce sum nodes, zero coefficient nodes, and leaves to have exactly one leaf for each element of the basis. We can eliminate all occurrences of the zero vector. 
 
-\begin{theorem}
-Suppose \( \star \) and \( \circ \) are two binary operators, with units, on the 
-same set and further suppose that one distributes over the other:
-\( (a \star b) \circ (c \star d) = (a \circ c) \star (b \circ d) \).
-Then the operator is associative. 
-\end{theorem}
+TODO: Prove this using an automated termination tool?
 
-\begin{proof}
-\begin{align*}
-(a \otimes b) \otimes c = & (a \otimes b) \otimes (1 \otimes c) \\
-= & (a \otimes 1) \otimes (b \otimes c) \\
-= & a \otimes (b \otimes c)
-\end{align*}
-\end{proof}
+Aside: The associative-commutative properties of vector sum means that these normal forms can be viewed as functions from \(S\) to the scalars.
 
+To multiply a linear expression by a scalar, add the scalar multiplication node above the root and normalize. To add a linear expression to another linear expression, add a sum node above the two roots and normalize. So functions from a finite set to the scalars at least form a pre-vector-space; the signature matches. Since the rewrites are sequences of applications of rewrites allowed by the equational theory, these normal forms with these operations do form a vector space.
 
-I did not learn the Eckmann--Hilton argument from the primary source; I 
-tried to read the primary source
-%\cite{eckmann1962group}
-and bounced 
-off. I learned it from Eugenia Cheng's video:  
-\url{https://www.youtube.com/watch?v=Rjdo-RWQVIY} and wikipedia: 
-\url{https://en.wikipedia.org/wiki/Eckmann\%E2\%80\%93Hilton_argument}
+If there is a linear expression for a point in terms of elements of \(S\), then you can interpret that linear expression as a recipe (or proof) constructing that point using either, for the branches, the guarantees of a vector space, or, for the leaves, the guarantee that \(S \subset \operatorname{span} S\).
 
-\section{Metamathematical reflections}
+The set of points that have a linear expression in terms of elements of \(S\) does form a vector space - linear expressions are exactly those expressions that are closed under the actions of a vector space.
 
-You can sometimes argue for a fact `the fibre product maps to the cartesian product, in categories that have a terminal object', where your argument seems to be mentioning and manipulating objects and morphisms `inside' the category in question. You can sometimes find a similar, corresponding, or equivalent argument that mentions and manipulates categories and functors `outside' the category in question.
+If we have a point that doesn't have a linear expression, then we could intersect it with the space of points that have a linear expression, and show that it is not in the span.
 
-Let's suppose that there's some formal proof system that mentions and manipulates objects and morphisms.
-Let's suppose that there's some formal proof system that mentions and manipulates categories and functors.
-If we can systematically translate (some) proofs from one vocabulary to the other, that would be an example of metamathematical reasoning - a proof by induction on the structure of mathematical proofs is metamathematics.
-(Metamathematics is mathematics, of course.)
+\bpoint{Exercise}
+Prove that any two bases of \(V\) have the same size \(\#B\).
 
-It's quite common for recognizably `the same' arguments to recur, in an apparently different context and/or vocabulary.
-For example, the combinator \(B : (A \to B) \to (C \to A) \to C \to B\) can be viewed as a tautological statement: `A implies B implies that C implies A implies C implies B', or it can be viewed as a statement about morphisms `Morphisms from an object A to an object B induce maps on the collection of morphisms from C to A to the collection of morphisms from C to B', or it can be viewed as a statement about categories and functors `The category of functors from functors from A to B to functors from C to A to functors from C to B is inhabited, for generic categories A, B, C.'
+I'd like to prove this basic theorem (any two bases have the same size) about vector spaces, and I believe the proof breaks into two halves: First, that finite sets of vectors form matroids, and second, that bases of a matroid all have the same size.
 
-Let's call these `In some as-yet-unformalized sense the same thing, but different in the context where it arises', a `metamathematical reflection'. The term `metamathematical reflection' is supposed to indicate a degree of understanding of the relationship a bit more detailed than a mysterious, as-yet-unexplained coincidence, but a bit less than either
+How do you explain the motivation to invent matroids?
+Well, there's a thing that happens, when you are doing mathematics.
+You have an informal concept, something like,
+`I want to find a thing that relates to a familiar thing A in the same way that this familiar thing B relates to this familiar thing C'.
+Working with the informal concept, you develop some confidence in some statements which `ought to be true'.
+
+Then you have some questions:
 \begin{enumerate}
-    \item a clear theorem about a general case that has several clear specializations, or
-    \item a clear formal proof with multiple familiar semantic models where it can be interpreted.
-\end{enumerate} 
-
-(I also believe, though I don't have a good example, that there's also
-routine reflections which extend `inside' the objects of a category. If you are reasoning about `elements' or `points' that are imagined to be `inside' a an object of a category, then the argument probably has reflections `up' or `outside' the object, regarding several objects and several maps within one category.)
-
-\subsection{A monoidal category}
-
-(This text is taken from Wikipedia) 
-
-A monoidal category is a category \(\mathbf{C} \) equipped with a monoidal structure. A monoidal structure consists of:
-
-\begin{itemize}
-    \item a functor \(\otimes \colon \mathbf {C} \times \mathbf {C} \to \mathbf {C}\) called the tensor product or monoidal product,
-    \item an object \( I \) called the unit object or identity object, and
-    \item a natural (in each of three arguments \(A, B, C\) isomorphism \(\alpha\), called associator, with components
-    \( \mathop{\alpha} A B C \colon A\otimes (B\otimes C) \to (A\otimes B)\otimes C\),
-    \item two natural isomorphisms \(\lambda\)  and \(\rho\), respectively called left and right unitor, with components \( \mathop{\lambda} A \colon I\otimes A \to A\) and \(\mathop{\rho} A \colon A\otimes I \to A \)
-\end{itemize}
-The coherence conditions for these natural transformations are:
-\begin{itemize}
-    \item for all \(A, B, C\) and \(D\) in \(\mathbf {C}\), the pentagon diagram commutes:
-
-% https://tikzcd.yichuanshen.de/
-\begin{tikzcd}
-& A \otimes (B \otimes (C \otimes D)) \arrow[ldd, "\operatorname{\alpha} A B (C \otimes D)" description] \arrow[rd, "(\operatorname{id} A) \otimes (\operatorname{\alpha} B C D)" description] & \\
-& & A \otimes ((B \otimes C) \otimes D) \arrow[dd, "\operatorname{\alpha} A (B \otimes C) D" description] \\
-(A \otimes B) \otimes (C \otimes D) \arrow[rdd, "\operatorname{\alpha} (A \otimes B) C D" description] & & \\
-& & (A \otimes (B \otimes C)) \otimes D \arrow[ld, "(\operatorname{\alpha} A B C) \otimes (\operatorname{id} D)" description] \\
-& ((A \otimes B) \otimes C) \otimes D &                   
-\end{tikzcd}
-
-    \item for all \(A\) and \(B\) in \(\mathbf{C}\), the triangle diagram commutes:
-
-% https://tikzcd.yichuanshen.de/
-\begin{tikzcd}
-A \otimes (I \otimes B) \arrow[rr, "\mathop{\alpha} A I B" description] \arrow[rd, "(\mathop{id} A) \otimes (\mathop{\lambda} B)" description] & & (A \otimes I) \otimes B \arrow[ld, "(\mathop{\rho} A) \otimes (\mathop{id} B)" description] \\
-& A \otimes B &                                                                                            
-\end{tikzcd}
-    
-\end{itemize}
-
-Aside: This definition is not obviously the correct categorification of the the concept of a monoid. I think the intent is something like `every equation that is true in a free monoid on the objects, with \(\otimes\) as binary operator and \(I\) as unit, has a corresponding isomorphism, and furthermore any two proofs, that a particular equation that is true in a free monoid on the objects, has a corresponding natural transformation'. 
-
-Why did Mac Lane phrase it this way (where showing that this definition captures that intent is a theorem to be proved: Mac Lane's coherence theorem), rather than the other way (where showing that a monoidal category can be presented by a pentagon law plus a triangle law would be the theorem to be proved)? Maybe it was an accident / no meaning. Maybe it was a fashion in mathematics. Maybe it has something to do with infinities? I feel comfortable thinking about finite and countable things, and handwaving off bigger infinities, saying something like `if you care about bigger infinities, I am sure there's a generalization of the theorems regarding finite and countable things that would be relevant there' (Downward Lowenheim-Skolem:
-\cite{lowenheim1915moglichkeiten, 
-%skolem1919untersuchungen,
-%skolem1922einige,
-burris2001downward}) - but Mac Lane might not be that sort of mathematician? 
-
-The pentagon is two closely related things, on the one hand, it is the local confluence of directed rewriting that (combined with well-ordering) yields global confluence and therefore a decision procedure, and an associahedron.
-
-Knuth-Bendix completion is an algorithm that can turn a set of equational identities into a decision procedure, by first orienting the equations, and then finding `critical pairs', expressions that can be rewritten in more than one way. If all of the critical pairs can be replaced with a rewrite rule `completing' the critical pair, and those rewrite rules do not introduce further critical pairs, then Knuth-Bendix completion terminates with a confluent rewrite system. Running  There is a law of associativity, \( a ( b c ) = (a b) c \). If you choose to orient that law to the right, then you have a rewrite rule that reassociates things `to the left'. \( a ( b c ) \to (a b) c\) but you don't have a confluent rewrite system. Running Knuth-Bendix on the rewrite system consisting of the one rewrite rule, you will find there is a critical pair, an expression that can be rewritten in more than one way, the starting point of the pentagon. Completing the pentagon means adding a rewrite rule from the starting point to the ending point of the pentagon. With that rule, there are no more critical pairs, and so Knuth-Bendix returns with a confluent rewriting system. 
-
-This leads to some natural questions:
-\begin{enumerate}
-    \item If you have an equational theory (such as the theory of rigs? According to \url{https://ncatlab.org/nlab/show/rig+category}, coherence for rig categories was worked out in (Laplaza 1972) and (Kelly 1974)?), by running Knuth-Bendix on it, you can find out what the analogs of the pentagon and the triangle laws would be, and so what the Mac Lane style categorification of that equational theory would be. See \cite{beke2011categorification}.
-    \item There's a quality of rewrite rules, that typically mathematicians use patterns that match anywhere in an expression, but programmers for efficiency routinely use patterns that can only match at the root, and add `bureaucratic' or `administrative' rules that `walk' the root (with `chroot'-like rotations) through the whole term to be processed, explicitly. What would the categorification of this idea be? 
-    \item If Buchberger's algorithm is an extension or variant of Knuth-Bendix, then you might wonder - what category-theoretic concepts do its outputs correspond to?
-    \item If resolution is an extension or variant of Knuth-Bendix, then what category-theoretic concepts do its outputs correspond to?
-
+    \item Do you want to take all of these as definitional?
+    \item Can you take only a subset of them as definitional, and derive the others as theorems?
+    \item What if there are multiple subsets that are `spanning' - that is, sufficient to derive the entire set?
+    \item What if there are symmetries among the different axiomatization? Communicating the symmetries would be important.
+    \item How are you going to talk about the situation? The different statements are all grounded in the same informal intuition, but there is some redundancy, and there are some proofs in the various directions.
 \end{enumerate}
 
+Fortuntately, there is a mathematical object for this situation - the matroid.
 
-\section{A monoid object within a monoidal category}
+Matroids are named for matrices in linear algebra; the `-oid' suffix means `ish'. That is, they're matrix-ish things. If you imagine the truths (axioms or theorems) in your theory happen to all be linear equations, then there's a correspondence between subsets of truths being redundant, and rows or columns in a matrix, conceived of as a system of linear equations, being linearly dependent.
 
-A \emph{monoid object} in
-\(\mathcal{C}\) is an object \(\mathbf{M}\) in \(\mathcal{C}\) together with
-morphisms
-\[ e \colon \mathbf{1} \to \mathbf{M} \quad\text{and}\quad  \mu \colon \mathbf{M} \otimes \mathbf{M} \to \mathbf{M} \]
-such that the following two diagrams commute:
+One of the aspects of the matroid is that there's a set of elements, which you can think of as either true statements or vectors,
+and any subset of elements can be categorized in two ways.
+The two different categories can be viewed as `similar to the whole' - which in general is redundant, with more theorems than you need to axiomatize the theory in question, or more vectors than you need to span the space in question - or, on the other hand `similar to the empty set' in that there is no redundancy, though these small sets of vectors may span a subspace, or axiomatize a more more generic theory.
+If you take a set that was independent, and take something away, you can't introduce a redundancy.
+Dually, if you take a set that was dependent (contains a derivation of one of the elements from some other elements) and add something, you can't make it independent.
+So this categorization of sets into two kinds is compatible with the inclusion relation of subsets - that is,
+it is a monotone map from the full lattice of all subsets of elements to the 2-element lattice; these are sometimes called `abstract simplicial complexes'.
 
-% https://tikzcd.yichuanshen.de/
-\begin{tikzcd}
-\mathbf{1} \otimes \mathbf{M} \arrow[rrdd, "\mathop{pr} 2" description] \arrow[rr, "\mathop{e} \otimes (\mathop{id} \mathbf{M})" description] &  & \mathbf{M} \otimes \mathbf{M} \arrow[dd, "\mu" description] &  & \mathbf{M} \otimes \mathbf{1} \arrow[ll, "(\mathop{id} \mathbf{M}) \otimes \mathop{e}" description] \arrow[lldd, "\mathop{pr} 1" description] \\
- &  &  &  &  \\
-&  & \mathbf{M} &  &                                                                                                                                              
-\end{tikzcd}
+There is another quality to a matroid, beyond just an abstract simplicial complex. Sometimes people describe it as a way to `bump' two sets of elements together to form another set of elements. 
 
-\quad\text{and}\quad
+One way to say this `bumping' is to focus on the independent sets that are at the frontier between independence and dependence. These would be sets of vectors that span the entire space or potential axiomatizations of the entire theory, such that adding any more elements would lead to a redundant set. One of these is called a `basis'. Then `basis exchange' is a rule that if there are distinct bases \(A, B\), for any \(a \in A \setminus B\) there exists \(b \in B \setminus A\) such that replacing \(b\) for \(a\) in \(A\) yields another basis.
 
-% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12BbOnACwBGAM2ABZAL4ACThDxd407r0EiJi2VnlxFPfsLFSQ40uky58hFACZyVWoxZtOulQfVyFz5folGTIDGw8AiIbKzt6ZlZEDiU9VXE-UyCLIjJw6kjHGK94txkPbVzXX3E7GCgAc3giUCEAJwguJDIQHAgkAGZqBjoBGAYABTNgyxAsMGxYEEyHaJAACiwoHW8EgEp3TU84ksTjOsbmxG62jsQbEF7+oZHUmImp1lmop24mJJAGppbqdqQAIw9PoDYYpEIPSbLZ72V45d5bLSSJYrYo+cTrT7fY5As5IS7XUF3CHjKHTF7ZWJcD5lcRAA
-\begin{tikzcd}
-\mathbf{M} \otimes \mathbf{M} \otimes \mathbf{M}  \arrow[dd, "(id \mathbf{M}) \otimes \mathbf{M}" description] \arrow[rr, "\mu \otimes (id \mathbf{M})" description] &  & \mathbf{M} \otimes \mathbf{M} \arrow[dd, "\mu" description] \\
-&  & \\
-\mathbf{M} \otimes \mathbf{M} \arrow[rr, "\mu" description] &  & \mathbf{M}                                                 
-\end{tikzcd}
+Another way to describe a `bumping' operation is to focus on the dependent sets that are at the frontier. One of these is called a `circuit'. An alternate description of matroids has a rule that for any circuits \(C_1, C_2\) and \(x\) an element in their intersection, then their union minus \(x\) contains a circuit.
 
-Okay, we want to prove that the monoid object induces a monoid structure to the set of maps from a generic object into the monoid object.
+A third way to describe a `bumping' operation is to focus on the independent sets, all of them. In this case, a rule, called `augmentation property' is that if there are two independent sets of different size, then there is a way to pluck an element from the larger, and add it to the smaller, such that the augmented set is an independent set. For the purpose of subsequent proofs, this is the one we will take as definitional of matroids.
 
-ENDORSE: The combinator \(B\) lifts the \(e\) morphism to a map from morphisms into \(\mathbf{1}\) to morphisms into the monoid object. There is a unique map into the terminal object. So \(B e (X \to 1) : X \to M\) is a particular element of the set of morphisms from \(X \to M\). \footnote{Recall we are using Haskell-like syntax for function application, \(f x\) means `the result of applying the function \(f\) to \(x\)', and also we are using types as names of values, if there is only one relevant value of that type.} 
+There are a few more variations of this general sort, working with `flats', or `hyperplanes', sets of sets of elements, that both pin down the frontier and also have a sort of `bumping' or `exchange' quality. There's another way to describe matroids, which centers a map from sets of elements to natural numbers, called the rank, and yet another way, which centers an endo-function called `closure'. I wouldn't be surprised if there was a dual axiomatization using an endo-function called `interior' (by analogy to topology), or an axiomatization with a binary operation called `implication' or `exponentiation' (by analogy to Heyting algebras).
 
-TRUE BUT DEAD END? Any two morphisms \(f: X \to M, g: X \to M\) corresponds
-to a single morphism \(f \times g: X \times X \to M \times M\) in the product category.
-That morphism is mapped by the \(\otimes\) functor to an arrow \( (\otimes) (f \times g) : X \otimes X \to M \otimes M \).
+These alternate descriptions, using different language, are called `cryptomorphisms' - matroids are useful for modeling situations where there are cryptomorphisms, and also matroids have many cryptomorphisms.
 
-OBSTACLE: I don't see a way to get from \(X\) to \(X \otimes X\).
+The key lemma that finite sets of vectors form matroids is the Steinitz exchange lemma:
 
-TRUE BUT DEAD END? The combinator \(B'\) is characterized by taking \(\mathop{B'} x y z \mapsto y (x z)\).
-It can be given a type (which per usual is a tautology if \(\to\) is interpreted as implication):
-\((A \to B) \to (B \to C) \to A \to C\). It sortof corresponds to the semicolon `followed by' or `flipped function composition' operator. If we apply \(\mathop{B'}\) to the monoid object map \(\mu\) we get \(\mathop{B'} \mu : (M \to X) \to M \otimes M \to X\). Not sure how that's helpful.
+\begin{theorem}
+If a vector \(z \in \Span (X \cup \{y\})\) then either \(z \in \Span X\) or \(y \in \Span (X \cup \{z\})\).
+\end{theorem}
 
-TRUE BUT DEAD END? The combinator \(B\) is characterized by \(\mathop{B} x y z \mapsto x (y z)\). 
-It can be given a type: \((B \to C) \to (A \to B) \to A \to C\). It sortof corresponds to the \(\circ\) `function composition' operator. \(\mathop{B} \mu : (X \to M \otimes M) \to X \to M\)
+\begin{proof}
+Suppose a vector \(z\) is within the space spanned by \(X\) plus a particular vector \(y\).
 
-TRUE BUT DEAD END? The combinator \(C\) is defined as \(\mathop{C} x y z \mapsto x z y\).
-It can be given a type \((A \to B \to C) \to B \to A \to C\). It's some sort of curried commutativity principle. In order to use it, I need a something that is a map that goes into a function type.
+Look at the coefficient of \(y\) in the linear expression for \(z\).
+Either it was zero, in which case \(z\) is within the space spanned by \(X\), or it was nonzero.
 
-TRUE BUT DEAD END? There's a principle that a map out of a product \(X \times Y \to Z\) is equivalent to a map into a function type \(X \to Y \to Z\). If we call that transformation \(\mathop{Curry}\),
-then we could say that \( \mathop{Curry} (\otimes) : X \to Y \to X \otimes Y \). That's a map into an arrow type, but it wouldn't do us any good to apply \(C\) to it.
+By dividing by the nonzero coefficient, we can solve to find a linear expression for \(y\) within the space spanned by \(X \cup \{z\}\).
+\end{proof}
 
-\(S\) is a combinator that might work. \( S : (A \to B \to C) \to (A \to B) \to A \to C\). 
-\(S (\mathop{Curry} (\otimes)) : (X \to Y) \to X \to X \otimes Y\). Okay, that looks promising. 
+Using the Steinitz exchange lemma, we can show:
 
-Here's a sketch of a sketch of how to define a binary operator on morphisms \(f : X \to M, g : X \to M\):
+\begin{theorem}
+A finite set of vectors, and linearly independent subsets of that set, constitutes a matroid. 
+\end{theorem}
+
+\begin{proof}
+First, a subset of a linearly independent set of vectors is also linearly independent. If there are no expressions for one as a combination of the others in a larger set, then there are no expressions for one as a combinations of the others in a particular subset. So the first property, that a matroid needs to be an abstract simplicial complex, is established.
+
+Second, we need to find a way to augment an independent set,
+using another, strictly larger, independent set. We will show it by contradiction.
+
+Assume for the sake of contradiction,
+\(X\) is a smaller independent set of size \(n\),
+and \(Y\) is a larger independent set,
+and there is no single element of \(Y\)
+that can be added to \(X\) to form a new independent set.
+
+We iterate through  \(Y\), considering
+particular elements \(y \in Y\).
+
+In order for these elements of \(Y\) to not augment \(X\), they must be within the space spanned by \(X\). That means they have linear expressions in terms of elements \(x \in X\). For each of the first \(n\), we can solve to find a linear expression for the elements of \(X\) in terms of elements of \(Y\).
+
+Eventually, since \(Y\) is larger, we will be considering the \(n+1\)th element of \(Y\). 
+
+This time, if \(y \in \Span X\), and obtain a linear expression witnessing that, then we can substitute the linear expressions that we have for the previously seen elements of \(Y\),
+and derive a linear expression for \(y\) as a linear combination of
+other elements of \(Y\), which would contradict the independence of \(Y\).
+
+Therefore the independent sets augmentation property holds, and finite sets of vectors form a matroid.
+\end{proof}
+
+I did not invent this proof entirely on my own, I used Wikipedia \url{https://en.wikipedia.org/wiki/Steinitz_exchange_lemma}
+and a paper about the logic of functional dependence, \cite{baltag2021simple}.
+
+Aside: I think there might be a variation of this process,
+where we keep track of a loop invariant something like `the span
+of X can be expressed as the direct sum of the span of these elements (the \(x \in X\) not yet considered) and the span of those elements (the \(y \in Y\) that have been considered)`. With each \(x, y\) pair considered, the dimensions tick over, like this:
+
+Suppose that \(X\) of size \(n\) spans \(V\) and \(Y\) of size \(m\) also spans \(V\). We start with a isomorphism of \(V\) with the direct sum of two spaces-with-bases, \(X_n \oplus 0\). We consider elements of \(Y\) and elements of \(X\) in pairs, and solve to advance the isomorphism one step further, \(X_{n-i} \oplus Y_{i} \cong X_{n-i-1} \oplus Y_{i+1}\). Eventually (after \(n\) steps) we have that \(V \cong 0 \oplus Y_{n} \cong Y_{n}\), and so either \(m = n\) or \(Y\) is not linearly independent.
+
+Finally, we can establish the goal.
+
+\begin{theorem}
+All the maximal independent sets in a matroid are the same size.
+\end{theorem}
+
+\begin{proof}
+If there were maximal independent sets of unequal size, then the smaller could be augmented with an element taken from the larger,
+which would be a contradiction of the hypothesis that the smaller was maximal.
+\end{proof}
+
+
+\bpoint{Exercise}
+Let \(V\) and \(W\) be vector spaces. Let \(B \subset V\) be a basis of \(V\).
+Let \(f \colon B \to W\) be a map of sets. Prove that there exists a unique
+linear map \(F \colon V \to W\) such that the restriction of \(F\) to \(B\)
+is \(f\).
+
+\begin{proof}
+Take a generic element of \(v \in V\).
+Since \(B\) is a basis of \(V\),
+there exists a linear combination
+of \(b \in B\) to create \(v\).
+We can substitute \(b \mapsto f b\) in this expression to define a map \(F : V \to W\).
+
+Aside: substitution like this corresponds to composition of functions.
+
+Suppose there was a linear map \(F'\) from \(V\) to \(W\) that restricts to \(f\) on \(B\). Then we can interpret the linear expression in terms of \(f b\) as a recipe to prove that \(F' v = F v\).
+The leaves of the linear expression rely on the hypothesis that \(F'\) restricts to \(f\) on \(B\). The coefficients of the linear expression
+rely on the functoriality of \(F'\), that it commutes with multiplication by a scalar. The sum of the linear expression also  relies on the functoriality of \(F'\), that it commutes with vector sum.
+\end{proof}
+
+\section{How to invent a cryptomorphism}
+
+In order to invent a cryptomorphism, you start with a familiar
+mathematical structure, and add a new defined term to it.
+Then you prove some theorems about the new defined term, using
+the combination of the familiar axioms, and the new definition.
+Then you `file off' or `abstract away' the definition, and consider
+the mathematical structures that have the new term as part of their given data, subject to some laws (the theorems that you proved).
+Then you work backwards and see whether there is a way to define
+the old structure in terms of the new. It may not be possible; a counterexample is a result. Iterate.
+
+A vector space has an abelian group (of vectors with addition).
+There is also a definable relation of parallelism - that if there exists a scalar that scales one vector to another vector,
+then the two vectors are parallel (This idea is not my invention,
+see \cite{pierce2009model}, which credits Decartes.)
+
+\[
+x \parallel y \Leftrightarrow \exists u \exists v (u x + v y = 0 \wedge (u \neq 0 \vee v \neq 0)
+\]
+
+Some theorems:
+
+\begin{theorem}
+The zero vector is parallel to everything.
+\end{theorem}
+
+\begin{proof}
+The zero scalar scales any vector to the zero vector.
+\end{proof}
+
+One of the funny things about this definition of parallelism is
+that technically witnesses to parallelism are pairs of scalars,
+but for nonzero vectors, you only need one scalar to witness parallelism
+
+\begin{theorem}
+If \(x \neq 0\) then \(x \parallel y\) if and only if there exists \(u\) such that \(u x = y\).
+\end{theorem}
+
+\begin{proof}
+If there exists \(u\) such that \(u x = y\), then we can use \(-1\) as \(v\) to show that \(x \parallel y\). 
+If there are \(u, v\) showing that \(x \parallel y\), and \(x\) is not the zero vector, then \(v\) is not zero, and we can divide by it to create a single-scalar witness. 
+\end{proof}
+
+\begin{theorem}
+The set of all vectors parallel to a particular vector is a subspace.
+\end{theorem}
+
+\begin{proof}
+If the particular vector is zero, then the set of all vectors parallel to it is the whole space. If it is nonzero,
+The definition of `parallel to a particular vector' is a special case of `linear expression for', so the set of all vectors parallel to a particular vector is a vector space with a one-element basis.
+\end{proof}
+
+\begin{theorem}
+Restricted to the set of nonzero vectors, the binary relation of parallelism is an equivalence relation.
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+    \item Parallelism is reflexive: A witness to \(x \parallel x\) is the multiplicative identity scalar.
+    \item Parallelism is symmetric. One proof is that the definition is symmetric. Another proof is that a witness to \(x \parallel y\) is a scalar - the multiplicative inverse is a witness to \(y \parallel x\).
+    \item Parallelism is transitive, on non-zero vectors. 
+    From \(x_1 \parallel x_2\) we get a witness \(k_1 x_1 = x_2\).
+    From \(x_2 \parallel x_3\) we get a witness \(k_2 x_2 = x_3\).
+    So \(k_1 k_2\) forms a witness to \(x \parallel z\).
+\end{enumerate}
+\end{proof}
+
+If you took these few theorems as axiomatic of the concept of parallelism, and attempted to add them to the definition of vector spaces, are there any old axioms that become redundant?
+
+This has been an attempt to find a cryptomorphism from vector spaces to abelian groups with parallelism.
+
+\subsection{notes}
+
 \begin{itemize}
-    \item \(S (\mathop{Curry} (\otimes)) \mathop{id} : X \to X \otimes X\).
-    \item \( \mathop{B'} (S (\mathop{Curry} (\otimes)) \mathop{id}) (f \otimes g) : X \to M \otimes M\).
-    \item \( \mathop{B'} (\mathop{B'} (S (\mathop{Curry} (\otimes)) \mathop{id}) (f \otimes g)) \mu : X \to M \).
+\item How to recover the field of scalars: A scalar is an equivalence class of pairs of parallel vectors (the construction is similar to negative numbers as equivalence classes of pairs of naturals). 
+\item How to scalar-add scalars (taken from \cite{pierce2009model}):
+\(
+(x_0, x_1) + (y_0, y_1) = (z_0, z_1)
+\)
+if and only if there exists \(w\) such that
+\( (x_0, w) = (y_0, y_1) \) and \( (x_0, x_1 + w) = (z_0, z_1) \).
+\item
+How to scalar-multiply scalars (taken from \cite{pierce2009model}):
+\( (x_0, x_1) \circ (y_0, y_1) = (z_0, z_1) \)
+if and only if there exists \(w\) such that
+\(
+(y_1, w) = (x_0, x_1 )
+\)
+and
+\(
+(y_0, w) = (z_0, z1)
+\).
+\item
+How to scale a vector by a scalar (taken from \cite{pierce2009model}):
+\(
+(x_0, x_1) y = z
+\)
+if and only if
+\(
+(x_0, x_1) = (y, z) 
+\)
+or both \(y\) and \(z\) are zero.
 \end{itemize}
-
-TODO: use the monoid object laws to show that this binary operator is associative and respects the proposed identity element.
-
-\section{DRY: Don't Repeat Yourself}
-
-The skein tree is a technique for calculating knot invariants;
-this illustration was drawn by Louis Kauffman, who invented the Kauffman polynomial, a knot invariant:
-
-\includegraphics[scale=0.25]{images/The-Trefoil-Skein-Tree}
-
-The illustration of the skein tree consists of multiple entire knots, which are connected together in a tree, where adjacent knots are related by being almost entirely duplicates, with a small exception at one crossing.
-
-An equational proof, such as the Eckman-Hilton ones earlier, is not normally considered to be a diagram, but if you replace each of the expressions by its parse tree,
-it is clear that the parse trees are related to one another in a chain, where they are almost entirely duplicated, with only a small exception (called the redex in term rewriting).
-
-A Gentzen sequent proof \footnote{See for example \url{https://en.wikipedia.org/wiki/Sequent_calculus}, it's too disgusting to illustrate here} is not normally considered to be a diagram, but if you replace each of the sequents by its parse tree, the sequent proof forms a tree, where the parse trees of adjacent sequents are related to one another by being almost entirely duplicates, with only a small exception.
-
-There's a slogan in programming: `Don't Repeat Yourself' - that suggests that `factoring out' this duplication would be a good thing to do.
-That is, if you can turn aside from whatever project you
-are working on to clear away a tangle of duplication (whether
-you consider it `notation' or not), you can often see further,
-and clearer, than if you kept plugging away in the usual way.
-
-
 
 \bibliographystyle{amsplain}
 \bibliography{refs}
 
-
 \end{document}
-
-\section{Some \LaTeX\ Examples}
-\label{sec:examples}
-
-%Now that you know the idea behind \LaTeX, let's get into some concrete examples.  If you haven't read the introduction (\autoref{sec:what-is}), I strongly urge you to; things from here on out will make more sense.  I encourage you to read along with the source; if you have been you already know how to
-%  emphasize text with \cs\emph,
-%  start a bulleted list with \env{itemize},
-%  start a section with \cs\section,
-%  give a footnote with \cs\footnote,
-%  and use a cross-reference using \cs\label and \cs\autoref.\footnote{%
-%    Actually, this command is given by the \pkg{hyperref} package.
-%    The standard command to use is \cs\ref,
-%      but \cs\autoref will insert the appropriate label in front
-%      (like `section') when \pkg{hyperref} knows it.
-%    Of course, you can teach the package new things.}
-%You also know that \LaTeX\ doesn't really pay attention to
-%  inconsistent        inter-word    spacing   or
-%  random
-%     line
-%    breaks.  The only    real `rule':
-%           if it encounters a \emph{blank} line---whitespace only---%
-%           it starts     a new          paragraph.
-           
-% You can also `skip' spaces using the comment character.
-% If you take the following, for example:
-% 
-%     Lorem ipsum doler---
-%       sit amet.
-% 
-% You will see that there is an unwanted space after the dash.
-% If we had a comment character to `comment out' the rest of the line:
-% 
-%     Lorem ipsum doler---%
-%       sit amet.
-% 
-% This yields the desired result.
-
-% Note also that it is generally poor practice to have excessively long lines -- it even makes your content harder for you to read while you're writing it -- so I make sure that my view of the content never makes the lines very long.  I will squeeze the window to be thinner (soft-wrapping the content) or tell my text editor to hard-wrap it into shorter lines to make sure I can easily read my content.  (Shorter lines also come in handy if you choose to use version control -- an advanced topic for another day.)
-
-%\subsection{How to Organize Your Document}
-
-%As you've already seen, \LaTeX\ comes with at least one command to organize your document: %\cs\section.  There are, in fact, many others:
-%\begin{multicols}{3}
-%\begin{enumerate}
-%\item \cs\part
-%\item \cs\chapter
-%\item \cs\section
-%\item \cs\subsection
-%\item \cs\subsubsection
-%\item \cs\paragraph
-%\item \cs\subparagraph
-%\end{enumerate}
-%\end{multicols}
-%Actually, the availability of these commands\footnote{Or \term{control sequences} as they are more properly called.} depends on the \term{document class} you use.  For example, \csarg\documentclass{article} doesn't define \cs\part or \cs\chapter, but \csarg\documentclass{book} does.
-
-\subsection{How to Make Lists}
-% Very slightly adapted from the stock text by writeLaTeX.com
-
-You can make lists with automatic numbering using \env{enumerate}\dots
-\begin{enumerate}
-\item Like this,
-\item and like this.
-\end{enumerate}
-\dots or bullet points using \env{itemize}\dots
-\begin{itemize}
-\item Like this,
-\item and like this.
-\end{itemize}
-\dots or with words and descriptions using \env{description}\dots
-\begin{description}
-\item[Word] Definition
-\item[Concept] Explanation
-\item[Idea] Text
-\end{description}
-
-\subsection{How to Include Figures}
-% adapted from the stock text by writeLaTeX.com
-
-See the code for \autoref{fig:frog} in this section for an example.
-\begin{enumerate}
-\item Upload the image file (JPEG, PNG or PDF) from your computer to \writeLaTeX\ using the upload link the project menu.
-\item Use the \cs\includegraphics command to include it in your document.
-\item Use the \env{figure} environment and the \cs\caption command to add a number and a caption to your figure.
-\end{enumerate}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.3\textwidth]{images/hexagon}
-\caption{This hexagon was uploaded to \writeLaTeX\ via the project menu.}
-\label{fig:frog}
-\end{figure}
-
-\subsection{How to Make Tables}
-
-Use the \env{table} and \env{tabular} commands for basic tables---see \autoref{tab:widgets} on page~\pageref{tab:widgets}, for example.  \cs\toprule, \cs\midrule, and \cs\bottomrule are all provided by \pkg{booktabs}.  The standard command to use is \cs\hline, but see the \pkg{booktabs} documentation\footnote{\url{http://texdoc.net/texmf-dist/doc/latex/booktabs/booktabs.pdf}} for some nice reading on why the tables it suggests are better.
-% the \url command is provided by the `hyperref' package.
-
-\begin{table}
-\centering
-\begin{tabular}{lr}
-\toprule
-Item & Quantity \\
-\midrule
-Widgets & 42 \\
-Gadgets & 13 \\
-\bottomrule
-\end{tabular}
-\caption{An example table.}
-\label{tab:widgets}
-\end{table}
-
-\subsection{How to Write Mathematics}
-% adapted from stock example for correctness and best practices
-
-\LaTeX\ is great at typesetting mathematics.  Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
-\[S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i\]
-denote their mean.  Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
-
-% Back to totally me
-I have no idea what \emph{any} of that means, so see \autoref{eq:simple}.
-If you want to be concise about it, you can also use \cs\eqref: see~\eqref{eq:simple}.
-\begin{thm}
-  If this, then that.
-\end{thm}
-\begin{proof}
-  Since we know that
-  \begin{equation}
-    \text{this} \implies \text{that},
-    \label{eq:simple}
-  \end{equation}
-  the result directly follows.
-\end{proof}
-There is a lot more to mathematics typesetting, but that's beyond the scope of this article.  There may be another that looks at this in-depth.
-
-\section{Getting Help}
-
-\LaTeX\ comes with very thorough documentation.  For online use, simply Google-search \texttt{texdoc (package)} to look up the official documentation for \pkg{package}.  This mirrors the command-line tool, \texttt{texdoc}, which is used in the same way.  For everything else, usually a simple search for \texttt{LaTeX (thing)} for information on \cs\thing or \env{thing}.  For everything else, including specific help, there's the \TeX~StackExchange.\footnote{\url{http://tex.stackexchange.com}}
-
-\section{Next Steps}
-
-\subsection{Getting \LaTeX}
-
-\writeLaTeX\ is a useful resource and I encourage you to use it to the fullest.  However, \LaTeX\ is a program that can run on \emph{your} computer just as easily as it can run online.  It is absolutely free.
-My recommendations are as follows:
-\begin{description}
-\item[Windows] \TeX~Live\footnote{\url{http://www.tug.org/texlive/windows.html}} (but MiK\TeX\footnote{\url{http://www.miktex.org}} is another popular option).
-\item[Mac] Mac\TeX\footnote{\url{http://www.tug.org/mactex}} is by \emph{far} the best.  I highly recommend it.
-\item[Linuxes] \TeX~Live\footnote{\url{http://www.tug.org/texlive}} is your \emph{only} option, and I actually recommend against using your distribution's package manager to install it and encourage you to use install script provided upstream.  The versions are almost always several years behind, and \LaTeX\ package development is very active.  If you absolutely must use the package manager, install \texttt{texlive-full} or similar---trust me when I say that it makes life \emph{much} easier.
-\end{description}
-
-To make links easier to work with, download the PDF using the appropriate button above on the top bar.  This is what \LaTeX\ actually produced for \writeLaTeX; it is fully clickable and otherwise interactive.  (It also just looks \emph{nicer} somehow\dots)
-
-\subsection{Choosing an Editor}
-
-Your experience with \LaTeX\ will largely be impacted by your choice of editor.  For learning on any platform, TUG's own \TeX works is a good starting point.  When you find you're repeating yourself a lot, I recommend moving onto \TeX maker (also cross-platform).  If you are comfortable using it---I won't lie and say it's immediately intuitive for a beginner---the venerable Emacs editor has an excellent mode called \textsc{Auc\TeX}.  It is \emph{extremely} good.  \TeX maker and Emacs will see you through from then on, and both are absolutely free.
-
-\vfill
-
-\begin{center}
-Happy \TeX ing!
-\end{center}
-
-\vfill

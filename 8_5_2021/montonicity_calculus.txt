@@ -1,0 +1,8 @@
+https://iulg.sitehost.iu.edu/moss/NLS/monotonicity1.pdf
+
+Comparing complicated expressions by parsing them as a composition
+of monotone and antitone functions.
+
+I enjoyed this; it relates to things I'm familiar with,
+sequent trees and types and it seems to offer a concrete technique
+that I might be able to learn to answer problems.

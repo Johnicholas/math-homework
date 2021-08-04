@@ -1,0 +1,5 @@
+https://ncatlab.org/nlab/show/traced+monoidal+category
+
+suggests that in order to have an analogue of `dimension',
+maybe you should look for an analogue of `trace',
+and dimension will show up as the trace of the identity map.

@@ -1,0 +1,146 @@
+\documentclass[14pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{amsmath} % for \text
+\usepackage{tikz-cd} % for \tikzcd
+\pagestyle{fancy}
+
+\lhead{A monoid object in a monoidal category}
+\chead{Johnicholas Hines}
+\rhead{August 5, 2021}
+
+\begin{document}
+
+\section{A monoid object within a monoidal category}
+
+(This text is taken from Wikipedia) 
+
+A monoidal category is a category \(\mathbf{C} \) equipped with a monoidal structure. A monoidal structure consists of:
+
+\begin{itemize}
+    \item a functor \(\otimes \colon \mathbf {C} \times \mathbf {C} \to \mathbf {C}\) called the tensor product or monoidal product,
+    \item an object \( I \) called the unit object or identity object, and
+    \item a natural (in each of three arguments \(A, B, C\)) isomorphism \(\alpha\), called associator, with components
+    \( \mathop{\alpha} A B C \colon A\otimes (B\otimes C) \to (A\otimes B)\otimes C\),
+    \item two natural isomorphisms \(\lambda\)  and \(\rho\), respectively called left and right unitor, with components \( \mathop{\lambda} A \colon I\otimes A \to A\) and \(\mathop{\rho} A \colon A\otimes I \to A \)
+\end{itemize}
+The coherence conditions for these natural transformations are:
+\begin{itemize}
+    \item for all \(A, B, C\) and \(D\) in \(\mathbf {C}\), the pentagon diagram commutes:
+
+% https://tikzcd.yichuanshen.de/
+\begin{tikzcd}
+& A \otimes (B \otimes (C \otimes D)) \arrow[ldd, "\operatorname{\alpha} A B (C \otimes D)" description] \arrow[rd, "(\operatorname{id} A) \otimes (\operatorname{\alpha} B C D)" description] & \\
+& & A \otimes ((B \otimes C) \otimes D) \arrow[dd, "\operatorname{\alpha} A (B \otimes C) D" description] \\
+(A \otimes B) \otimes (C \otimes D) \arrow[rdd, "\operatorname{\alpha} (A \otimes B) C D" description] & & \\
+& & (A \otimes (B \otimes C)) \otimes D \arrow[ld, "(\operatorname{\alpha} A B C) \otimes (\operatorname{id} D)" description] \\
+& ((A \otimes B) \otimes C) \otimes D &                   
+\end{tikzcd}
+
+    \item for all \(A\) and \(B\) in \(\mathbf{C}\), the triangle diagram commutes:
+
+% https://tikzcd.yichuanshen.de/
+\begin{tikzcd}
+A \otimes (I \otimes B) \arrow[rr, "\mathop{\alpha} A I B" description] \arrow[rd, "(\mathop{id} A) \otimes (\mathop{\lambda} B)" description] & & (A \otimes I) \otimes B \arrow[ld, "(\mathop{\rho} A) \otimes (\mathop{id} B)" description] \\
+& A \otimes B &                                                                                            
+\end{tikzcd}
+    
+\end{itemize}
+
+
+A \emph{monoid object} in
+\(\mathcal{C}\) is an object \(\mathbf{M}\) in \(\mathcal{C}\) together with
+morphisms
+\[ e \colon \mathbf{I} \to \mathbf{M} \quad\text{and}\quad  \mu \colon \mathbf{M} \otimes \mathbf{M} \to \mathbf{M} \]
+such that the following two diagrams commute:
+
+% https://tikzcd.yichuanshen.de/
+\begin{tikzcd}
+\mathbf{1} \otimes \mathbf{M} \arrow[rrdd, "\mathop{pr} 2" description] \arrow[rr, "\mathop{e} \otimes (\mathop{id} \mathbf{M})" description] &  & \mathbf{M} \otimes \mathbf{M} \arrow[dd, "\mu" description] &  & \mathbf{M} \otimes \mathbf{1} \arrow[ll, "(\mathop{id} \mathbf{M}) \otimes \mathop{e}" description] \arrow[lldd, "\mathop{pr} 1" description] \\
+ &  &  &  &  \\
+&  & \mathbf{M} &  &                  
+\end{tikzcd}
+
+\quad\text{and}\quad
+
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12BbOnACwBGAM2ABZAL4ACThDxd407r0EiJi2VnlxFPfsLFSQ40uky58hFACZyVWoxZtOulQfVyFz5folGTIDGw8AiIbKzt6ZlZEDiU9VXE-UyCLIjJw6kjHGK94txkPbVzXX3E7GCgAc3giUCEAJwguJDIQHAgkAGZqBjoBGAYABTNgyxAsMGxYEEyHaJAACiwoHW8EgEp3TU84ksTjOsbmxG62jsQbEF7+oZHUmImp1lmop24mJJAGppbqdqQAIw9PoDYYpEIPSbLZ72V45d5bLSSJYrYo+cTrT7fY5As5IS7XUF3CHjKHTF7ZWJcD5lcRAA
+\begin{tikzcd}
+\mathbf{M} \otimes \mathbf{M} \otimes \mathbf{M}  \arrow[dd, "(id \mathbf{M}) \otimes \mathbf{M}" description] \arrow[rr, "\mu \otimes (id \mathbf{M})" description] &  & \mathbf{M} \otimes \mathbf{M} \arrow[dd, "\mu" description] \\
+&  & \\
+\mathbf{M} \otimes \mathbf{M} \arrow[rr, "\mu" description] &  & \mathbf{M}                                                 
+\end{tikzcd}
+
+Suppose that the identity object of the monoidal product,
+is also terminal. Then there is a monoid structure
+to the set of maps from a generic object
+into the monoid object.
+
+The combinator \(B\) is defined by its reduction rule \(B x y z \mapsto x (y z)\). It can be given a type, which (as usual) is a tautology when arrows are interpreted as implications: \((A \to B) \to (C \to A) \to C \to B\). 
+
+When (partially) applied to \(e\), the \(B\) combinator lifts the \(e\) morphism to a map from morphisms into \(\mathbf{1}\) to morphisms into the monoid object. There is also a unique map into the terminal object. So \(B e (X \to 1) : X \to M\) is a particular element of the set of morphisms from \(X \to M\). \footnote{Recall we are using Haskell-like syntax for function application, \(f x\) means `the result of applying the function \(f\) to \(x\)', and also we are using types as names of values, if there is only one relevant value of that type.} This will turn out to be the identity of the monoid structure.
+
+So if X were 1, then we could multiply elements
+f : 1 \to M by g : 1 \to M by looking at
+(f \times g) ; \mu : 1 \times 1 \to M
+
+In doing that, we're relying on 1 \times 1 \cong 1,
+
+
+%TRUE BUT DEAD END? Any two morphisms \(f: X \to M, g: X \to M\) corresponds
+%to a single morphism \(f \times g: X \times X \to M \times M\) in the product category.
+%That morphism is mapped by the \(\otimes\) functor to an arrow \( (\otimes) (f \times g) : X \otimes X \to M \otimes M \).
+
+%OBSTACLE: I don't see a way to get from \(X\) to \(X \otimes X\).
+
+%TRUE BUT DEAD END? The combinator \(B'\) is characterized by 
+%taking \(\mathop{B'} x y z \mapsto y (x z)\).
+%It can be given a type (which per usual is a tautology if 
+%\(\to\) is interpreted as implication):
+%\((A \to B) \to (B \to C) \to A \to C\). It sortof 
+%corresponds to the semicolon `followed by' or `flipped 
+%function composition' operator. If we apply \(\mathop{B'}\) 
+%to the monoid object map \(\mu\) we get \(\mathop{B'} \mu : 
+%(M \to X) \to M \otimes M \to X\). Not sure how that's 
+%helpful.
+
+%TRUE BUT DEAD END? The combinator \(B\) is characterized by 
+%\(\mathop{B} x y z \mapsto x (y z)\). 
+%It can be given a type: \((B \to C) \to (A \to B) \to 
+%A \to C\). It sortof corresponds to the \(\circ\) `function 
+%composition' operator. \(\mathop{B} \mu : (X \to M \otimes M)
+%\to X \to M\)
+
+%TRUE BUT DEAD END? The combinator \(C\) is defined as 
+%\(\mathop{C} x y z \mapsto x z y\).
+%It can be given a type \((A \to B \to C) \to B \to A \to C\). %It's some sort of curried commutativity principle. In order 
+%to use it, I need a something that is a map that goes into a 
+%function type.
+
+%TRUE BUT DEAD END? There's a principle that a map out of a 
+%product \(X \times Y \to Z\) is equivalent to a map into a 
+%function type \(X \to Y \to Z\). If we call that 
+%transformation \(\mathop{Curry}\),
+%then we could say that \( \mathop{Curry} (\otimes) : X \to Y 
+%\to X \otimes Y \). That's a map into an arrow type, but it 
+%wouldn't do us any good to apply \(C\) to it.
+
+%\(S\) is a combinator that might work. \( S : (A \to B \to C) %\to (A \to B) \to A \to C\). 
+%\(S (\mathop{Curry} (\otimes)) : (X \to Y) \to X \to X 
+%\otimes Y\). Okay, that looks promising. 
+
+%Here's a sketch of a sketch of how to define a binary operator on morphisms \(f : X \to M, g : X \to M\):
+%\begin{itemize}
+%    \item \(S (\mathop{Curry} (\otimes)) \mathop{id} : X \to X \otimes X\).
+%    \item \( \mathop{B'} (S (\mathop{Curry} (\otimes)) \mathop{id}) (f \otimes g) : X \to M \otimes M\).
+%    \item \( \mathop{B'} (\mathop{B'} (S (\mathop{Curry} (\otimes)) \mathop{id}) (f \otimes g)) \mu : X \to M \).
+%\end{itemize}
+
+TODO: use the monoid object laws to show that this binary operator is associative and respects the proposed identity element.
+
+HINT: use a simple concrete monoid, like the cyclic monoid with one generator and 2 elements, or the free monoid on one generator, and a familiar category, like Set,
+and check that your construction is the identity on the bundle of maps from 1 to the concrete monoid, and a
+natural monoid on the bundle of maps from 2 to the concrete monoid.
+
+\end{document}
